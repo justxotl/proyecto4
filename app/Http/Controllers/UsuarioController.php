@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\infoper;
 use App\Models\User;
+use Illuminate\Validation\Rule;
+
 
 
 use Illuminate\Http\Request;
@@ -59,7 +61,7 @@ class UsuarioController extends Controller
         
         
         return redirect()->route('admin.usuarios.index')
-            ->with('mensaje', 'Turno creado correctamente')
+            ->with('mensaje', 'Usuario creado correctamente')
             ->with('icono', 'success');
         //return $user;
 
@@ -68,25 +70,58 @@ class UsuarioController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $usuario = User::find($id);
+    return view('admin.usuarios.show',compact('usuario'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $usuario = User::findOrFail($id);
+        $infoper = infoper::all();
+        return view('admin.usuarios.edit',compact('usuario','infoper'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        //
+        $usuario = User::find($id);
+        $request->validate([
+            'name' => 'required|max:20'. $usuario->id,
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'ci_us' => 'required|unique:infopers,ci_us,' . $usuario->id,
+            'email' => 'required|unique:users,email,' . $usuario->id,
+            'rol' => 'nullable',
+            'password' => 'nullable|min:8|max:20|confirmed',    
+        ]);
+
+        $usuario = User::find($usuario->id);
+        $usuario->name = $request->name;
+        $usuario->email = $request->email;
+        $usuario->rol = 1;
+        if ($request->filled('password')) {
+            $usuario->password = Hash::make($request['password']);
+        }
+        $usuario->save();
+
+        $infoPer = infoper::find($usuario->infoper->user_id);
+        $infoPer->ci_us = $request->ci_us;
+        $infoPer->nombre = $request->nombre;
+        $infoPer->apellido = $request->apellido;
+        $infoPer->user_id = $usuario->id;
+        $infoPer->save();
+
+        return redirect()->route('admin.usuarios.index')
+            ->with('mensaje', 'Usuario actualizado correctamente')
+            ->with('icono', 'success');
+        
     }
 
     /**
@@ -96,8 +131,7 @@ class UsuarioController extends Controller
     {
         $usuario = User::find($id);
         $usuario->delete();
-        $infoPer = infoper::where('user_id', $id)->first();
-        $infoPer->delete();
+    
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario eliminado correctamente')
             ->with('icono', 'success');
