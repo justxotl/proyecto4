@@ -53,10 +53,11 @@
 @stop
 
 @section('adminlte_js')
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @stack('js')
-    @yield('js')
+@stack('js')
+@yield('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @if( (($mensaje = Session::get('mensaje')) && ($icono = Session::get('icono'))) )
+    
         <script>
             
             Swal.fire({

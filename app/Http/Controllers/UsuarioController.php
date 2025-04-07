@@ -63,7 +63,6 @@ class UsuarioController extends Controller
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario creado correctamente')
             ->with('icono', 'success');
-        //return $user;
 
     }
 

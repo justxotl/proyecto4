@@ -309,11 +309,6 @@ return [
         ['header' => 'FUNCIONES'],
 
         [
-            'text' => 'Inicio',
-            'url' => 'admin/home',
-            'icon' => 'fas fa-fw fa-home',
-        ],
-        [
             'text' => 'Usuarios',
             'url' => 'admin/usuarios',
             'icon' => 'fas fa-fw fa-users',
@@ -326,7 +321,7 @@ return [
         [
             'text' => 'Autores',
             'url' => 'admin/autores',
-            'icon' => 'fas fa-fw fa-user',
+            'icon' => 'fas fa-fw fa-pen-nib',
         ],
         
         ['header' => 'CONFIGURACIÓN'],
@@ -378,7 +373,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
