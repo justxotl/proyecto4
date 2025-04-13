@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('autors', function (Blueprint $table) {
+        Schema::create('fichas', function (Blueprint $table) {
             $table->id();
-            $table->string('ci_autor', 8)->unique();
-            $table->string('nombre_autor', 250);
-            $table->string('apellido_autor', 250);
-            $table->foreignId('ficha_id')->nullable()->constrained()->onDelete('cascade')->onUpdate('cascade'); // Relación con la tabla de autores
+            $table->string('titulo', 250);
+            $table->date('fecha');
+            $table->foreignId('carrera_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); // Relación con la tabla de carreras
+            $table->text('resumen');
             $table->timestamps();
         });
     }
@@ -26,6 +26,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('autors');
+        Schema::dropIfExists('fichas');
     }
 };
+

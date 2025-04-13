@@ -37,11 +37,11 @@ class UsuarioController extends Controller
         
         $request->validate([
             'name' => 'required|max:250',
-            'ci_us' => 'required|max:8',
+            'ci_us' => 'required|max:8|unique:infopers,ci_us',
             'nombre' => 'required|max:250',
             'apellido' => 'required|max:250',
             'rol' => 'nullable',
-            'email' => 'required|max:250|unique:users',
+            'email' => 'required|max:250|unique:users,email',
             'password' => 'required|min:8|max:20|confirmed',
         ]);
 

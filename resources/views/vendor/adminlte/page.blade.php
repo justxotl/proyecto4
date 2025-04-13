@@ -68,4 +68,8 @@
             });
         </script>
     @endif
+    <script src="{{url('js/phase.js')}}"></script>
+    
 @stop
+
+

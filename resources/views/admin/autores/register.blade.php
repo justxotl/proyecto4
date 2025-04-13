@@ -48,7 +48,7 @@
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                                @error('ci_us')
+                                @error('ci_autor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -86,7 +86,7 @@
                                     </div>
                                 </div>
 
-                                @error('apellido')
+                                @error('apellido_autor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

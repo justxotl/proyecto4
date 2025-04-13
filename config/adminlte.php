@@ -323,6 +323,11 @@ return [
             'url' => 'admin/autores',
             'icon' => 'fas fa-fw fa-pen-nib',
         ],
+        [
+            'text' => 'Carreras',
+            'url' => 'admin/carreras',
+            'icon' => 'fas fa-fw fa-graduation-cap',
+        ],
         
         ['header' => 'CONFIGURACIÓN'],
         [
