@@ -13,11 +13,10 @@ class Autor extends Model
         'ci_autor',
         'nombre_autor',
         'apellido_autor',
-        'ficha_id',
     ];
 
     public function ficha()
     {
-        return $this->belongsTo(Ficha::class,'ficha_id');
+        return $this->belongsToMany(Ficha::class);
     }
 }

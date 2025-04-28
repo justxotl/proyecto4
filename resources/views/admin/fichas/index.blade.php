@@ -27,7 +27,8 @@
                                 <th style="text-align: center">#</th>
                                 <th style="text-align: center">Fecha</th>
                                 <th style="text-align: center">Título</th>
-                                <th style="text-align: center">Autor</th>
+                                <th style="text-align: center">Autor(es)</th>
+                                <th style="text-align: center">Materia</th>
                                 <th style="text-align: center">Acción</th>
                             </tr>
                         </thead>
@@ -39,9 +40,13 @@
                                 <tr>
                                     <td style="text-align: center">{{ $contador++ }}</td>
                                     <td style="text-align: center">{{ $ficha->fecha }}</td>
-                                    <td>{{ $ficha->titulo }}</td>
-                                    <td>{{ $ficha->autor->nombre_autor}}</td>
-
+                                    <td>{{ $ficha->titulo}}</td>
+                                    <td>
+                                    @foreach ($ficha->autor as $autor)
+                                        {{ $autor->nombre_autor }} {{ $autor->apellido_autor }}<br>
+                                    @endforeach
+                                    </td>
+                                    <td>{{ $ficha->carrera->nombre }}</td>
                                     <td style="text-align: center">
                                         <div class="btn-group" role="group" aria-label="Basic example">
                                             <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}" type="button"

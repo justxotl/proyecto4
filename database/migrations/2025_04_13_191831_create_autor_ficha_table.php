@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('autors', function (Blueprint $table) {
+        Schema::create('autor_ficha', function (Blueprint $table) {
             $table->id();
-            $table->string('ci_autor', 8)->unique();
-            $table->string('nombre_autor', 250);
-            $table->string('apellido_autor', 250);
+            $table->unsignedBigInteger('ficha_id');
+            $table->foreign('ficha_id')->references('id')->on('fichas')->onDelete('cascade');
+            $table->unsignedBigInteger('autor_id');
+            $table->foreign('autor_id')->references('id')->on('autors')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('autors');
+        Schema::dropIfExists('autor_ficha');
     }
 };

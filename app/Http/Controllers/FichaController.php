@@ -16,7 +16,7 @@ class FichaController extends Controller
      */
     public function index()
     {
-        $fichas = Ficha::all();
+        $fichas = Ficha::with('autor')->get();
         return view('admin.fichas.index', compact('fichas'));
     }
 
@@ -32,12 +32,16 @@ class FichaController extends Controller
     public function buscarAutor($id)
     {
         $buscarautor = Autor::where('ci_autor', $id)->first();
+        if(!$buscarautor){
+            return response()->json('NotFound');
+        }
+
         $ficha = Autor::join('fichas', 'autors.id', '=', 'fichas.autor_id')->where('fichas.autor_id', '=', $buscarautor->id);
 
         if ($ficha) {
             return response()->json($buscarautor);
         } else {
-            return response()->json(['No sirve']);
+            return response()->json('NotFound');
         }
     }
 
@@ -49,106 +53,70 @@ class FichaController extends Controller
         $nombre = $request->nombre_autor;
         $apellido = $request->apellido_autor;
         $cedula = $request->ci_autor;
-        $buscarautor = Autor::where('ci_autor', $request->ci_autor)->first();
-        if (empty($buscarautor)) {
-            $validacion = Validator::make(
-                $request->all(),
-                [
-                    'ci_autor' => 'required|unique:autors',
-                    'nombre_autor' => 'required',
-                    'apellido_autor' => 'required',
-                    'titulo' => 'required|unique:fichas',
-                    'fecha' => 'required',
-                    'carrera' => 'required',
-                    'resumen' => 'required',
-                ],
-                [
-                    'ci_autor.required' => 'La cédula es requerida.',
-                    'ci_autor.unique' => 'La cédula ya existe dentro del sistema.',
-                    'nombre_autor.required' => 'El nombre es requerido',
-                    'apellido_autor.required' => 'El apellido es requerido',
-                    'titulo.required' => 'El Titulo es requerido',
-                    'fecha.required' => 'La fecha es requerida',
-                    'carrera.required' => 'La carrera es requerida.',
-                    'resumen.required' => 'El resumen es requerido.',
-                ]
-            );
-            if ($request->ajax()) {
-                if ($validacion->fails()) {
-                    return response()->json(['error' => $validacion->errors()]);
-                }
+    // Validación de los datos
+    $validacion = Validator::make(
+        $request->all(),
+        [
+            'ci_autor.*' => 'required',
+            'nombre_autor.*' => 'required',
+            'apellido_autor.*' => 'required',
+            'titulo' => 'required|unique:fichas',
+            'fecha' => 'required',
+            'carrera' => 'required',
+            'resumen' => 'required',
+        ],
+        [
+            'ci_autor.*.required' => 'La cédula es requerida.',
+            'nombre_autor.*.required' => 'El nombre es requerido.',
+            'apellido_autor.*.required' => 'El apellido es requerido.',
+            'titulo.required' => 'El título es requerido.',
+            'fecha.required' => 'La fecha es requerida.',
+            'carrera.required' => 'La carrera es requerida.',
+            'resumen.required' => 'El resumen es requerido.',
+        ]
+    );
 
-                DB::beginTransaction();
-
-                try {
-
-
-                    // Crear ficha
-                    $ficha = Ficha::create([
-                        'titulo' => $request->titulo,
-                        'fecha' => $request->fecha,
-                        'carrera_id' => $request->carrera,
-                        'resumen' => $request->resumen,
-                    ]);
-
-                    // Iterar sobre autores
-                    foreach ($request->ci_autor as $index => $cedula) {
-                        // Crear Estudiante
-                        $autor = Autor::create([
-                            'ci_autor' => $cedula,
-                            'nombre_autor' => $request->nombre_autor[$index],
-                            'apellido_autor' => $request->apellido_autor[$index],
-                            'ficha_id' => $ficha->id,
-                        ]);
-                    }
-
-                    DB::commit();
-                    return response()->json(['response' => 'Autores creados correctamente.']);
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    return response()->json(['response' => 'Error en el servidor: ' . $e->getMessage()]);
-                }
-            } else {
-                if ($validacion->fails()) {
-                    return back()->with($validacion)->withInput();
-                }
-            }
-        } else {
-            $validacion = Validator::make(
-                $request->all(),
-                [
-                    'ci_autor' => 'required|unique:autors',
-                    'nombre_autor' => 'required',
-                    'apellido_autor' => 'required',
-                    'titulo' => 'required|unique:fichas',
-                    'fecha' => 'required',
-                    'carrera' => 'required',
-                    'resumen' => 'required',
-                ],
-                [
-                    'ci_autor.required' => 'La cedula es requerido',
-                    'ci_autor.unique' => 'La cedula ya existe',
-                    'nombre_autor.required' => 'El nombre es requerido',
-                    'apellido_autor.required' => 'El apellido es requerido',
-                    'titulo.required' => 'El Titulo es requerido',
-                    'fecha.required' => 'La fecha es requerida',
-                    'carrera.required' => 'La carrera es requerido',
-                    'resumen.required' => 'El resumen es requerido',
-                ]
-            );
-            if ($request->ajax()) {
-                if ($validacion->fails()) {
-                    return response()->json(['error' => $validacion->errors()]);
-                }
-
-                
-            } else {
-                if ($validacion->fails()) {
-                    return back()->with($validacion)->withInput();
-                }
-            }
-        }
+    if ($validacion->fails()) {
+        return back()->withErrors($validacion)->withInput();
     }
+
+    DB::beginTransaction();
+
+    try {
+        // Crear la ficha
+        $ficha = Ficha::create([
+            'titulo' => $request->titulo,
+            'fecha' => $request->fecha,
+            'carrera_id' => $request->carrera,
+            'resumen' => $request->resumen,
+        ]);
+
+        // Iterar sobre los autores enviados
+        foreach ($request->ci_autor as $index => $cedula) {
+            // Buscar si el autor ya existe
+            $autor = Autor::where('ci_autor', $cedula)->first();
+
+            if (!$autor) {
+                // Si el autor no existe, crearlo
+                $autor = Autor::create([
+                    'ci_autor' => $cedula,
+                    'nombre_autor' => $request->nombre_autor[$index],
+                    'apellido_autor' => $request->apellido_autor[$index],
+                ]);
+            }
+
+            // Asociar el autor con la ficha en la tabla pivote
+            $ficha->autor()->attach($autor->id);
+        }
+
+        DB::commit();
+        return response()->json(['response' => 'Ficha y autores procesados correctamente.']);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json(['response' => 'Error en el servidor: ' . $e->getMessage()]);
+    }
+    
+}
 
     /**
      * Display the specified resource.
@@ -177,8 +145,13 @@ class FichaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ficha $ficha)
+    public function destroy($id)
     {
-        //
+        $fichas = Ficha::find($id);
+        $fichas->delete();
+
+        return redirect()->route('admin.fichas.index')
+            ->with('mensaje', 'Ficha eliminada correctamente.')
+            ->with('icono', 'success');
     }
 }

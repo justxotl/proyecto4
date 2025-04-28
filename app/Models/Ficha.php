@@ -2,7 +2,6 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Ficha extends Model
@@ -19,6 +18,11 @@ class Ficha extends Model
 
     public function autor()
     {
-        return $this->hasOne(Autor::class);
+        return $this->belongsToMany(Autor::class);
+    }
+
+    public function carrera()
+    {
+        return $this->belongsTo(Carrera::class);
     }
 }

@@ -42,7 +42,7 @@
                     <form action="{{ url('admin/fichas/register') }}" id="form_ficha" method="post">
                         @csrf
                         <button type="submit" disabled hidden aria-hidden="true"></button>
-                        <div class="row" id="ficha_plus">
+                        <div class="row">
                             {{-- CI field --}}
                             <div class="input-group mb-3 col-md-4">
                                 <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
@@ -101,6 +101,11 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div id="ficha_plus">
+
+                        </div>
+
                         <div class="row" style="visibility: hidden" id="titleFicha">
                             {{-- Titulo field --}}
                             <div class="input-group mb-3 col-md-12">
@@ -119,9 +124,9 @@
                                     </span>
                                 @enderror
                             </div>
-                        
 
-                        
+
+
                             {{-- Fecha field --}}
                             <div class="input-group mb-3 col-md-6">
                                 <input type="date" name="fecha"
@@ -161,9 +166,9 @@
                                     </span>
                                 @enderror
                             </div>
-                        
 
-                        
+
+
                             {{-- Resumen field --}}
                             <div class="input-group mb-3 col-md-12">
 
@@ -192,7 +197,7 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     </div>
 
 @stop

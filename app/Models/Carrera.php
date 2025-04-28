@@ -2,7 +2,6 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
 use Illuminate\Database\Eloquent\Model;
 
 class Carrera extends Model
@@ -13,4 +12,11 @@ class Carrera extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function ficha()
+    {
+        return $this->hasMany(Ficha::class);
+    }
 }
+
+
