@@ -25,6 +25,7 @@ Route::get('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::clas
 Route::get('/admin/usuarios/{id}/edit', [App\Http\Controllers\UsuarioController::class, 'edit'])->name('admin.usuarios.edit')->middleware('auth');
 Route::put('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::class, 'update'])->name('admin.usuarios.update')->middleware('auth');
 Route::delete('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::class, 'destroy'])->name('admin.usuarios.destroy')->middleware('auth');
+Route::get('/admin/perfil', [App\Http\Controllers\UsuarioController::class, 'perfil'])->name('admin.perfil')->middleware('auth');
 
 // rutas autor
 Route::get('/admin/autores', [App\Http\Controllers\AutorController::class, 'index'])->name('admin.autores.index')->middleware('auth');

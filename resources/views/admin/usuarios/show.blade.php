@@ -16,6 +16,7 @@
                     <h3 class="card-title mt-1">Datos Registrados</h3>
 
                     <div class="card-tools">
+                        <a href="{{ url('/admin/usuarios') }}" class="btn btn-secondary">Volver</a>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-angle-down"></i>
                         </button>
@@ -65,14 +66,6 @@
                             </div>
                         </div>
                         <br>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form group">
-                                    <a href="{{url('admin/usuarios')}}" class="btn btn-secondary">Volver</a>
-                                </div>
-                            </div>
-                        </div>
-
                 </div>
                 <!-- /.card-body -->
             </div>

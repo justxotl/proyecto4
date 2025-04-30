@@ -125,8 +125,6 @@
                                 @enderror
                             </div>
 
-
-
                             {{-- Fecha field --}}
                             <div class="input-group mb-3 col-md-6">
                                 <input type="date" name="fecha"

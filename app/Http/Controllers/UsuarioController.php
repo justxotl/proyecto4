@@ -135,4 +135,8 @@ class UsuarioController extends Controller
             ->with('mensaje', 'Usuario eliminado correctamente')
             ->with('icono', 'success');
     }
+
+    public function perfil(){
+        return view('admin.perfil');
+    }
 }

@@ -52,6 +52,7 @@
                                             <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}" type="button"
                                                 style="border-radius: 3px"; class="btn btn-success btn-sm"><i
                                                     class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                    <a href="{{url('admin/fichas/'.$ficha->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
                                             <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
                                                 onclick="preguntar{{ $ficha->id }}(event)"
                                                 id="miFormulario{{ $ficha->id }}">
