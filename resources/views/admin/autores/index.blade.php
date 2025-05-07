@@ -21,65 +21,67 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-hover table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center">#</th>
-                                <th style="text-align: center">Nombre</th>
-                                <th style="text-align: center">apellido </th>
-                                <th style="text-align: center">Cédula</th>
-                                <th style="text-align: center">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
-                            @foreach ($autores as $autor)
-
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover table-striped table-sm">
+                            <thead>
                                 <tr>
-                                    <td style="text-align: center">{{ $contador++ }}</td>
-                                    <td>{{ $autor->nombre_autor}}</td>
-                                    <td>{{ $autor->apellido_autor}}</td>
-                                    <td>{{ $autor->ci_autor }}</td>
-                                    <td style="text-align: center">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button" style="border-radius: 3px";
-                                                class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
-                                            <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
-                                                onclick="preguntar{{ $autor->id }}(event)"
-                                                id="miFormulario{{ $autor->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                            <script>
-                                                function preguntar{{ $autor->id }}(event) {
-                                                    event.preventDefault();
-                                                    Swal.fire({
-                                                        title: '¿Desea eliminar este registro?',
-                                                        text: '',
-                                                        icon: 'question',
-                                                        showDenyButton: true,
-                                                        confirmButtonText: 'Eliminar',
-                                                        confirmButtonColor: '#a5161d',
-                                                        denyButtonColor: '#949494',
-                                                        denyButtonText: 'Cancelar',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            var form = $('#miFormulario{{ $autor->id }}');
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </div>
-                                    </td>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">Nombre</th>
+                                    <th style="text-align: center">apellido </th>
+                                    <th style="text-align: center">Cédula</th>
+                                    <th style="text-align: center">Acción</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($autores as $autor)
+                        
+                                    <tr>
+                                        <td style="text-align: center">{{ $contador++ }}</td>
+                                        <td>{{ $autor->nombre_autor}}</td>
+                                        <td>{{ $autor->apellido_autor}}</td>
+                                        <td>{{ $autor->ci_autor }}</td>
+                                        <td style="text-align: center">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button" style="border-radius: 3px";
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
+                                                    onclick="preguntar{{ $autor->id }}(event)"
+                                                    id="miFormulario{{ $autor->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                                <script>
+                                                    function preguntar{{ $autor->id }}(event) {
+                                                        event.preventDefault();
+                                                        Swal.fire({
+                                                            title: '¿Desea eliminar este registro?',
+                                                            text: '',
+                                                            icon: 'question',
+                                                            showDenyButton: true,
+                                                            confirmButtonText: 'Eliminar',
+                                                            confirmButtonColor: '#a5161d',
+                                                            denyButtonColor: '#949494',
+                                                            denyButtonText: 'Cancelar',
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                var form = $('#miFormulario{{ $autor->id }}');
+                                                                form.submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

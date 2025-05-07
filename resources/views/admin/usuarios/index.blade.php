@@ -21,71 +21,73 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-hover table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center">#</th>
-                                <th style="text-align: center">Nombre de Usuario</th>
-                                <th style="text-align: center">Nombre</th>
-                                <th style="text-align: center">apellido </th>
-                                <th style="text-align: center">Correo</th>
-                                <th style="text-align: center">Cédula</th>
-                                <th style="text-align: center">Rol</th>
-                                <th style="text-align: center">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
-                            @foreach ($usuarios as $usuario)
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover table-striped table-sm">
+                            <thead>
                                 <tr>
-                                    <td style="text-align: center">{{ $contador++ }}</td>
-                                    <td>{{ $usuario->name }}</td>
-                                    <td>{{ $usuario->infoper->nombre }}</td>
-                                    <td>{{ $usuario->infoper->apellido }}</td>
-                                    <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->infoper->ci_us }}</td>
-                                    <td>{{ $usuario->rol }}</td>
-                                    <td style="text-align: center">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}" type="button" style="border-radius: 3px";
-                                                class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
-                                                <a href="{{url('admin/usuarios/'.$usuario->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
-                                            <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
-                                                onclick="preguntar{{ $usuario->id }}(event)"
-                                                id="miFormulario{{ $usuario->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                            <script>
-                                                function preguntar{{ $usuario->id }}(event) {
-                                                    event.preventDefault();
-                                                    Swal.fire({
-                                                        title: '¿Desea eliminar este registro?',
-                                                        text: '',
-                                                        icon: 'question',
-                                                        showDenyButton: true,
-                                                        confirmButtonText: 'Eliminar',
-                                                        confirmButtonColor: '#a5161d',
-                                                        denyButtonColor: '#949494',
-                                                        denyButtonText: 'Cancelar',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            var form = $('#miFormulario{{ $usuario->id }}');
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </div>
-                                    </td>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">Nombre de Usuario</th>
+                                    <th style="text-align: center">Nombre</th>
+                                    <th style="text-align: center">apellido </th>
+                                    <th style="text-align: center">Correo</th>
+                                    <th style="text-align: center">Cédula</th>
+                                    <th style="text-align: center">Rol</th>
+                                    <th style="text-align: center">Acción</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($usuarios as $usuario)
+                                    <tr>
+                                        <td style="text-align: center">{{ $contador++ }}</td>
+                                        <td>{{ $usuario->name }}</td>
+                                        <td>{{ $usuario->infoper->nombre }}</td>
+                                        <td>{{ $usuario->infoper->apellido }}</td>
+                                        <td>{{ $usuario->email }}</td>
+                                        <td>{{ $usuario->infoper->ci_us }}</td>
+                                        <td>{{ $usuario->rol }}</td>
+                                        <td style="text-align: center">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}" type="button" style="border-radius: 3px";
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                    <a href="{{url('admin/usuarios/'.$usuario->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
+                                                <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
+                                                    onclick="preguntar{{ $usuario->id }}(event)"
+                                                    id="miFormulario{{ $usuario->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                                <script>
+                                                    function preguntar{{ $usuario->id }}(event) {
+                                                        event.preventDefault();
+                                                        Swal.fire({
+                                                            title: '¿Desea eliminar este registro?',
+                                                            text: '',
+                                                            icon: 'question',
+                                                            showDenyButton: true,
+                                                            confirmButtonText: 'Eliminar',
+                                                            confirmButtonColor: '#a5161d',
+                                                            denyButtonColor: '#949494',
+                                                            denyButtonText: 'Cancelar',
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                var form = $('#miFormulario{{ $usuario->id }}');
+                                                                form.submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

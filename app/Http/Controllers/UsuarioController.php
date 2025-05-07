@@ -1,9 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Hash;
 use App\Models\infoper;
 use App\Models\User;
+use App\Models\PreguntaUser;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 
@@ -34,7 +38,7 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $request->validate([
             'name' => 'required|max:250',
             'ci_us' => 'required|max:8|unique:infopers,ci_us',
@@ -58,12 +62,11 @@ class UsuarioController extends Controller
         $infoPer->apellido = $request->apellido;
         $infoPer->user_id = $usuario->id;
         $infoPer->save();
-        
-        
+
+
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario creado correctamente')
             ->with('icono', 'success');
-
     }
 
     /**
@@ -72,7 +75,7 @@ class UsuarioController extends Controller
     public function show($id)
     {
         $usuario = User::find($id);
-    return view('admin.usuarios.show',compact('usuario'));
+        return view('admin.usuarios.show', compact('usuario'));
     }
 
     /**
@@ -82,23 +85,27 @@ class UsuarioController extends Controller
     {
         $usuario = User::findOrFail($id);
         $infoper = infoper::all();
-        return view('admin.usuarios.edit',compact('usuario','infoper'));
+        return view('admin.usuarios.edit', compact('usuario', 'infoper'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $usuario = User::find($id);
         $request->validate([
-            'name' => 'required|max:20'. $usuario->id,
+            'name' => 'required|max:20' . $usuario->id,
             'nombre' => 'required',
             'apellido' => 'required',
             'ci_us' => 'required|unique:infopers,ci_us,' . $usuario->id,
             'email' => 'required|unique:users,email,' . $usuario->id,
             'rol' => 'nullable',
-            'password' => 'nullable|min:8|max:20|confirmed',    
+            'password' => 'nullable|min:8|max:20|confirmed',
+            'preguntauno' => 'nullable|string|max:255',
+            'respuestauno' => 'nullable|string|max:255',
+            'preguntados' => 'nullable|string|max:255',
+            'respuestados' => 'nullable|string|max:255',
         ]);
 
         $usuario = User::find($usuario->id);
@@ -116,12 +123,39 @@ class UsuarioController extends Controller
         $infoPer->apellido = $request->apellido;
         $infoPer->user_id = $usuario->id;
         $infoPer->save();
+    
+        $preguntas = PreguntaUser::where('user_id', $usuario->id)->first();
 
-        return redirect()->route('admin.usuarios.index')
+        if ($preguntas) {
+            // Actualizar
+            $preguntas->pregunta_uno = $request->preguntauno;
+            $preguntas->pregunta_dos = $request->preguntados;
+            $preguntas->respuesta_uno = $request->respuestauno;
+            $preguntas->respuesta_dos = $request->respuestados;
+            $preguntas->save();
+        } else {
+            // Crear nuevo
+            PreguntaUser::create([
+                'user_id' => $usuario->id,
+                'pregunta_uno' => $request->preguntauno,
+                'pregunta_dos' => $request->preguntados,
+                'respuesta_uno' => $request->respuestauno,
+                'respuesta_dos' => $request->respuestados,
+            ]);
+        }
+
+        if ($request->redirect_to === 'perfil') {
+            return redirect()->route('admin.perfil')
+                ->with('mensaje', 'Usuario actualizado correctamente')
+                ->with('icono', 'success');
+        }else{
+            return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario actualizado correctamente')
             ->with('icono', 'success');
-        
+        }
     }
+        
+    
 
     /**
      * Remove the specified resource from storage.
@@ -130,13 +164,24 @@ class UsuarioController extends Controller
     {
         $usuario = User::find($id);
         $usuario->delete();
-    
+
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario eliminado correctamente')
             ->with('icono', 'success');
     }
 
-    public function perfil(){
-        return view('admin.perfil');
+    public function perfil()
+    {
+        $preguntas = PreguntaUser::firstOrNew(
+            ['user_id' => Auth::user()->id],
+            [
+                'pregunta_uno' => '',
+                'pregunta_dos' => '',
+                'respuesta_uno' => '',
+                'respuesta_dos' => '',
+            ]
+        );
+    
+        return view('admin.perfil', compact('preguntas'));
     }
 }

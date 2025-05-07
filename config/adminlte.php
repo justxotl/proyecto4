@@ -328,17 +328,15 @@ return [
             'url' => 'admin/carreras',
             'icon' => 'fas fa-fw fa-graduation-cap',
         ],
-        
-        ['header' => 'CONFIGURACIÓN'],
         [
-            'text' => 'Perfil',
-            'url' => 'admin/perfil',
-            'icon' => 'fas fa-fw fa-user',
+            'text' => 'Roles',
+            'url' => 'admin/roles',
+            'icon' => 'fas fa-fw fa-address-book',
         ],
         [
-            'text' => 'Cambiar Contraseña',
-            'url' => 'admin/cambiar-contraseña',
-            'icon' => 'fas fa-fw fa-lock',
+            'text' => 'Base de Datos',
+            'url' => 'admin/basedatos',
+            'icon' => 'fas fa-fw fa-database',
         ],
     ],
 

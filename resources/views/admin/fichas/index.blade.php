@@ -21,72 +21,74 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-hover table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center">#</th>
-                                <th style="text-align: center">Fecha</th>
-                                <th style="text-align: center">Título</th>
-                                <th style="text-align: center">Autor(es)</th>
-                                <th style="text-align: center">Materia</th>
-                                <th style="text-align: center">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
-                            @foreach ($fichas as $ficha)
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover table-striped table-sm">
+                            <thead>
                                 <tr>
-                                    <td style="text-align: center">{{ $contador++ }}</td>
-                                    <td style="text-align: center">{{ $ficha->fecha }}</td>
-                                    <td>{{ $ficha->titulo}}</td>
-                                    <td>
-                                    @foreach ($ficha->autor as $autor)
-                                        {{ $autor->nombre_autor }} {{ $autor->apellido_autor }}<br>
-                                    @endforeach
-                                    </td>
-                                    <td>{{ $ficha->carrera->nombre }}</td>
-                                    <td style="text-align: center">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}" type="button"
-                                                style="border-radius: 3px"; class="btn btn-success btn-sm"><i
-                                                    class="fas fa-pencil-alt"></i></a> &nbsp;
-                                                    <a href="{{url('admin/fichas/'.$ficha->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
-                                            <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
-                                                onclick="preguntar{{ $ficha->id }}(event)"
-                                                id="miFormulario{{ $ficha->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                            <script>
-                                                function preguntar{{ $ficha->id }}(event) {
-                                                    event.preventDefault();
-                                                    Swal.fire({
-                                                        title: '¿Desea eliminar este registro?',
-                                                        text: '',
-                                                        icon: 'question',
-                                                        showDenyButton: true,
-                                                        confirmButtonText: 'Eliminar',
-                                                        confirmButtonColor: '#a5161d',
-                                                        denyButtonColor: '#949494',
-                                                        denyButtonText: 'Cancelar',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            var form = $('#miFormulario{{ $ficha->id }}');
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </div>
-                                    </td>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">Fecha</th>
+                                    <th style="text-align: center">Título</th>
+                                    <th style="text-align: center">Autor(es)</th>
+                                    <th style="text-align: center">Materia</th>
+                                    <th style="text-align: center">Acción</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($fichas as $ficha)
+                                    <tr>
+                                        <td style="text-align: center">{{ $contador++ }}</td>
+                                        <td style="text-align: center">{{ $ficha->fecha }}</td>
+                                        <td>{{ $ficha->titulo}}</td>
+                                        <td>
+                                        @foreach ($ficha->autor as $autor)
+                                            {{ $autor->nombre_autor }} {{ $autor->apellido_autor }}<br>
+                                        @endforeach
+                                        </td>
+                                        <td>{{ $ficha->carrera->nombre }}</td>
+                                        <td style="text-align: center">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}" type="button"
+                                                    style="border-radius: 3px"; class="btn btn-success btn-sm"><i
+                                                        class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                        <a href="{{url('admin/fichas/'.$ficha->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
+                                                <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
+                                                    onclick="preguntar{{ $ficha->id }}(event)"
+                                                    id="miFormulario{{ $ficha->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                                <script>
+                                                    function preguntar{{ $ficha->id }}(event) {
+                                                        event.preventDefault();
+                                                        Swal.fire({
+                                                            title: '¿Desea eliminar este registro?',
+                                                            text: '',
+                                                            icon: 'question',
+                                                            showDenyButton: true,
+                                                            confirmButtonText: 'Eliminar',
+                                                            confirmButtonColor: '#a5161d',
+                                                            denyButtonColor: '#949494',
+                                                            denyButtonText: 'Cancelar',
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                var form = $('#miFormulario{{ $ficha->id }}');
+                                                                form.submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

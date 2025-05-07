@@ -52,6 +52,11 @@ class User extends Authenticatable
         return $this->hasOne(Infoper::class);
     }
 
+    public function preguntasUser()
+    {
+        return $this->hasOne(PreguntaUser::class, 'user_id');
+    }
+
     public function adminlte_profile_url()
     {
         return 'admin/perfil';

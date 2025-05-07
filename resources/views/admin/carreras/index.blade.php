@@ -20,61 +20,63 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                    <table id="example1" class="table table-bordered table-hover table-striped table-sm">
-                        <thead>
-                            <tr>
-                                <th style="text-align: center">#</th>
-                                <th style="text-align: center">Nombre</th>
-                                <th style="text-align: center">Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
-                            @foreach ($carreras as $carrera)
+                    <div class="table-responsive">
+                        <table id="example1" class="table table-bordered table-hover table-striped table-sm">
+                            <thead>
                                 <tr>
-                                    <td style="text-align: center">{{ $contador++ }}</td>
-                                    <td>{{ $carrera->nombre}}</td>
-                                    <td style="text-align: center">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}" type="button"
-                                                style="border-radius: 3px"; class="btn btn-success btn-sm"><i
-                                                    class="fas fa-pencil-alt"></i></a> &nbsp;
-                                            <form action="{{ url('/admin/carreras', $carrera->id) }}" method="post"
-                                                onclick="preguntar{{ $carrera->id }}(event)"
-                                                id="miFormulario{{ $carrera->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                            <script>
-                                                function preguntar{{ $carrera->id }}(event) {
-                                                    event.preventDefault();
-                                                    Swal.fire({
-                                                        title: '¿Desea eliminar este registro?',
-                                                        text: '',
-                                                        icon: 'question',
-                                                        showDenyButton: true,
-                                                        confirmButtonText: 'Eliminar',
-                                                        confirmButtonColor: '#a5161d',
-                                                        denyButtonColor: '#949494',
-                                                        denyButtonText: 'Cancelar',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            var form = $('#miFormulario{{ $carrera->id }}');
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </div>
-                                    </td>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">Nombre</th>
+                                    <th style="text-align: center">Acción</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $contador = 1;
+                                @endphp
+                                @foreach ($carreras as $carrera)
+                                    <tr>
+                                        <td style="text-align: center">{{ $contador++ }}</td>
+                                        <td>{{ $carrera->nombre}}</td>
+                                        <td style="text-align: center">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}" type="button"
+                                                    style="border-radius: 3px"; class="btn btn-success btn-sm"><i
+                                                        class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                <form action="{{ url('/admin/carreras', $carrera->id) }}" method="post"
+                                                    onclick="preguntar{{ $carrera->id }}(event)"
+                                                    id="miFormulario{{ $carrera->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </form>
+                                                <script>
+                                                    function preguntar{{ $carrera->id }}(event) {
+                                                        event.preventDefault();
+                                                        Swal.fire({
+                                                            title: '¿Desea eliminar este registro?',
+                                                            text: '',
+                                                            icon: 'question',
+                                                            showDenyButton: true,
+                                                            confirmButtonText: 'Eliminar',
+                                                            confirmButtonColor: '#a5161d',
+                                                            denyButtonColor: '#949494',
+                                                            denyButtonText: 'Cancelar',
+                                                        }).then((result) => {
+                                                            if (result.isConfirmed) {
+                                                                var form = $('#miFormulario{{ $carrera->id }}');
+                                                                form.submit();
+                                                            }
+                                                        });
+                                                    }
+                                                </script>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.card-body -->
             </div>

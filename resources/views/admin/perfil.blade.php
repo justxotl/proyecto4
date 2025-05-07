@@ -12,7 +12,7 @@
     <div class="col-md-12">
         <div class="card card-outline card-info">
             <div class="card-header">
-                <h3 class="card-title mt-1">Cosas acá:</h3>
+                <h3 class="card-title mt-1">Datos:</h3>
 
                 {{-- <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -27,6 +27,7 @@
                 <form action="{{ url('admin/usuarios', Auth::User()->id) }}" method="POST">
                     @csrf
                     @method('PUT')
+                    <input type="hidden" name="redirect_to" value="perfil">
                     <div class="row">
 
                         <div class="col-md-4">
@@ -92,12 +93,12 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="row mt-2">
                         <div class="col-md-6">
                             <div class="form group">
                                 <label for="">Pregunta #1:</label>
-                                <input type="text" name="preguntauno" value=""
+                                <input type="text" name="preguntauno" value="{{ $preguntas->pregunta_uno }}"
                                     class="form-control">
                                 @error('preguntauno')
                                     <small style="color: red;">{{ $message }}</small>
@@ -108,7 +109,7 @@
                         <div class="col-md-6">
                             <div class="form group">
                                 <label for="">Pregunta #2:</label>
-                                <input type="text" name="preguntados" class="form-control" required>
+                                <input type="text" name="preguntados" value="{{$preguntas->pregunta_dos}}" class="form-control">
                                 @error('preguntados')
                                     <small style="color: red;">{{ $message }}</small>
                                 @enderror
@@ -120,7 +121,7 @@
                         <div class="col-md-6">
                             <div class="form group">
                                 <label for="">Respuesta #1:</label>
-                                <input type="text" name="respuestauno" value="" class="form-control" required>
+                                <input type="text" name="respuestauno" value="{{$preguntas->respuesta_uno}}" class="form-control">
                                 @error('respuestauno')
                                     <small style="color: red;">{{ $message }}</small>
                                 @enderror
@@ -130,7 +131,7 @@
                         <div class="col-md-6">
                             <div class="form group">
                                 <label for="">Respuesta #2:</label>
-                                <input type="text" name="respuestados" class="form-control" required>
+                                <input type="text" name="respuestados" value="{{$preguntas->respuesta_dos}}" class="form-control">
                                 @error('respuestados')
                                     <small style="color: red;">{{ $message }}</small>
                                 @enderror
@@ -143,7 +144,7 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <div class="form group">
-                                <button type="submit" class="btn btn-primary">Súbelo</button>
+                                <button type="submit" class="btn btn-primary">Actualizar</button>
                             </div>
                         </div>
                     </div>

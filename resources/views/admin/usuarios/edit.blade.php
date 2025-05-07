@@ -28,6 +28,7 @@
                     <form action="{{ url('admin/usuarios', $usuario->id) }}" method="POST">
                         @csrf
                         @method('PUT')
+                        <input type="hidden" name="redirect_to" value="usuarios">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form group">
