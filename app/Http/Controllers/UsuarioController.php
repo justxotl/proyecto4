@@ -44,14 +44,12 @@ class UsuarioController extends Controller
             'ci_us' => 'required|max:8|unique:infopers,ci_us',
             'nombre' => 'required|max:250',
             'apellido' => 'required|max:250',
-            'rol' => 'nullable',
             'email' => 'required|max:250|unique:users,email',
             'password' => 'required|min:8|max:20|confirmed',
         ]);
 
         $usuario = new User();
         $usuario->name = $request->name;
-        $usuario->rol = 1;
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
         $usuario->save();
@@ -100,7 +98,6 @@ class UsuarioController extends Controller
             'apellido' => 'required',
             'ci_us' => 'required|unique:infopers,ci_us,' . $usuario->id,
             'email' => 'required|unique:users,email,' . $usuario->id,
-            'rol' => 'nullable',
             'password' => 'nullable|min:8|max:20|confirmed',
             'preguntauno' => 'nullable|string|max:255',
             'respuestauno' => 'nullable|string|max:255',
@@ -111,7 +108,6 @@ class UsuarioController extends Controller
         $usuario = User::find($usuario->id);
         $usuario->name = $request->name;
         $usuario->email = $request->email;
-        $usuario->rol = 1;
         if ($request->filled('password')) {
             $usuario->password = Hash::make($request['password']);
         }
@@ -154,8 +150,6 @@ class UsuarioController extends Controller
             ->with('icono', 'success');
         }
     }
-        
-    
 
     /**
      * Remove the specified resource from storage.

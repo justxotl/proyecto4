@@ -6,6 +6,8 @@ use App\Models\Autor;
 use App\Models\infoper;
 use App\Models\User;
 use App\Models\Carrera;
+use App\Models\Ficha;
+
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,7 +23,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'User',
-            'rol' => 1,
             'email' => 'test@example.com',
             'password' => Hash::make('12345678'),
         ]);
@@ -41,6 +42,13 @@ class DatabaseSeeder extends Seeder
 
         Carrera::create([
             'nombre' => 'Ingenieria de Sistemas',
+        ]);
+
+        Ficha::create([
+            'titulo' => 'Titulo 1',
+            'fecha' => '2023-10-01',
+            'carrera_id' => 1,
+            'resumen' => 'Resumen de la ficha 1',
         ]);
     }
 }

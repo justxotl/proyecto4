@@ -2,7 +2,7 @@
 
 @section('content_header')
 <div class="row">
-    <h1 class="ml-4 mt-2"><b>Listado de Usuarios</b></h1>
+    <h1 class="ml-4 mt-2"><b>Listado de Roles</b></h1>
 </div>
     <hr>
 @stop
@@ -12,10 +12,10 @@
         <div class="col-md-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h2 class="card-title mt-2">Usuarios registrados</h2>
+                    <h2 class="card-title mt-2">Roles registrados:</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/usuarios/register') }}" class="btn btn-primary">Nuevo Usuario</a>
+                        <a href="{{ url('/admin/roles/register') }}" class="btn btn-primary">Nuevo Rol</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -26,11 +26,7 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center">#</th>
-                                    <th style="text-align: center">Nombre de Usuario</th>
                                     <th style="text-align: center">Nombre</th>
-                                    <th style="text-align: center">apellido </th>
-                                    <th style="text-align: center">Correo</th>
-                                    <th style="text-align: center">Cédula</th>
                                     <th style="text-align: center">Acción</th>
                                 </tr>
                             </thead>
@@ -38,29 +34,25 @@
                                 @php
                                     $contador = 1;
                                 @endphp
-                                @foreach ($usuarios as $usuario)
+                                @foreach ($roles as $rol)
+                        
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td>{{ $usuario->name }}</td>
-                                        <td>{{ $usuario->infoper->nombre }}</td>
-                                        <td>{{ $usuario->infoper->apellido }}</td>
-                                        <td>{{ $usuario->email }}</td>
-                                        <td>{{ $usuario->infoper->ci_us }}</td>
+                                        <td>{{$rol->name}}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}" type="button" style="border-radius: 3px";
+                                                <a href="{{ url('/admin/roles/' . $rol->id . '/edit') }}" type="button" style="border-radius: 3px";
                                                     class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
-                                                    <a href="{{url('admin/usuarios/'.$usuario->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
-                                                <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
-                                                    onclick="preguntar{{ $usuario->id }}(event)"
-                                                    id="miFormulario{{ $usuario->id }}">
+                                                <form action="{{ url('/admin/roles', $rol->id) }}" method="post"
+                                                    onclick="preguntar{{ $rol->id }}(event)"
+                                                    id="miFormulario{{ $rol->id }}">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i
                                                             class="fas fa-trash"></i></button>
                                                 </form>
                                                 <script>
-                                                    function preguntar{{ $usuario->id }}(event) {
+                                                    function preguntar{{ $rol->id }}(event) {
                                                         event.preventDefault();
                                                         Swal.fire({
                                                             title: '¿Desea eliminar este registro?',
@@ -73,7 +65,7 @@
                                                             denyButtonText: 'Cancelar',
                                                         }).then((result) => {
                                                             if (result.isConfirmed) {
-                                                                var form = $('#miFormulario{{ $usuario->id }}');
+                                                                var form = $('#miFormulario{{ $rol->id }}');
                                                                 form.submit();
                                                             }
                                                         });
@@ -159,10 +151,10 @@
                 "pageLength": 5,
                 "language": {
                     "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Usuarios",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 Usuarios",
-                    "infoFiltered": "(Filtrado de _MAX_ total Usuarios)",
-                    "lengthMenu": "Mostrar _MENU_ Usuarios",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Roles",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Roles",
+                    "infoFiltered": "(Filtrado de _MAX_ total Roles)",
+                    "lengthMenu": "Mostrar _MENU_ Roles",
                     "loadingRecords": "Cargando...",
                     "processing": "Procesando...",
                     "search": "Buscador:",
