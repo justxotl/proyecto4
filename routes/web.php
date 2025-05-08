@@ -54,6 +54,15 @@ Route::get('/admin/carreras/{id}/edit', [App\Http\Controllers\CarreraController:
 Route::put('/admin/carreras/{id}', [App\Http\Controllers\CarreraController::class, 'update'])->name('admin.carreras.update')->middleware('auth');
 Route::delete('/admin/carreras/{id}', [App\Http\Controllers\CarreraController::class, 'destroy'])->name('admin.carreras.destroy')->middleware('auth');
 
+//rutas roles
+Route::get('/admin/roles', [App\Http\Controllers\CarreraController::class, 'index'])->name('admin.roles.index')->middleware('auth');
+Route::get('/admin/roles/register', [App\Http\Controllers\CarreraController::class, 'create'])->name('admin.roles.register')->middleware('auth');
+Route::post('/admin/roles/register', [App\Http\Controllers\CarreraController::class, 'store'])->name('admin.roles.store')->middleware('auth');
+Route::get('/admin/roles/{id}', [App\Http\Controllers\CarreraController::class, 'show'])->name('admin.roles.show')->middleware('auth');
+Route::get('/admin/roles/{id}/edit', [App\Http\Controllers\CarreraController::class, 'edit'])->name('admin.roles.edit')->middleware('auth');
+Route::put('/admin/roles/{id}', [App\Http\Controllers\CarreraController::class, 'update'])->name('admin.roles.update')->middleware('auth');
+Route::delete('/admin/roles/{id}', [App\Http\Controllers\CarreraController::class, 'destroy'])->name('admin.roles.destroy')->middleware('auth');
+
 require __DIR__.'/auth.php';
 
 Auth::routes();
