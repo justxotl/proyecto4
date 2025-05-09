@@ -17,6 +17,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//rutas de recuperación de contraseña
+Route::get('/recover', [App\Http\Controllers\UsuarioController::class, 'recover'])->name('password.recuperar');
+Route::post('/admin/usuarios/recover', [App\Http\Controllers\UsuarioController::class, 'recoverPost'])->name('password.recuperar.post');
+
 // rutas usuario
 Route::get('/admin/usuarios', [App\Http\Controllers\UsuarioController::class, 'index'])->name('admin.usuarios.index')->middleware('auth');
 Route::get('/admin/usuarios/register', [App\Http\Controllers\UsuarioController::class, 'create'])->name('admin.usuarios.register')->middleware('auth');

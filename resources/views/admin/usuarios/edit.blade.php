@@ -30,20 +30,9 @@
                         @method('PUT')
                         <input type="hidden" name="redirect_to" value="usuarios">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Nombre de Usuario</label>
-                                    <input type="text" name="name" value="{{ $usuario->name }}" class="form-control"
-                                        required>
-                                    @error('name')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form group">
-                                    <label for="">Nombre</label>
+                                    <label for="">Nombre:</label>
                                     <input type="text" name="nombre" value="{{ $usuario->infoper->nombre }}"
                                         class="form-control" required>
                                     @error('nombre')
@@ -52,9 +41,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Apellido</label>
+                                    <label for="">Apellido:</label>
                                     <input type="text" name="apellido" value="{{ $usuario->infoper->apellido }}"
                                         class="form-control" required>
                                     @error('apellido')
@@ -64,12 +53,20 @@
                             </div>
                         </div>
 
-                        <br>
-
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Cédula</label>
+                                    <label for="">Nombre de Usuario:</label>
+                                    <input type="text" name="name" value="{{ $usuario->name }}" class="form-control" required>
+                                    @error('name')
+                                        <small style="color: red;">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form group">
+                                    <label for="">Cédula:</label>
                                     <input type="text" name="ci_us" value="{{ $usuario->infoper->ci_us }}"
                                         class="form-control" required>
                                     @error('ci_us')
@@ -77,10 +74,12 @@
                                     @enderror
                                 </div>
                             </div>
-                        
+                        </div>
+
+                        <div class="row mt-2">
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Email</label>
+                                    <label for="">Email:</label>
                                     <input type="email" name="email" value="{{ $usuario->email }}" class="form-control"
                                         required>
                                     @error('email')
@@ -88,14 +87,21 @@
                                     @enderror
                                 </div>
                             </div>
+                            
+                            <div class="form group col-md-6">
+                                <label for="">Rol:</label>
+                                <select name="rol" id="rol" class="form-select form-control">
+                                    @foreach ($roles as $rol)
+                                        <option value="{{$rol->name}}" {{$rol->name == $usuario->roles->pluck('name')->implode(', ') ? 'selected': ''}}>{{ $rol->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
 
-                        <br>
-
-                        <div class="row">
+                        <div class="row mt-2">
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Contraseña</label>
+                                    <label for="">Contraseña:</label>
                                     <input type="password" name="password" value="{{ old('password') }}"
                                         class="form-control">
                                     @error('password')
@@ -106,7 +112,7 @@
                         
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Verificación de contraseña</label>
+                                    <label for="">Verificación de contraseña:</label>
                                     <input type="password" name="password_confirmation" class="form-control">
                                     @error('password_confirmation')
                                         <small style="color: red;">{{ $message }}</small>
@@ -115,9 +121,7 @@
                             </div>
                         </div>
 
-                        <br>
-
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="form group">
                                     <a href="{{ url('admin/usuarios') }}" class="btn btn-danger">Cancelar</a>

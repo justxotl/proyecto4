@@ -175,25 +175,52 @@
                         className: 'btn btn-default'
                     },
                     {
+                        extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
-                        extend: 'pdf',
-                        className: 'btn btn-danger'
+                        className: 'btn btn-danger',
+                        orientation: 'landscape',
+                        pageSize: 'A4',
+                        title: 'Listado de Roles',
+                        exportOptions: {
+                            columns: [0, 1] // columnas a exportar
+                        },
+                        customize: function(doc) {
+                            doc.styles.title = {
+                                fontSize: 16,
+                                alignment: 'center',
+                                bold: true
+                            };
+
+                            doc.pageMargins = [40, 60, 40, 60];
+
+                            doc.footer = function(currentPage, pageCount) {
+                                return {
+                                    text: 'Página ' + currentPage.toString() + ' de ' +
+                                        pageCount,
+                                    alignment: 'right',
+                                    margin: [0, 0, 20, 0]
+                                };
+                            };
+
+                            doc.content[1].table.widths = ['15%', '85%']; // ancho por columna
+
+                            // Centrar el texto de todas las celdas
+                            var body = doc.content[1].table.body;
+                            body.forEach(function(row, rowIndex) {
+                                row.forEach(function(cell, cellIndex) {
+                                    if (rowIndex === 0) {
+                                        // Encabezados de la tabla
+                                        cell.alignment = 'center';
+                                        cell.bold = true;
+                                    } else {
+                                        // Celdas del cuerpo
+                                        cell.alignment = 'center';
+                                    }
+                                });
+                            });
+                        }
+
                     },
-                    {
-                        text: '<i class="fas fa-file-csv"></i> CSV',
-                        extend: 'csv',
-                        className: 'btn btn-info'
-                    },
-                    {
-                        text: '<i class="fas fa-file-excel"></i> EXCEL',
-                        extend: 'excel',
-                        className: 'btn btn-success'
-                    },
-                    {
-                        text: '<i class="fas fa-print"></i> IMPRIMIR',
-                        extend: 'print',
-                        className: 'btn btn-warning'
-                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

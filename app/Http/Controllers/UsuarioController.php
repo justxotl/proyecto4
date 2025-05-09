@@ -10,9 +10,8 @@ use App\Models\PreguntaUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
-
-
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
 {
@@ -30,7 +29,8 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('admin.usuarios.register');
+        $roles = Role::all();
+        return view('admin.usuarios.register', compact('roles'));
     }
 
     /**
@@ -45,6 +45,7 @@ class UsuarioController extends Controller
             'nombre' => 'required|max:250',
             'apellido' => 'required|max:250',
             'email' => 'required|max:250|unique:users,email',
+            'rol' => 'required',
             'password' => 'required|min:8|max:20|confirmed',
         ]);
 
@@ -53,6 +54,7 @@ class UsuarioController extends Controller
         $usuario->email = $request->email;
         $usuario->password = Hash::make($request['password']);
         $usuario->save();
+        $usuario->assignRole($request->rol);
 
         $infoPer = new infoper();
         $infoPer->ci_us = $request->ci_us;
@@ -60,7 +62,6 @@ class UsuarioController extends Controller
         $infoPer->apellido = $request->apellido;
         $infoPer->user_id = $usuario->id;
         $infoPer->save();
-
 
         return redirect()->route('admin.usuarios.index')
             ->with('mensaje', 'Usuario creado correctamente')
@@ -82,8 +83,9 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
+        $roles = Role::all();
         $infoper = infoper::all();
-        return view('admin.usuarios.edit', compact('usuario', 'infoper'));
+        return view('admin.usuarios.edit', compact('usuario', 'infoper', 'roles'));
     }
 
     /**
@@ -112,6 +114,7 @@ class UsuarioController extends Controller
             $usuario->password = Hash::make($request['password']);
         }
         $usuario->save();
+        $usuario->syncRoles($request->rol);
 
         $infoPer = infoper::find($usuario->infoper->user_id);
         $infoPer->ci_us = $request->ci_us;
@@ -177,5 +180,26 @@ class UsuarioController extends Controller
         );
     
         return view('admin.perfil', compact('preguntas'));
+    }
+
+    public function recover()
+    {
+        return view('recover');
+    }
+
+    public function recoverPost(Request $request)
+    {
+        $request->validate([
+            'ci_recover' => 'required|max:8',
+        ]);
+
+        $usuario = User::whereHas('infoper', function ($query) use ($request) {
+            $query->where('ci_us', $request->ci_recover);
+        })->first();
+
+        return response()->json([
+            $usuario,
+        ]);
+
     }
 }

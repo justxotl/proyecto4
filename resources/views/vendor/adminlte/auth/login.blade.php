@@ -78,7 +78,7 @@
     {{-- Password reset link --}}
     @if($passResetUrl)
         <p class="my-0">
-            <a href="{{ $passResetUrl }}">
+            <a href="recover">
                 {{ __('adminlte::adminlte.i_forgot_my_password') }}
             </a>
         </p>
