@@ -15,7 +15,7 @@
                     <h2 class="card-title mt-2">Fichas Bibliográficas</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary">Nueva Ficha</a>
+                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nueva Ficha</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -41,26 +41,37 @@
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
                                         <td style="text-align: center">{{ $ficha->fecha }}</td>
-                                        <td>{{ $ficha->titulo}}</td>
+                                        <td class="truncate-3-lines">{{ $ficha->titulo }}</td>
                                         <td>
-                                        @foreach ($ficha->autor as $autor)
-                                            {{ $autor->nombre_autor }} {{ $autor->apellido_autor }}<br>
-                                        @endforeach
+                                            <ul>
+                                                @foreach ($ficha->autor as $autor)
+                                                    <li>{{ $autor->nombre_autor }} {{ $autor->apellido_autor }}</li>
+                                                @endforeach
+                                            </ul>
                                         </td>
                                         <td>{{ $ficha->carrera->nombre }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}" type="button"
-                                                    style="border-radius: 3px"; class="btn btn-success btn-sm"><i
-                                                        class="fas fa-pencil-alt"></i></a> &nbsp;
-                                                        <a href="{{url('admin/fichas/'.$ficha->id)}}" type="button" style="border-radius: 3px"; class="btn btn-info btn-sm" ><i class="bi bi-eye fas fa-eye"></i></a> &nbsp;
+                                                <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}"
+                                                    class="btn btn-success btn-sm">
+                                                    <i class="fas fa-pen"></i>
+                                                </a>
+                                                <a href="{{ url('admin/fichas/' . $ficha->id) }}"
+                                                    class="btn btn-info btn-sm">
+                                                    <i class="fas fa-info"></i>
+                                                </a>
+                                                <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
+                                                    class="btn btn-dark btn-sm">
+                                                    <i class="fas fa-file-pdf"></i>
+                                                </a>
                                                 <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
                                                     onclick="preguntar{{ $ficha->id }}(event)"
                                                     id="miFormulario{{ $ficha->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fas fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
                                                 </form>
                                                 <script>
                                                     function preguntar{{ $ficha->id }}(event) {
@@ -109,20 +120,88 @@
             /* Centrar los botones */
             gap: 10px;
             /* Espaciado entre botones */
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             /* Separar botones de la tabla */
+        }
+
+        /* Truncar contenido a 3 líneas con puntos suspensivos */
+        .truncate-3-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
         }
 
         /* Estilo personalizado para los botones */
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            border-radius: 4px;
-            /* Bordes redondeados */
             padding: 5px 15px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
+        }
+
+        .table td {
+            vertical-align: middle;
+            /* Centra verticalmente el contenido */
+            text-align: center;
+            /* Centra horizontalmente el contenido */
+        }
+
+        a.btn,
+        button.btn {
+            display: inline-block;
+            /* Asegura que ambas etiquetas se comporten igual */
+            padding: 5px 15px;
+            /* Relleno interno */
+            font-size: 14px;
+            /* Tamaño de fuente */
+            text-align: center;
+            /* Centrar el texto */
+            vertical-align: middle;
+            /* Alineación vertical */
+            border: none;
+            /* Elimina bordes predeterminados */
+            text-decoration: none;
+            /* Elimina subrayado en enlaces */
+            cursor: pointer;
+            /* Asegura que el cursor sea consistente */
+        }
+
+        .btn-group {
+            display: inline-flex;
+            /* Asegura que los botones estén en línea */
+            justify-content: center;
+            /* Centra horizontalmente los botones dentro del grupo */
+            align-items: center;
+            /* Centra verticalmente los botones dentro del grupo */
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+            /* Elimina bordes redondeados internos */
+        }
+
+        .btn-group .btn:first-child {
+            border-top-left-radius: 4px;
+            /* Redondea la esquina superior izquierda */
+            border-bottom-left-radius: 4px;
+            /* Redondea la esquina inferior izquierda */
+        }
+
+        .btn-group .btn:last-child {
+            border-top-right-radius: 4px;
+            /* Redondea la esquina superior derecha */
+            border-bottom-right-radius: 4px;
+            /* Redondea la esquina inferior derecha */
+        }
+
+        .btn-group .btn+.btn {
+            margin-left: 0;
+            /* Elimina el espacio entre botones */
         }
 
         /* Colores por tipo de botón */
@@ -160,6 +239,31 @@
         $(function() {
             $("#example1").DataTable({
                 "pageLength": 5,
+                "columnDefs": [{
+                        "width": "5%",
+                        "targets": 0
+                    },
+                    {
+                        "width": "10%",
+                        "targets": 1
+                    },
+                    {
+                        "width": "30%",
+                        "targets": 2
+                    },
+                    {
+                        "width": "25%",
+                        "targets": 3
+                    },
+                    {
+                        "width": "15%",
+                        "targets": 4
+                    },
+                    {
+                        "width": "15%",
+                        "targets": 5
+                    },
+                ],
                 "language": {
                     "emptyTable": "No hay información",
                     "info": "Mostrando _START_ a _END_ de _TOTAL_ Fichas",
@@ -190,7 +294,7 @@
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger',
                         orientation: 'landscape',
-                        pageSize: 'A4',
+                        pageSize: 'letter',
                         title: 'Listado de Fichas',
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4] // columnas a exportar
@@ -213,7 +317,9 @@
                                 };
                             };
 
-                            doc.content[1].table.widths = ['3%', '7%', '40%', '20%', '30%']; // ancho por columna
+                            doc.content[1].table.widths = ['5%', '10%', '40%', '20%',
+                                '25%'
+                            ]; // ancho por columna
 
                             // Centrar el texto de todas las celdas
                             var body = doc.content[1].table.body;

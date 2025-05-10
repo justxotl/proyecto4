@@ -14,7 +14,7 @@
                 <div class="card-header">
                     <h2 class="card-title mt-2">Carreras Registradas</h2>
                     <div class="card-tools">
-                        <a href="{{ url('/admin/carreras/register') }}" class="btn btn-primary">Nueva Carrera</a>
+                        <a href="{{ url('/admin/carreras/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nueva Carrera</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>

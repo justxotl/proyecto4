@@ -15,7 +15,7 @@
                     <h2 class="card-title mt-2">Roles registrados:</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/roles/register') }}" class="btn btn-primary">Nuevo Rol</a>
+                        <a href="{{ url('/admin/roles/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Rol</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>

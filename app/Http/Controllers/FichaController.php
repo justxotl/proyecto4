@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Ficha;
 use App\Models\Autor;
 use App\Models\Carrera;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -117,6 +118,16 @@ class FichaController extends Controller
         }
     }
 
+
+    /**
+     * Generate PDF for the specified resource.
+     */
+    public function pdf($id){
+        $ficha = Ficha::with('autor')->where('id', $id)->first();
+        $pdf = Pdf::loadView('admin.fichas.pdf', compact('ficha'));
+        return $pdf->stream();
+    }
+
     /**
      * Display the specified resource.
      */
@@ -131,7 +142,6 @@ class FichaController extends Controller
      */
     public function edit($id)
     {
-
         $ficha = Ficha::findOrFail($id);
         $carreras = Carrera::all();
         return view('admin.fichas.edit', compact('ficha', 'carreras'));
@@ -143,7 +153,6 @@ class FichaController extends Controller
     public function update(Request $request, $id)
     {
         
-
         // Validación de los datos
         $validacion =  Validator::make(
             $request->all(),

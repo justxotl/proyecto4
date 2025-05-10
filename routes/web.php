@@ -45,6 +45,7 @@ Route::get('/admin/fichas', [App\Http\Controllers\FichaController::class, 'index
 Route::get('/admin/fichas/register', [App\Http\Controllers\FichaController::class, 'create'])->name('admin.fichas.register')->middleware('auth');
 Route::post('/admin/fichas/register', [App\Http\Controllers\FichaController::class, 'store'])->name('admin.fichas.store')->middleware('auth');
 Route::get('/admin/fichas/{id}', [App\Http\Controllers\FichaController::class, 'show'])->name('admin.fichas.show')->middleware('auth');
+Route::get('/admin/fichas/pdf/{id}', [App\Http\Controllers\FichaController::class, 'pdf'])->name('admin.fichas.pdf')->middleware('auth');
 Route::get('/admin/fichas/{id}/edit', [App\Http\Controllers\FichaController::class, 'edit'])->name('admin.fichas.edit')->middleware('auth');
 Route::get('/admin/fichas/{cedula}/get', [App\Http\Controllers\FichaController::class, 'buscarAutor'])->name('admin.fichas.buscarAutor')->middleware('auth');
 Route::put('/admin/fichas/{id}', [App\Http\Controllers\FichaController::class, 'update'])->name('admin.fichas.update')->middleware('auth');

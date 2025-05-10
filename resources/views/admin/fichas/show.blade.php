@@ -22,7 +22,6 @@
 
     <hr>
 
-
     <div class="row">
         <div class="col-md-12">
             <div class="card card-outline card-info">
@@ -85,9 +84,8 @@
                         <div class="row" id="titleFicha">
                             {{-- Titulo field --}}
                             <div class="input-group mb-3 col-md-12">
-                                <input type="text" name="titulo"
-                                    class="form-control @error('titulo') is-invalid @enderror" value="{{ $ficha->titulo }}"
-                                    placeholder="Título del Trabajo" id="titulo" disabled>
+                                <textarea name="resumen" id="resumen" rows="3" class="form-control" disabled>{{ $ficha->titulo }}</textarea>
+                                
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span
@@ -141,7 +139,7 @@
                             {{-- Resumen field --}}
                             <div class="input-group mb-3 col-md-12">
 
-                                <textarea name="resumen" id="resumen" rows="4" class="form-control" disabled>{{ $ficha->resumen }}</textarea>
+                                <textarea name="resumen" id="resumen" rows="5" class="form-control" disabled>{{ $ficha->resumen }}</textarea>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -162,7 +160,7 @@
             </div>
         </div>
     </div>
-    </div>
+
 
 @stop
 
@@ -170,4 +168,5 @@
 @stop
 
 @section('js')
+
 @stop

@@ -15,7 +15,7 @@
                     <h2 class="card-title mt-2">Usuarios registrados</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/usuarios/register') }}" class="btn btn-primary">Nuevo Usuario</a>
+                        <a href="{{ url('/admin/usuarios/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Usuario</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -50,13 +50,10 @@
                                         <td>{{ $usuario->roles->pluck('name')->implode(', ') }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}"
-                                                    type="button" style="border-radius: 3px";
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                                &nbsp;
-                                                <a href="{{ url('admin/usuarios/' . $usuario->id) }}" type="button"
-                                                    style="border-radius: 3px"; class="btn btn-info btn-sm"><i
-                                                        class="bi bi-eye fas fa-eye"></i></a> &nbsp;
+                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+
+                                                <a href="{{ url('admin/usuarios/' . $usuario->id) }}" class="btn btn-info btn-sm"><i
+                                                        class="bi bi-eye fas fa-eye"></i></a>
                                                 <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
                                                     onclick="preguntar{{ $usuario->id }}(event)"
                                                     id="miFormulario{{ $usuario->id }}">
@@ -120,12 +117,70 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            border-radius: 4px;
-            /* Bordes redondeados */
             padding: 5px 15px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
+        }
+
+        .table td {
+            vertical-align: middle;
+            /* Centra verticalmente el contenido */
+            text-align: center;
+            /* Centra horizontalmente el contenido */
+        }
+
+        a.btn,
+        button.btn {
+            display: inline-block;
+            /* Asegura que ambas etiquetas se comporten igual */
+            padding: 5px 15px;
+            /* Relleno interno */
+            font-size: 14px;
+            /* Tamaño de fuente */
+            text-align: center;
+            /* Centrar el texto */
+            vertical-align: middle;
+            /* Alineación vertical */
+            border: none;
+            /* Elimina bordes predeterminados */
+            text-decoration: none;
+            /* Elimina subrayado en enlaces */
+            cursor: pointer;
+            /* Asegura que el cursor sea consistente */
+        }
+
+        .btn-group {
+            display: inline-flex;
+            /* Asegura que los botones estén en línea */
+            justify-content: center;
+            /* Centra horizontalmente los botones dentro del grupo */
+            align-items: center;
+            /* Centra verticalmente los botones dentro del grupo */
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+            /* Elimina bordes redondeados internos */
+        }
+
+        .btn-group .btn:first-child {
+            border-top-left-radius: 4px;
+            /* Redondea la esquina superior izquierda */
+            border-bottom-left-radius: 4px;
+            /* Redondea la esquina inferior izquierda */
+        }
+
+        .btn-group .btn:last-child {
+            border-top-right-radius: 4px;
+            /* Redondea la esquina superior derecha */
+            border-bottom-right-radius: 4px;
+            /* Redondea la esquina inferior derecha */
+        }
+
+        .btn-group .btn+.btn {
+            margin-left: 0;
+            /* Elimina el espacio entre botones */
         }
 
         /* Colores por tipo de botón */

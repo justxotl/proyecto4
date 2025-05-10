@@ -26,13 +26,13 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="card card-outline card-info">
+            <div class="card card-outline card-success">
 
                 <div class="card-header">
                     <h3 class="card-title mt-2">Modifique la información correspondiente:</h3>
                     <div class="card-tools">
                         <a href="{{ url('/admin/fichas') }}" class="btn btn-secondary">Volver</a>
-                        <a href="javascript:void(0)" class="btn btn-info addRow"><i
+                        <a href="javascript:void(0)" class="btn btn-primary addRow"><i
                                 class="fas fa-plus {{ config('adminlte.classes_auth_icon', '') }}"></i>&nbsp; Autor
                             Adicional</a>
                     </div>
@@ -178,7 +178,7 @@
                         </div>
 
                         {{-- Register button --}}
-                        <button type="submit" class="btn btn-primary" >Actualizar</button>
+                        <button type="submit" class="btn btn-success" >Actualizar</button>
                     </form>
                 </div>
             </div>

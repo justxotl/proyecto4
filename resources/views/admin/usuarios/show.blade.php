@@ -2,6 +2,10 @@
 
 @section('title', 'Información de Usuario')
 
+@extends('adminlte::page')
+
+@section('title', 'Información de Usuario')
+
 @section('content')
     <div class="row">
         <h1 class="ml-4 mt-4"><b>Información de "{{$usuario->name}}"</b></h1>
@@ -13,7 +17,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-info">
                 <div class="card-header">
-                    <h3 class="card-title mt-1">Datos Registrados</h3>
+                    <h3 class="card-title mt-2"><b>Datos Registrados:</b></h3>
 
                     <div class="card-tools">
                         <a href="{{ url('/admin/usuarios') }}" class="btn btn-secondary">Volver</a>
@@ -25,47 +29,92 @@
                 <!-- /.card-header -->
                 <div class="card-body">
 
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Nombre de Usuario</label>
-                                    <p>{{$usuario->name}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Nombre</label>
-                                    <p>{{$usuario->infoper->ci_us}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Nombre</label>
-                                    <p>{{$usuario->infoper->nombre}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Apellido</label>
-                                    <p>{{$usuario->infoper->apellido}}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Nombre de Usuario:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="{{ $usuario->name }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Cédula:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="{{ $usuario->infoper->ci_us }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-id-card"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form group">
-                                    <label for="">Email</label>
-                                    <p>{{$usuario->email}}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Nombre:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="{{ $usuario->infoper->nombre }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-id-card"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <br>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Apellido:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" value="{{ $usuario->infoper->apellido }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-id-card"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Email:</label>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" value="{{ $usuario->email }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-envelope"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Rol:</label>
+                                <div class="input-group">
+                                    <input type="email" class="form-control" value="{{ $usuario->roles->pluck('name')->implode(', ') }}" disabled>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-filter"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
                 </div>
                 <!-- /.card-body -->
             </div>

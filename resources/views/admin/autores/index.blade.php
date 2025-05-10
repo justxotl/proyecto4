@@ -15,7 +15,7 @@
                     <h2 class="card-title mt-2">Autores registrados</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary">Nuevo Autor</a>
+                        <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Autor</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
