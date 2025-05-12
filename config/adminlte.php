@@ -335,7 +335,7 @@ return [
         ],
         [
             'text' => 'Base de Datos',
-            'url' => 'admin/basedatos',
+            'url' => 'admin/backup',
             'icon' => 'fas fa-fw fa-database',
         ],
     ],
@@ -452,7 +452,7 @@ return [
             ],
         ],
         'Chartjs' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

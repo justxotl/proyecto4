@@ -61,7 +61,7 @@
                                                     <i class="fas fa-info"></i>
                                                 </a>
                                                 <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
-                                                    class="btn btn-dark btn-sm">
+                                                    class="btn btn-dark btn-sm" target="_blank">
                                                     <i class="fas fa-file-pdf"></i>
                                                 </a>
                                                 <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
@@ -238,7 +238,11 @@
     <script>
         $(function() {
             $("#example1").DataTable({
-                "pageLength": 5,
+                "pageLength":5, 
+                "lengthMenu": [
+                    [5, 10, 25, 50],
+                    [5, 10, 25, 50]
+                ],
                 "columnDefs": [{
                         "width": "5%",
                         "targets": 0

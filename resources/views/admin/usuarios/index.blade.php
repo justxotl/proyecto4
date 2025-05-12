@@ -206,9 +206,8 @@
         }
 
         .btn-default {
-            background-color: #6e7176;
             color: #212529;
-            border: none;
+            border: 1px solid #4b4b4b;
         }
     </style>
 @stop

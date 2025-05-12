@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
 //rutas de recuperación de contraseña
 Route::get('/recover', [App\Http\Controllers\UsuarioController::class, 'recover'])->name('password.recuperar');
 Route::post('/admin/usuarios/recover', [App\Http\Controllers\UsuarioController::class, 'recoverPost'])->name('password.recuperar.post');
+Route::post('/admin/usuarios/verificarPreguntas', [App\Http\Controllers\UsuarioController::class, 'verificarPreguntas'])->name('admin.usuarios.verificarPreguntas');
+Route::post('admin/usuarios/resetPassword', [App\Http\Controllers\UsuarioController::class, 'resetPassword'])->name('admin.usuarios.resetPassword');
 
 // rutas usuario
 Route::get('/admin/usuarios', [App\Http\Controllers\UsuarioController::class, 'index'])->name('admin.usuarios.index')->middleware('auth');
@@ -67,6 +69,13 @@ Route::post('/admin/roles/register', [App\Http\Controllers\RoleController::class
 Route::get('/admin/roles/{id}/edit', [App\Http\Controllers\RoleController::class, 'edit'])->name('admin.roles.edit')->middleware('auth');
 Route::put('/admin/roles/{id}', [App\Http\Controllers\RoleController::class, 'update'])->name('admin.roles.update')->middleware('auth');
 Route::delete('/admin/roles/{id}', [App\Http\Controllers\RoleController::class, 'destroy'])->name('admin.roles.destroy')->middleware('auth');
+
+//rutas de respaldo
+Route::get('/admin/backup', [App\Http\Controllers\BackupController::class, 'index'])->name('admin.backup.index')->middleware('auth');
+Route::get('/admin/backup/create', [App\Http\Controllers\BackupController::class, 'create'])->name('admin.backup.create')->middleware('auth');
+Route::get('/admin/backup/descargar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'descargar'])->name('admin.backup.descargar')->middleware('auth');
+Route::post('/admin/backup/restore', [App\Http\Controllers\BackupController::class, 'restore'])->name('admin.backup.restore')->middleware('auth');
+Route::delete('/admin/backup/eliminar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'eliminar'])->name('admin.backup.eliminar')->middleware('auth');
 
 require __DIR__.'/auth.php';
 

@@ -124,8 +124,12 @@ class FichaController extends Controller
      */
     public function pdf($id){
         $ficha = Ficha::with('autor')->where('id', $id)->first();
-        $pdf = Pdf::loadView('admin.fichas.pdf', compact('ficha'));
-        return $pdf->stream();
+        $pdf = Pdf::loadView('admin.fichas.pdf', compact('ficha'))
+        ->setPaper('letter', 'portrait') // Configura el tamaño y orientación de la página
+        ->setOption('isHtml5ParserEnabled', true) // Habilita el parser HTML5
+        ->setOption('isPhpEnabled', true); // Habilita el uso de PHP en las vistas
+
+    return $pdf->stream();
     }
 
     /**

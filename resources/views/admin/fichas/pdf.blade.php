@@ -12,6 +12,13 @@
     <style>
         body {
             font-family: 'Times New Roman', Times, serif, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            page-break-inside: avoid;
+            /* Evita cortes dentro de contenedores */
         }
 
         .header {
@@ -40,6 +47,7 @@
 
         table {
             width: 100%;
+            font-size: 0.75rem;
             border-collapse: collapse;
         }
 
@@ -47,7 +55,7 @@
         td {
             border: 1px solid black !important;
             padding: 8px;
-            vertical-align: top;
+            vertical-align: middle;
         }
 
         thead th {
@@ -73,13 +81,23 @@
             width: 85%;
         }
 
-        .footer {
-            position: fixed;
-            bottom: 30px;
-            width: 100%;
-            text-align: center;
-            font-size: 0.9rem;
-            color: #333;
+        thead {
+            display: table-header-group;
+            /* Asegura que los encabezados de tabla se repitan en cada página */
+        }
+
+        tbody {
+            display: table-row-group;
+        }
+
+        tr {
+            page-break-inside: auto;
+            /* Evita cortes dentro de filas de tabla */
+        }
+
+        .page-break {
+            page-break-before: always;
+            /* Fuerza un salto de página */
         }
     </style>
 </head>
@@ -92,13 +110,13 @@
             <img src="{{ public_path('images/LogoUDO.png') }}" alt="Logo UDO">
             <div class="header-text">
                 <h2>Universidad de Oriente — Núcleo Bolívar</h2>
-                <h2>Ciudad Bolívar, Estado Bolívar</h2>
+                <h2>Ciudad Bolívar, Estado Bolívar, {{ \Carbon\Carbon::now()->format('d/m/Y') }}</h2>
                 <h2>Formato de Ficha Bibliográfica</h2>
             </div>
         </div>
 
         <!-- Título de la ficha -->
-        <h2 class="text-center">{{ $ficha->titulo }}</h2>
+        <h3 class="text-center">{{ $ficha->titulo }}</h3>
 
         <!-- Tabla de autores -->
         <h2>Autores</h2>
@@ -140,12 +158,6 @@
             </tbody>
         </table>
     </div>
-
-    <!-- Pie de página -->
-    <div class="footer">
-        Ciudad Bolívar, {{ \Carbon\Carbon::now()->format('d/m/Y') }}
-    </div>
-
 </body>
 
 </html>

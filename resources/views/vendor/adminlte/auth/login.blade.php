@@ -77,9 +77,9 @@
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($passResetUrl)
-        <p class="my-0">
+        <p class="my-0 text-center">
             <a href="recover">
-                {{ __('adminlte::adminlte.i_forgot_my_password') }}
+                <b>{{ __('adminlte::adminlte.i_forgot_my_password') }}</b>
             </a>
         </p>
     @endif

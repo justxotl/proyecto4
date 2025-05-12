@@ -114,7 +114,10 @@ class UsuarioController extends Controller
             $usuario->password = Hash::make($request['password']);
         }
         $usuario->save();
-        $usuario->syncRoles($request->rol);
+
+        if ($request->has('rol')) {
+            $usuario->syncRoles($request->rol);
+        }
 
         $infoPer = infoper::find($usuario->infoper->user_id);
         $infoPer->ci_us = $request->ci_us;
@@ -122,35 +125,24 @@ class UsuarioController extends Controller
         $infoPer->apellido = $request->apellido;
         $infoPer->user_id = $usuario->id;
         $infoPer->save();
-    
-        $preguntas = PreguntaUser::where('user_id', $usuario->id)->first();
 
-        if ($preguntas) {
-            // Actualizar
+        if ($request->has(['preguntauno', 'preguntados', 'respuestauno', 'respuestados'])) {
+            $preguntas = PreguntaUser::firstOrNew(['user_id' => $usuario->id]);
             $preguntas->pregunta_uno = $request->preguntauno;
             $preguntas->pregunta_dos = $request->preguntados;
             $preguntas->respuesta_uno = $request->respuestauno;
             $preguntas->respuesta_dos = $request->respuestados;
             $preguntas->save();
-        } else {
-            // Crear nuevo
-            PreguntaUser::create([
-                'user_id' => $usuario->id,
-                'pregunta_uno' => $request->preguntauno,
-                'pregunta_dos' => $request->preguntados,
-                'respuesta_uno' => $request->respuestauno,
-                'respuesta_dos' => $request->respuestados,
-            ]);
         }
 
         if ($request->redirect_to === 'perfil') {
             return redirect()->route('admin.perfil')
                 ->with('mensaje', 'Usuario actualizado correctamente')
                 ->with('icono', 'success');
-        }else{
+        } else {
             return redirect()->route('admin.usuarios.index')
-            ->with('mensaje', 'Usuario actualizado correctamente')
-            ->with('icono', 'success');
+                ->with('mensaje', 'Usuario actualizado correctamente')
+                ->with('icono', 'success');
         }
     }
 
@@ -178,7 +170,7 @@ class UsuarioController extends Controller
                 'respuesta_dos' => '',
             ]
         );
-    
+
         return view('admin.perfil', compact('preguntas'));
     }
 
@@ -193,13 +185,61 @@ class UsuarioController extends Controller
             'ci_recover' => 'required|max:8',
         ]);
 
+        // Buscar el usuario por la cédula en infoper
         $usuario = User::whereHas('infoper', function ($query) use ($request) {
             $query->where('ci_us', $request->ci_recover);
         })->first();
 
-        return response()->json([
-            $usuario,
-        ]);
+        if (!$usuario) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No se encontró ningún usuario con esa cédula.',
+            ]);
+        }
 
+        // Buscar las preguntas asociadas al usuario
+        $preguntas = PreguntaUser::where('user_id', $usuario->id)->first();
+
+        if (!$preguntas) {
+            return response()->json([
+                'success' => false,
+                'message' => 'El usuario no tiene preguntas de seguridad registradas.',
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'user_id' => $usuario->id,
+            'pregunta_uno' => $preguntas->pregunta_uno,
+            'pregunta_dos' => $preguntas->pregunta_dos,
+        ]);
+    }
+
+    public function verificarPreguntas(Request $request)
+    {
+        $user = User::find($request->user_id);
+        $preguntas = $user->preguntasUser;
+
+        if (
+            $preguntas &&
+            strtolower(trim($preguntas->respuesta_uno)) === strtolower(trim($request->respuesta_uno)) &&
+            strtolower(trim($preguntas->respuesta_dos)) === strtolower(trim($request->respuesta_dos))
+        ) {
+            return response()->json(['status' => 'ok']);
+        }
+
+        return response()->json(['status' => 'fail']);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $user = User::find($request->user_id);
+        if ($user) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json(['status' => 'ok']);
+        }
+
+        return response()->json(['status' => 'fail']);
     }
 }
