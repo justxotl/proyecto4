@@ -131,7 +131,7 @@
             /* Centrar los botones */
             gap: 10px;
             /* Espaciado entre botones */
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             /* Separar botones de la tabla */
         }
 

@@ -291,7 +291,7 @@
                 buttons: [{
                         text: '<i class="fas fa-copy"></i> COPIAR',
                         extend: 'copy',
-                        className: 'btn btn-default'
+                        className: 'btn btn-dark'
                     },
                     {
                         extend: 'pdfHtml5',

@@ -39,7 +39,7 @@
                                         <td>{{ $carrera->nombre}}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}" type="button" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}" type="button" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                 <form action="{{ url('/admin/carreras', $carrera->id) }}" method="post"
                                                     onclick="preguntar{{ $carrera->id }}(event)"
                                                     id="miFormulario{{ $carrera->id }}">
@@ -95,7 +95,7 @@
             /* Centrar los botones */
             gap: 10px;
             /* Espaciado entre botones */
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             /* Separar botones de la tabla */
         }
 
@@ -227,7 +227,7 @@
                 buttons: [{
                         text: '<i class="fas fa-copy"></i> COPIAR',
                         extend: 'copy',
-                        className: 'btn btn-default'
+                        className: 'btn btn-dark'
                     },
                     {
                         extend: 'pdfHtml5',

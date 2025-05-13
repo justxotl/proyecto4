@@ -45,8 +45,7 @@
                                         <td>{{ $autor->ci_autor }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button" style="border-radius: 3px";
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a> &nbsp;
+                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                 <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
                                                     onclick="preguntar{{ $autor->id }}(event)"
                                                     id="miFormulario{{ $autor->id }}">
@@ -102,7 +101,7 @@
             /* Centrar los botones */
             gap: 10px;
             /* Espaciado entre botones */
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             /* Separar botones de la tabla */
         }
 
@@ -110,12 +109,70 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            border-radius: 4px;
-            /* Bordes redondeados */
             padding: 5px 15px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
+        }
+
+        .table td {
+            vertical-align: middle;
+            /* Centra verticalmente el contenido */
+            text-align: center;
+            /* Centra horizontalmente el contenido */
+        }
+
+        a.btn,
+        button.btn {
+            display: inline-block;
+            /* Asegura que ambas etiquetas se comporten igual */
+            padding: 5px 15px;
+            /* Relleno interno */
+            font-size: 14px;
+            /* Tamaño de fuente */
+            text-align: center;
+            /* Centrar el texto */
+            vertical-align: middle;
+            /* Alineación vertical */
+            border: none;
+            /* Elimina bordes predeterminados */
+            text-decoration: none;
+            /* Elimina subrayado en enlaces */
+            cursor: pointer;
+            /* Asegura que el cursor sea consistente */
+        }
+
+        .btn-group {
+            display: inline-flex;
+            /* Asegura que los botones estén en línea */
+            justify-content: center;
+            /* Centra horizontalmente los botones dentro del grupo */
+            align-items: center;
+            /* Centra verticalmente los botones dentro del grupo */
+        }
+
+        .btn-group .btn {
+            border-radius: 0;
+            /* Elimina bordes redondeados internos */
+        }
+
+        .btn-group .btn:first-child {
+            border-top-left-radius: 4px;
+            /* Redondea la esquina superior izquierda */
+            border-bottom-left-radius: 4px;
+            /* Redondea la esquina inferior izquierda */
+        }
+
+        .btn-group .btn:last-child {
+            border-top-right-radius: 4px;
+            /* Redondea la esquina superior derecha */
+            border-bottom-right-radius: 4px;
+            /* Redondea la esquina inferior derecha */
+        }
+
+        .btn-group .btn+.btn {
+            margin-left: 0;
+            /* Elimina el espacio entre botones */
         }
 
         /* Colores por tipo de botón */
@@ -176,7 +233,7 @@
                 buttons: [{
                         text: '<i class="fas fa-copy"></i> COPIAR',
                         extend: 'copy',
-                        className: 'btn btn-default'
+                        className: 'btn btn-dark'
                     },
                     {
                         extend: 'pdfHtml5',

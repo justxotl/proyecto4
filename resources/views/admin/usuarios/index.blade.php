@@ -109,7 +109,7 @@
             /* Centrar los botones */
             gap: 10px;
             /* Espaciado entre botones */
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             /* Separar botones de la tabla */
         }
 
@@ -243,7 +243,7 @@
                 buttons: [{
                         text: '<i class="fas fa-copy"></i> COPIAR',
                         extend: 'copy',
-                        className: 'btn btn-default'
+                        className: 'btn btn-dark'
                     },
                     {
                         extend: 'pdfHtml5',
