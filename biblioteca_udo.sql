@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-05-2025 a las 02:31:52
+-- Tiempo de generación: 13-05-2025 a las 03:12:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -45,9 +45,10 @@ INSERT INTO `autors` (`id`, `ci_autor`, `nombre_autor`, `apellido_autor`, `creat
 (2, '11111111', 'nuevo', 'nuevo', '2025-04-14 00:06:47', '2025-04-14 00:06:47'),
 (3, '22222222', 'dasdasdasd', 'asdasdasdasd', '2025-04-14 00:06:47', '2025-04-14 00:06:47'),
 (4, '54545454', 'nuevesito', 'nuevo', '2025-04-14 01:08:46', '2025-04-14 01:08:46'),
-(5, '34957861', 'noseanada', 'vayalo', '2025-04-14 01:15:58', '2025-04-26 19:06:44'),
+(5, '34957861', 'Antonio', 'Perez', '2025-04-14 01:15:58', '2025-05-10 02:05:58'),
 (6, '76948521', 'carajito', 'manolo', '2025-04-14 01:40:20', '2025-04-14 01:40:20'),
-(7, '14798652', 'pedro', 'alcachofa', '2025-04-14 01:40:20', '2025-04-14 01:40:20');
+(7, '14798652', 'pedro', 'alcachofa', '2025-04-14 01:40:20', '2025-04-14 01:40:20'),
+(9, '30040201', 'Gabriel', 'Perdomo', '2025-05-13 00:46:15', '2025-05-13 00:46:15');
 
 -- --------------------------------------------------------
 
@@ -68,12 +69,16 @@ CREATE TABLE `autor_ficha` (
 --
 
 INSERT INTO `autor_ficha` (`id`, `ficha_id`, `autor_id`, `created_at`, `updated_at`) VALUES
-(23, 5, 6, NULL, NULL),
-(24, 5, 7, NULL, NULL),
-(27, 2, 1, NULL, NULL),
-(28, 2, 4, NULL, NULL),
 (30, 1, 2, NULL, NULL),
-(31, 1, 3, NULL, NULL);
+(31, 1, 3, NULL, NULL),
+(38, 5, 6, NULL, NULL),
+(39, 5, 7, NULL, NULL),
+(40, 7, 5, NULL, NULL),
+(42, 2, 1, NULL, NULL),
+(43, 2, 3, NULL, NULL),
+(44, 9, 3, NULL, NULL),
+(46, 8, 6, NULL, NULL),
+(47, 10, 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -118,8 +123,13 @@ CREATE TABLE `carreras` (
 
 INSERT INTO `carreras` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
 (1, 'Ingenieria de Sistemas', '2025-04-14 00:05:30', '2025-04-14 00:05:30'),
-(3, 'carrera nueva', '2025-04-14 02:21:35', '2025-04-14 02:21:35'),
-(4, 'Cura del Cáncer III', '2025-04-30 03:11:57', '2025-04-30 03:11:57');
+(3, 'Matemáticas Aplicadas', '2025-04-14 02:21:35', '2025-05-10 02:04:24'),
+(4, 'Geociencias', '2025-04-30 03:11:57', '2025-05-10 02:04:06'),
+(5, 'Ejemplo de Respaldo', '2025-05-11 01:25:39', '2025-05-11 01:25:39'),
+(6, 'Tabla', '2025-05-12 01:49:34', '2025-05-12 01:49:34'),
+(7, 'Otra Carrera Más', '2025-05-12 02:27:06', '2025-05-12 02:27:06'),
+(8, 'Ingeniería Industrial', '2025-05-13 00:17:07', '2025-05-13 00:17:07'),
+(9, 'Ludopatía General', '2025-05-13 00:45:54', '2025-05-13 00:45:54');
 
 -- --------------------------------------------------------
 
@@ -145,7 +155,7 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `fichas` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `titulo` varchar(250) NOT NULL,
+  `titulo` varchar(800) NOT NULL,
   `fecha` date NOT NULL,
   `carrera_id` bigint(20) UNSIGNED NOT NULL,
   `resumen` text NOT NULL,
@@ -160,7 +170,11 @@ CREATE TABLE `fichas` (
 INSERT INTO `fichas` (`id`, `titulo`, `fecha`, `carrera_id`, `resumen`, `created_at`, `updated_at`) VALUES
 (1, 'asdaklñjsdaljsdk', '2025-01-01', 4, 'asldkuajsldkjasldkajsdlakjsd', '2025-04-14 00:06:47', '2025-04-30 03:12:08'),
 (2, 'ioooooooooooooo', '2025-04-02', 1, 'coherencia', '2025-04-14 01:08:46', '2025-04-30 03:01:55'),
-(5, 'por fin weon', '2025-04-08', 3, 'asdkasdlñaksdoqosppapa', '2025-04-14 01:40:20', '2025-04-30 02:56:54');
+(5, 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.', '2025-04-08', 1, '\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"', '2025-04-14 01:40:20', '2025-05-09 23:42:58'),
+(7, 'lorem ipsum', '2025-05-02', 3, '\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"', '2025-05-10 02:08:30', '2025-05-10 02:08:30'),
+(8, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2025-05-01', 3, '\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"', '2025-05-10 02:16:17', '2025-05-12 21:32:09'),
+(9, 'prueba', '2024-10-09', 6, 'prueba de resumen', '2025-05-12 02:35:50', '2025-05-12 02:35:50'),
+(10, 'Ahorro de diamantes profesional.', '2020-09-15', 9, '¿Cómo ahorrar diamantes sin caer en la desesperación?, cinco pasos que te salvarán la vida.', '2025-05-13 00:48:40', '2025-05-13 00:48:40');
 
 -- --------------------------------------------------------
 
@@ -184,7 +198,10 @@ CREATE TABLE `infopers` (
 
 INSERT INTO `infopers` (`id`, `ci_us`, `nombre`, `apellido`, `user_id`, `created_at`, `updated_at`) VALUES
 (1, '12345678', 'Test', 'User', 1, '2025-04-14 00:05:30', '2025-04-14 00:05:30'),
-(2, '30000000', 'Administrador', 'Administrante', 2, '2025-05-07 17:20:48', '2025-05-07 17:20:48');
+(2, '30000000', 'Administrador', 'Administrante', 2, '2025-05-07 17:20:48', '2025-05-07 17:20:48'),
+(3, '46587646', 'Hermenejildo', 'Ochoa', 3, '2025-05-08 02:05:37', '2025-05-08 02:05:37'),
+(4, '32649785', 'gladys', 'parra', 4, '2025-05-08 02:24:47', '2025-05-08 02:24:47'),
+(5, '30040201', 'Gabriel', 'Perdomo', 5, '2025-05-13 00:44:01', '2025-05-13 00:44:01');
 
 -- --------------------------------------------------------
 
@@ -247,7 +264,45 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2025_04_06_183353_create_autors_table', 1),
 (8, '2025_04_13_191831_create_autor_ficha_table', 1),
 (9, '2025_05_06_224752_create_preguntas_user_table', 2),
-(10, '2025_05_06_232935_update_preguntas_user_nullable', 3);
+(10, '2025_05_06_232935_update_preguntas_user_nullable', 3),
+(11, '2025_05_07_201809_create_permission_tables', 4),
+(12, '2025_05_07_215939_remove_rol_column_from_users_table', 5),
+(13, '2025_05_09_221358_update_titulo_length_in_fichas_table', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `model_has_permissions`
+--
+
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(1, 'App\\Models\\User', 1),
+(2, 'App\\Models\\User', 2),
+(2, 'App\\Models\\User', 4),
+(2, 'App\\Models\\User', 5),
+(4, 'App\\Models\\User', 3);
 
 -- --------------------------------------------------------
 
@@ -259,6 +314,20 @@ CREATE TABLE `password_reset_tokens` (
   `email` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -283,8 +352,45 @@ CREATE TABLE `preguntas_user` (
 --
 
 INSERT INTO `preguntas_user` (`id`, `user_id`, `pregunta_uno`, `respuesta_uno`, `pregunta_dos`, `respuesta_dos`, `created_at`, `updated_at`) VALUES
-(1, 1, 'pregunta', 'pruebas aca', 'pregunta', 'pruebas aquí', '2025-05-07 03:31:19', '2025-05-07 17:19:22'),
-(3, 2, 'papa', 'wahoo', 'yahoo', 'yippee', '2025-05-07 17:34:08', '2025-05-07 18:55:59');
+(1, 1, NULL, NULL, NULL, NULL, '2025-05-07 03:31:19', '2025-05-11 03:33:24'),
+(3, 2, 'a', 'a', 'a', 'a', '2025-05-07 17:34:08', '2025-05-12 23:00:30'),
+(4, 4, NULL, NULL, NULL, NULL, '2025-05-08 02:55:17', '2025-05-08 02:55:17'),
+(5, 3, 'guacala', 'no', 'se', 'se', '2025-05-08 02:55:35', '2025-05-11 03:48:01'),
+(6, 5, 'Cuál es el apodo de Escanor', 'El Papocho', 'Decepción Total', 'Galan', '2025-05-13 00:52:33', '2025-05-13 00:52:33');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `guard_name` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'MASTER', 'web', '2025-05-08 01:25:45', '2025-05-08 01:25:45'),
+(2, 'ADMIN', 'web', '2025-05-08 01:27:23', '2025-05-08 01:27:23'),
+(4, 'USER', 'web', '2025-05-08 01:28:20', '2025-05-08 01:28:20');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -306,7 +412,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('JUS2ErfOdIAUWZnQSZ6Seeu1pJrxvmob9ZuwkrbQ', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSjl5dlJCeXdpbFVvbGc1Tng0QTlqb2RZWVZkSHVEZHk1Y1R6WWI2OCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTM6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL3VzdWFyaW9zIjt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTtzOjQ6ImF1dGgiO2E6MTp7czoyMToicGFzc3dvcmRfY29uZmlybWVkX2F0IjtpOjE3NDY2NDY2NDI7fX0=', 1746663765);
+('ar62S2CYIYUWYhaCHirmCuKk1Ykr6nHlbSAcLQYg', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNXp1TjZkSmJUNjd0MkdtdkQxT0lNSUR4aVhwcjVORkZyelo5Z3VTaiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL2JhY2t1cCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc0NzA5NTQwMzt9fQ==', 1747095912),
+('Ta3khQy4GUYNk6Z7YAIXkyoGD6QVh7Z3avNHVq0G', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOXo5N1NjWWh2M1dJZlJkMWpMRWVSdXBFYU1FTnB3VG9uYXlEalBGRCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2xvZ2luIjt9czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovL2xvY2FsaG9zdC9sYXJhdmVsL2JpYmxpby9wdWJsaWMvYWRtaW4vcm9sZXMiO319', 1747097994),
+('yPFro7gNuKv1K1lrWFF9JuZ3bRH47soq4vB5nORv', 5, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSzFhYmo2Z2podUFJaXIyQ2haZWZFdzBEVWpBclF1dGVGNFQ4YXo1NSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL2JhY2t1cCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzQ3MDk3NjkyO319', 1747097694);
 
 -- --------------------------------------------------------
 
@@ -319,7 +427,6 @@ CREATE TABLE `users` (
   `name` varchar(20) NOT NULL,
   `email` varchar(255) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `rol` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -330,9 +437,12 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `rol`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'User', 'test@ejemplo.com', '2025-04-14 00:05:30', 1, '$2y$12$EAH.sppOnSVuQWcCqOY3ouXpLz4kjJi/IZt/kApJTWWtRq2ivG2Cq', 'su3jQJKwk9J5Qk4t0yyqJ6YpKI5sveuOVQVB7Rk7g4Sa9zyxNpZEoZUnFjts', '2025-04-14 00:05:30', '2025-05-07 03:33:15'),
-(2, 'admin', 'admin@admin.com', NULL, 1, '$2y$12$C1/n9YuoVOk6/OFu9RzzwOaaSDEaxmIYF2kWTfK03cYB5ZvAqpitq', NULL, '2025-05-07 17:20:48', '2025-05-07 17:20:48');
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'User', 'test@ejemplo.com', '2025-04-14 00:05:30', '$2y$12$f7./EB9P9cQ0bKSDb.qKhOCWD69.ZDW6sw5lfskRLmKk.sCiAVy/y', 'lcVHX8BORsVKgitKhYGop17CJed7XvHHMkqsg2soBHwut7jyvCUoO4l0JQLX', '2025-04-14 00:05:30', '2025-05-11 03:33:24'),
+(2, 'admin', 'admin@admin.com', NULL, '$2y$12$r/Sm6NV28OxV4FFzzDYS6uzMOhOZWpHIVJ0yB/gj62/tu2Gw9o0FS', NULL, '2025-05-07 17:20:48', '2025-05-12 23:13:53'),
+(3, 'Hermenejildo', 'ochoa@gmail.com', NULL, '$2y$12$VZ7yq7zIuGe87gB5Dql16ucQPiJ5Pnwcn9dC7zG2esBAfXH59gt/u', NULL, '2025-05-08 02:05:37', '2025-05-08 02:05:37'),
+(4, 'gladys', 'gladys@gmail.com', NULL, '$2y$12$z85yvnG81ZRsgL/ZZ3DhC.A5c0bD6D00u0XbNoOCIU2zXQ7fk2CX6', NULL, '2025-05-08 02:24:46', '2025-05-08 02:24:46'),
+(5, 'nolose', 'noloseqwq@gmail.com', NULL, '$2y$12$IIKPypKpeD/gJYhgSPXCK.iHOUBngcgRQ9hZHVW9d8RlHU2U5HrO6', NULL, '2025-05-13 00:44:00', '2025-05-13 00:53:37');
 
 --
 -- Índices para tablas volcadas
@@ -413,10 +523,31 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indices de la tabla `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
 -- Indices de la tabla `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indices de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `permissions_name_guard_name_unique` (`name`,`guard_name`);
 
 --
 -- Indices de la tabla `preguntas_user`
@@ -424,6 +555,20 @@ ALTER TABLE `password_reset_tokens`
 ALTER TABLE `preguntas_user`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `preguntas_user_user_id_unique` (`user_id`);
+
+--
+-- Indices de la tabla `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `roles_name_guard_name_unique` (`name`,`guard_name`);
+
+--
+-- Indices de la tabla `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
 
 --
 -- Indices de la tabla `sessions`
@@ -448,19 +593,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `autors`
 --
 ALTER TABLE `autors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `autor_ficha`
 --
 ALTER TABLE `autor_ficha`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -472,13 +617,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `fichas`
 --
 ALTER TABLE `fichas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `infopers`
 --
 ALTER TABLE `infopers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -490,19 +635,31 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT de la tabla `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT de la tabla `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_user`
 --
 ALTER TABLE `preguntas_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -528,10 +685,29 @@ ALTER TABLE `infopers`
   ADD CONSTRAINT `infopers_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Filtros para la tabla `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
 -- Filtros para la tabla `preguntas_user`
 --
 ALTER TABLE `preguntas_user`
   ADD CONSTRAINT `preguntas_user_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Filtros para la tabla `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

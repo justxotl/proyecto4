@@ -8,7 +8,7 @@ function buscarAutor(event) {
             data: { id: autor },
             success: function (response) {
                 console.log(response);
-                if (response == 'NotFound') {
+                if (response == "NotFound") {
                     document.getElementById("nombreAutor").style.visibility =
                         "visible";
                     document.getElementById("apellidoAutor").style.visibility =
@@ -46,45 +46,45 @@ function buscarAutor(event) {
 
 function registrarAutor(event) {
     event.preventDefault();
-    const cedula = document.getElementById('ciautor').value
-    if (cedula == '') {
+    const cedula = document.getElementById("ciautor").value;
+    if (cedula == "") {
         Swal.fire({
             position: "top-end",
             icon: "warning",
             title: "Y entonces?",
             showConfirmButton: false,
-            timer: 3000
+            timer: 3000,
         });
     }
     $.ajax({
-        url: 'register',
-        method: 'POST',
-        data: $('#form_ficha').serialize(),
+        url: "register",
+        method: "POST",
+        data: $("#form_ficha").serialize(),
         success: function (response) {
-            if (response == 'Error en el servidor') {
-                alert('Todo mal')
+            if (response == "Error en el servidor") {
+                alert("Todo mal");
             } else {
-                $('#form_ficha')[0].reset();
+                $("#form_ficha")[0].reset();
                 Swal.fire({
                     position: "center",
                     icon: "success",
                     title: "Ficha y autores procesados correctamente.",
                     showConfirmButton: false,
-                    timer: 3000
-                })
+                    timer: 3000,
+                });
                 setTimeout(() => {
-                    window.location.href = '/laravel/biblio/public/admin/fichas';
+                    window.location.href =
+                        "/laravel/biblio/public/admin/fichas";
                 }, 1000);
             }
-        }
+        },
     });
-
 }
 
 $(".card-tools").on("click", ".addRow", function () {
     let html = `
     <div class="row autor-item">
-                            <div class="input-group mb-3 col-md-4">
+                            <div class="input-group mb-3 col-md-3">
                                 <input type="text" name="ci_autor[]"
                                     class="form-control cedulaBuscar" placeholder="CI del Autor" id="ciautor" required autofocus>
 
@@ -98,8 +98,7 @@ $(".card-tools").on("click", ".addRow", function () {
                                 
                             </div>
                             
-
-                            <div class="input-group mb-3 col-md-4" id="nombreAutor">
+                            <div class="input-group mb-3 col-md-3" id="nombreAutor">
                                 <input type="text" name="nombre_autor[]"
                                     class="form-control nombreAutor" placeholder="Nombre del Autor" id="autorN" required>
 
@@ -112,7 +111,7 @@ $(".card-tools").on("click", ".addRow", function () {
                             </div>
 
 
-                            <div class="input-group mb-3 col-md-4" id="apellidoAutor">
+                            <div class="input-group mb-3 col-md-3" id="apellidoAutor">
                                 <input type="text" name="apellido_autor[]" class="form-control apellidoAutor" placeholder="Apellido del Autor" id="autorA" required>
 
                                 <div class="input-group-append">
@@ -122,26 +121,27 @@ $(".card-tools").on("click", ".addRow", function () {
                                 </div>
                                     <span class="invalid-feedback" role="alert"></span>
                             </div>
+                                <a href='javascript:void(0)' class=' col-md-3 mb-3 btn btn-danger deleteRow'><i class="fas fa-user-times"></i></a>
+
                     </div>
-    `
-    $('#ficha_plus').append(html)
+    `;
+    $("#ficha_plus").append(html);
 });
-$(document).on('keyup', '.cedulaBuscar', function (e) {
-    if(e.which == 13){
+
+$(document).on("keyup", ".cedulaBuscar", function (e) {
+    if (e.which == 13) {
         const autor = $(this).val();
-        const row = $(this).closest('.autor-item');
-        const nombreInput = row.find('.nombreAutor');
-        const apellidoInput = row.find('.apellidoAutor');
+        const row = $(this).closest(".autor-item");
+        const nombreInput = row.find(".nombreAutor");
+        const apellidoInput = row.find(".apellidoAutor");
         $.ajax({
             url: "" + autor + "/get",
             method: "GET",
             data: { id: autor },
             success: function (response) {
-                if (response == 'NotFound') {
-                    document.getElementById("autorN").value =
-                        '';
-                    document.getElementById("autorA").value =
-                        '';
+                if (response == "NotFound") {
+                    document.getElementById("autorN").value = "";
+                    document.getElementById("autorA").value = "";
                 } else {
                     nombreInput.val(response.nombre_autor);
                     apellidoInput.val(response.apellido_autor);
@@ -150,3 +150,47 @@ $(document).on('keyup', '.cedulaBuscar', function (e) {
         });
     }
 });
+
+$("#ficha_plus").on("click", ".deleteRow", function () {
+    $(this).closest(".autor-item").remove();
+});
+
+function quitar(id, event) {
+    event.preventDefault();
+    Swal.fire({
+        title: "¿Desea eliminar este registro?",
+        icon: "question",
+        showDenyButton: true,
+        confirmButtonText: "Eliminar",
+        confirmButtonColor: "#a5161d",
+        denyButtonColor: "#270a0a",
+        denyButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            const baseUrl = $('meta[name="quitar-autor-url"]').attr("content");
+            const url = baseUrl.replace(":id", id);
+
+            $.ajax({
+                url: url,
+                method: "DELETE", // Método HTTP DELETE
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr("content"), // Token CSRF
+                },
+                success: function (response) {
+                    Swal.fire("Eliminado", response.message, "success");
+                    // Eliminar la fila del autor en la interfaz
+                    $(`button[onclick="quitar(${id}, event)"]`)
+                        .closest(".row")
+                        .remove();
+                },
+                error: function (xhr) {
+                    Swal.fire(
+                        "Error",
+                        "No se pudo eliminar el autor de la ficha.",
+                        "error"
+                    );
+                },
+            });
+        }
+    });
+}

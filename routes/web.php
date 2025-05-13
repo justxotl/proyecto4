@@ -41,6 +41,7 @@ Route::post('/admin/autores/register', [App\Http\Controllers\AutorController::cl
 Route::get('/admin/autores/{id}/edit', [App\Http\Controllers\AutorController::class, 'edit'])->name('admin.autores.edit')->middleware('auth');
 Route::put('/admin/autores/{id}', [App\Http\Controllers\AutorController::class, 'update'])->name('admin.autores.update')->middleware('auth');
 Route::delete('/admin/autores/{id}', [App\Http\Controllers\AutorController::class, 'destroy'])->name('admin.autores.destroy')->middleware('auth');
+Route::delete('/quitar_autor/{id}', [App\Http\Controllers\FichaController::class, 'quitar'])->name('fichas.quitar')->middleware('auth');
 
 //rutas fichas
 Route::get('/admin/fichas', [App\Http\Controllers\FichaController::class, 'index'])->name('admin.fichas.index')->middleware('auth');
@@ -76,6 +77,8 @@ Route::get('/admin/backup/create', [App\Http\Controllers\BackupController::class
 Route::get('/admin/backup/descargar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'descargar'])->name('admin.backup.descargar')->middleware('auth');
 Route::post('/admin/backup/restore', [App\Http\Controllers\BackupController::class, 'restore'])->name('admin.backup.restore')->middleware('auth');
 Route::delete('/admin/backup/eliminar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'eliminar'])->name('admin.backup.eliminar')->middleware('auth');
+
+
 
 require __DIR__.'/auth.php';
 

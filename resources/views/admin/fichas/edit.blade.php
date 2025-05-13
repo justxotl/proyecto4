@@ -3,6 +3,8 @@
 @section('title', 'Actualización de Fichas')
 
 @section('content_header')
+    <meta name="quitar-autor-url" content="{{ route('fichas.quitar', ':id') }}">
+
     <div class="row">
         <h1 class="ml-4 mt-3"><b>Actualización de Ficha</b></h1>
     </div>
@@ -45,53 +47,58 @@
                         @method('PUT')
                         <button type="submit" disabled hidden aria-hidden="true"></button>
                         @foreach ($ficha->autor as $autor)
-                        <div class="row">
-                            {{-- CI field --}}
-                            <div class="input-group mb-3 col-md-4">
-                                <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
-                                    class="form-control @error('ci_autor') is-invalid @enderror"
-                                    value="{{ $autor->ci_autor }}" placeholder="CI del Autor" id="ciautor" autofocus required>
+                            <div class="row">
+                                {{-- CI field --}}
+                                <div class="input-group mb-3 col-md-3">
+                                    <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
+                                        class="form-control @error('ci_autor') is-invalid @enderror"
+                                        value="{{ $autor->ci_autor }}" placeholder="CI del Autor" id="ciautor" autofocus
+                                        required>
 
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span
+                                                class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        </div>
+                                    </div>
+                                    @error('ci_autor')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                {{-- Nombre field --}}
+                                <div class="input-group mb-3 col-md-3" id="nombreAutor">
+                                    <input type="text" name="nombre_autor[]"
+                                        class="form-control @error('nombre_autor') is-invalid @enderror"
+                                        value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor" id="autorN"
+                                        required>
+
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        </div>
                                     </div>
                                 </div>
-                                @error('ci_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
 
-                            {{-- Nombre field --}}
-                            <div class="input-group mb-3 col-md-4" id="nombreAutor">
-                                <input type="text" name="nombre_autor[]"
-                                    class="form-control @error('nombre_autor') is-invalid @enderror"
-                                    value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor" id="autorN"
-                                    requi>
-                                    
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                {{-- Apellido field --}}
+                                <div class="input-group mb-3 col-md-3" id="apellidoAutor">
+                                    <input type="text" name="apellido_autor[]"
+                                        class="form-control @error('apellido_autor') is-invalid @enderror"
+                                        value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor"
+                                        id="autorA" required>
+
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span
+                                                class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        </div>
                                     </div>
                                 </div>
+                                <button class="btn btn-danger mb-3 col-md-3"
+                                    onclick="quitar({{ $autor->id }}, event)"><i class="fas fa-user-times"></i></button>
                             </div>
-
-                            {{-- Apellido field --}}
-                            <div class="input-group mb-3 col-md-4" id="apellidoAutor">
-                                <input type="text" name="apellido_autor[]"
-                                    class="form-control @error('apellido_autor') is-invalid @enderror"
-                                    value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor" id="autorA"
-                                    required>
-
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         @endforeach
 
                         <div id="ficha_plus">
@@ -139,7 +146,9 @@
                             <div class="input-group mb-3 col-md-6" id="carreraTrabajo">
                                 <select name="carrera" id="carrera" class=" form-select form-control">
                                     @foreach ($carreras as $carrera)
-                                        <option value="{{ $carrera->id }}" {{$carrera->id == $ficha->carrera_id ? 'selected': ''}}>{{ $carrera->nombre }}</option>
+                                        <option value="{{ $carrera->id }}"
+                                            {{ $carrera->id == $ficha->carrera_id ? 'selected' : '' }}>
+                                            {{ $carrera->nombre }}</option>
                                     @endforeach
                                 </select>
 
@@ -160,7 +169,8 @@
                             {{-- Resumen field --}}
                             <div class="input-group mb-3 col-md-12">
 
-                                <textarea name="resumen" id="resumen" rows="4" class="form-control @error('resumen') is-invalid @enderror" placeholder="Resumen del Trabajo" form="form_ficha" required>{{ $ficha->resumen }}</textarea>
+                                <textarea name="resumen" id="resumen" rows="4" class="form-control @error('resumen') is-invalid @enderror"
+                                    placeholder="Resumen del Trabajo" form="form_ficha" required>{{ $ficha->resumen }}</textarea>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -178,7 +188,7 @@
                         </div>
 
                         {{-- Register button --}}
-                        <button type="submit" class="btn btn-success" >Actualizar</button>
+                        <button type="submit" class="btn btn-success">Actualizar</button>
                     </form>
                 </div>
             </div>
@@ -192,5 +202,5 @@
 @stop
 
 @section('js')
-@stop
 
+@stop

@@ -240,4 +240,26 @@ class FichaController extends Controller
             ->with('mensaje', 'Ficha eliminada correctamente.')
             ->with('icono', 'success');
     }
+
+    public function quitar($id)
+{
+    
+    try {
+        // Buscar la ficha que tiene asociado al autor
+        $ficha = Ficha::whereHas('autor', function ($query) use ($id) {
+            $query->where('autors.id', $id);
+        })->first();
+
+        if (!$ficha) {
+            return response()->json(['message' => 'La relación no existe.'], 404);
+        }
+
+        // Desasociar al autor de la ficha
+        $ficha->autor()->detach($id);
+
+        return response()->json(['message' => 'El autor ha sido eliminado de la ficha correctamente.']);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error al eliminar el autor: ' . $e->getMessage()], 500);
+    }
+}
 }
