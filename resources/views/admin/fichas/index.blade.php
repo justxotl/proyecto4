@@ -15,7 +15,8 @@
                     <h2 class="card-title mt-2">Fichas Bibliográficas</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nueva Ficha</a>
+                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
+                            Nueva Ficha</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -40,7 +41,7 @@
                                 @foreach ($fichas as $ficha)
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td style="text-align: center">{{ $ficha->fecha }}</td>
+                                        <td style="text-align: center">{{ \Carbon\Carbon::parse($ficha->fecha)->format('d-m-Y') }}</td>
                                         <td class="truncate-3-lines">{{ $ficha->titulo }}</td>
                                         <td>
                                             <ul>
@@ -138,7 +139,7 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -155,7 +156,7 @@
         button.btn {
             display: inline-block;
             /* Asegura que ambas etiquetas se comporten igual */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Relleno interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -238,7 +239,7 @@
     <script>
         $(function() {
             $("#example1").DataTable({
-                "pageLength":5, 
+                "pageLength": 5,
                 "lengthMenu": [
                     [5, 10, 25, 50],
                     [5, 10, 25, 50]
@@ -289,11 +290,6 @@
                 "lengthChange": true,
                 "autoWidth": false,
                 buttons: [{
-                        text: '<i class="fas fa-copy"></i> COPIAR',
-                        extend: 'copy',
-                        className: 'btn btn-dark'
-                    },
-                    {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger',
@@ -342,6 +338,27 @@
                         }
 
                     },
+                    {
+                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                        className: 'btn btn-success',
+                        action: function(e, dt, node, config) {
+                            Swal.fire({
+                                title: '¿Desea exportar la tabla en un archivo Excel?',
+                                text: '',
+                                icon: 'question',
+                                showDenyButton: true,
+                                confirmButtonText: 'Exportar',
+                                confirmButtonColor: '#28a745',
+                                denyButtonColor: '#949494',
+                                denyButtonText: 'Cancelar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href =
+                                        "{{ route('fichas.exportar') }}";
+                                }
+                            });
+                        },
+                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

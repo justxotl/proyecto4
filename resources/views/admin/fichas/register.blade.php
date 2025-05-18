@@ -3,6 +3,7 @@
 @section('title', 'Registro de Fichas')
 
 @section('content_header')
+<meta name="buscar-autor-url" content="{{ route('fichas.buscar', ':id') }}">
     <div class="row">
         <h1 class="ml-4 mt-3"><b>Registro de Ficha</b></h1>
     </div>
@@ -42,6 +43,7 @@
                     <form action="{{ url('admin/fichas/register') }}" id="form_ficha" method="post">
                         @csrf
                         <button type="submit" disabled hidden aria-hidden="true"></button>
+                        <input type="hidden" id="uri" value="{{ route('admin.fichas.index') }}">
                         <div class="row">
                             {{-- CI field --}}
                             <div class="input-group mb-3 col-md-4">

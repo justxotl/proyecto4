@@ -4,6 +4,7 @@
 
 @section('content_header')
     <meta name="quitar-autor-url" content="{{ route('fichas.quitar', ':id') }}">
+    <meta name="buscar-autor-url" content="{{ route('fichas.buscar', ':id') }}">
 
     <div class="row">
         <h1 class="ml-4 mt-3"><b>Actualización de Ficha</b></h1>
@@ -52,7 +53,7 @@
                                 <div class="input-group mb-3 col-md-3">
                                     <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
                                         class="form-control @error('ci_autor') is-invalid @enderror"
-                                        value="{{ $autor->ci_autor }}" placeholder="CI del Autor" id="ciautor" autofocus
+                                        value="{{ $autor->ci_autor }}" placeholder="CI del Autor" autofocus
                                         required>
 
                                     <div class="input-group-append">
@@ -72,7 +73,7 @@
                                 <div class="input-group mb-3 col-md-3" id="nombreAutor">
                                     <input type="text" name="nombre_autor[]"
                                         class="form-control @error('nombre_autor') is-invalid @enderror"
-                                        value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor" id="autorN"
+                                        value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor"
                                         required>
 
                                     <div class="input-group-append">
@@ -86,8 +87,7 @@
                                 <div class="input-group mb-3 col-md-3" id="apellidoAutor">
                                     <input type="text" name="apellido_autor[]"
                                         class="form-control @error('apellido_autor') is-invalid @enderror"
-                                        value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor"
-                                        id="autorA" required>
+                                        value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor" required>
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">

@@ -15,7 +15,8 @@
                     <h2 class="card-title mt-2">Usuarios registrados</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/usuarios/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Usuario</a>
+                        <a href="{{ url('/admin/usuarios/register') }}" class="btn btn-primary"><i
+                                class="fa fa-plus"></i>&nbsp; Nuevo Usuario</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -50,10 +51,11 @@
                                         <td>{{ $usuario->roles->pluck('name')->implode(', ') }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}"
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
 
-                                                <a href="{{ url('admin/usuarios/' . $usuario->id) }}" class="btn btn-info btn-sm"><i
-                                                        class="bi bi-eye fas fa-eye"></i></a>
+                                                <a href="{{ url('admin/usuarios/' . $usuario->id) }}"
+                                                    class="btn btn-info btn-sm"><i class="bi bi-eye fas fa-eye"></i></a>
                                                 <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
                                                     onclick="preguntar{{ $usuario->id }}(event)"
                                                     id="miFormulario{{ $usuario->id }}">
@@ -117,7 +119,7 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -134,7 +136,7 @@
         button.btn {
             display: inline-block;
             /* Asegura que ambas etiquetas se comporten igual */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Relleno interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -241,11 +243,6 @@
                 },
 
                 buttons: [{
-                        text: '<i class="fas fa-copy"></i> COPIAR',
-                        extend: 'copy',
-                        className: 'btn btn-dark'
-                    },
-                    {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger',
@@ -294,6 +291,27 @@
                         }
 
                     },
+                    {
+                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                        className: 'btn btn-success',
+                        action: function(e, dt, node, config) {
+                            Swal.fire({
+                                title: '¿Desea exportar la tabla en un archivo Excel?',
+                                text: '',
+                                icon: 'question',
+                                showDenyButton: true,
+                                confirmButtonText: 'Exportar',
+                                confirmButtonColor: '#28a745',
+                                denyButtonColor: '#949494',
+                                denyButtonText: 'Cancelar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href =
+                                        "{{ route('usuarios.exportar') }}";
+                                }
+                            });
+                        },
+                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\infoper;
 use App\Models\User;
 use App\Models\PreguntaUser;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -241,5 +243,12 @@ class UsuarioController extends Controller
         }
 
         return response()->json(['status' => 'fail']);
+    }
+
+    public function exportarUsers()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $nombreArchivo = "listado_de_usuarios_registrados_{$fecha}.xlsx";
+        return Excel::download(new \App\Exports\UsersExport, $nombreArchivo);
     }
 }

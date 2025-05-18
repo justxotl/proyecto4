@@ -7,6 +7,8 @@ use App\Models\Autor;
 use App\Models\Carrera;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +33,22 @@ class FichaController extends Controller
     }
 
     public function buscarAutor($id)
+    {
+        $buscarautor = Autor::where('ci_autor', $id)->first();
+        if (!$buscarautor) {
+            return response()->json('NotFound');
+        }
+
+        $ficha = Autor::join('fichas', 'autors.id', '=', 'fichas.autor_id')->where('fichas.autor_id', '=', $buscarautor->id);
+
+        if ($ficha) {
+            return response()->json($buscarautor);
+        } else {
+            return response()->json('NotFound');
+        }
+    }
+
+    public function fichasBuscar($id)
     {
         $buscarautor = Autor::where('ci_autor', $id)->first();
         if (!$buscarautor) {
@@ -122,14 +140,15 @@ class FichaController extends Controller
     /**
      * Generate PDF for the specified resource.
      */
-    public function pdf($id){
+    public function pdf($id)
+    {
         $ficha = Ficha::with('autor')->where('id', $id)->first();
         $pdf = Pdf::loadView('admin.fichas.pdf', compact('ficha'))
-        ->setPaper('letter', 'portrait') // Configura el tamaño y orientación de la página
-        ->setOption('isHtml5ParserEnabled', true) // Habilita el parser HTML5
-        ->setOption('isPhpEnabled', true); // Habilita el uso de PHP en las vistas
+            ->setPaper('letter', 'portrait') // Configura el tamaño y orientación de la página
+            ->setOption('isHtml5ParserEnabled', true) // Habilita el parser HTML5
+            ->setOption('isPhpEnabled', true); // Habilita el uso de PHP en las vistas
 
-    return $pdf->stream();
+        return $pdf->stream();
     }
 
     /**
@@ -156,7 +175,7 @@ class FichaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         // Validación de los datos
         $validacion =  Validator::make(
             $request->all(),
@@ -225,7 +244,6 @@ class FichaController extends Controller
             DB::rollBack();
             return back()->with('error', 'Error en el servidor: ' . $e->getMessage());
         }
-            
     }
 
     /**
@@ -242,24 +260,31 @@ class FichaController extends Controller
     }
 
     public function quitar($id)
-{
-    
-    try {
-        // Buscar la ficha que tiene asociado al autor
-        $ficha = Ficha::whereHas('autor', function ($query) use ($id) {
-            $query->where('autors.id', $id);
-        })->first();
+    {
 
-        if (!$ficha) {
-            return response()->json(['message' => 'La relación no existe.'], 404);
+        try {
+            // Buscar la ficha que tiene asociado al autor
+            $ficha = Ficha::whereHas('autor', function ($query) use ($id) {
+                $query->where('autors.id', $id);
+            })->first();
+
+            if (!$ficha) {
+                return response()->json(['message' => 'La relación no existe.'], 404);
+            }
+
+            // Desasociar al autor de la ficha
+            $ficha->autor()->detach($id);
+
+            return response()->json(['message' => 'El autor ha sido eliminado de la ficha correctamente.']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error al eliminar el autor: ' . $e->getMessage()], 500);
         }
-
-        // Desasociar al autor de la ficha
-        $ficha->autor()->detach($id);
-
-        return response()->json(['message' => 'El autor ha sido eliminado de la ficha correctamente.']);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Error al eliminar el autor: ' . $e->getMessage()], 500);
     }
-}
+
+    public function exportarFichas()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $nombreArchivo = "listado_de_fichas_registradas_{$fecha}.xlsx";
+        return Excel::download(new \App\Exports\FichasExport, $nombreArchivo);
+    }
 }

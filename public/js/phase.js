@@ -46,6 +46,7 @@ function buscarAutor(event) {
 
 function registrarAutor(event) {
     event.preventDefault();
+    const uri = $("#uri").val();
     const cedula = document.getElementById("ciautor").value;
     if (cedula == "") {
         Swal.fire({
@@ -73,8 +74,7 @@ function registrarAutor(event) {
                     timer: 3000,
                 });
                 setTimeout(() => {
-                    window.location.href =
-                        "/laravel/biblio/public/admin/fichas";
+                    window.location.href = uri
                 }, 1000);
             }
         },
@@ -86,7 +86,7 @@ $(".card-tools").on("click", ".addRow", function () {
     <div class="row autor-item">
                             <div class="input-group mb-3 col-md-3">
                                 <input type="text" name="ci_autor[]"
-                                    class="form-control cedulaBuscar" placeholder="CI del Autor" id="ciautor" required autofocus>
+                                    class="form-control cedulaBuscar" placeholder="CI del Autor"  required autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -100,7 +100,7 @@ $(".card-tools").on("click", ".addRow", function () {
                             
                             <div class="input-group mb-3 col-md-3" id="nombreAutor">
                                 <input type="text" name="nombre_autor[]"
-                                    class="form-control nombreAutor" placeholder="Nombre del Autor" id="autorN" required>
+                                    class="form-control nombreAutor" placeholder="Nombre del Autor" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -112,7 +112,7 @@ $(".card-tools").on("click", ".addRow", function () {
 
 
                             <div class="input-group mb-3 col-md-3" id="apellidoAutor">
-                                <input type="text" name="apellido_autor[]" class="form-control apellidoAutor" placeholder="Apellido del Autor" id="autorA" required>
+                                <input type="text" name="apellido_autor[]" class="form-control apellidoAutor" placeholder="Apellido del Autor" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -134,8 +134,10 @@ $(document).on("keyup", ".cedulaBuscar", function (e) {
         const row = $(this).closest(".autor-item");
         const nombreInput = row.find(".nombreAutor");
         const apellidoInput = row.find(".apellidoAutor");
+        const baseUrl = $('meta[name="buscar-autor-url"]').attr("content");
+        const url = baseUrl.replace(":id", autor);
         $.ajax({
-            url: "" + autor + "/get",
+            url: url,
             method: "GET",
             data: { id: autor },
             success: function (response) {
