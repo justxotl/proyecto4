@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fichas', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo', 250);
+            $table->string('titulo', 900);
             $table->date('fecha');
             $table->foreignId('carrera_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); // Relación con la tabla de carreras
             $table->text('resumen');

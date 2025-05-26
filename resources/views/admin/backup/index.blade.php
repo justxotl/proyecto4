@@ -8,6 +8,16 @@
 @stop
 
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-6">
             <div class="card card-outline card-primary">
@@ -40,11 +50,13 @@
                                         <td style="text-align: center">{{ $contador++ }}</td>
                                         <td style="text-align: center">{{ basename($backup) }}</td>
                                         <td style="text-align: center">
-                                            {{ date('d-m-Y H:i:s', Storage::lastModified($backup)) }}</td>
+                                            {{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($backup))->setTimezone('America/Caracas')->format('d-m-Y') }}
+                                        </td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 <a href="{{ url('admin/backup/descargar/' . basename($backup)) }}"
-                                                    class="btn btn-success btn-sm"><i class="fa fa-download"></i></a>
+                                                    class="btn btn-success btn-sm"><i class="fa fa-download"
+                                                        title="Descargar"></i></a>
                                                 @php
                                                     $backupName = basename($backup);
                                                     $backupId = md5($backupName);
@@ -56,7 +68,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                                        <i class="fa fa-trash"></i>
+                                                        <i class="fa fa-trash" title="Eliminar"></i>
                                                     </button>
                                                 </form>
 
@@ -98,7 +110,7 @@
                     <h2 class="card-title mt-2">Restaurar desde Respaldo:</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/admin/backup/restore') }}" method="POST">
+                    <form action="{{ url('/admin/backup/restore') }}" method="POST" id="form-restaurar">
                         @csrf
                         <div class="form-group">
                             <label for="backup_file">Seleccione un punto de restauración:</label>
@@ -108,8 +120,25 @@
                                 @endforeach
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-info mt-2">
-                            <i class="fa fa-rotate-left"></i> Restaurar Base de Datos
+                        <button type="submit" id="btn-restaurar" class="btn btn-info mt-1 w-100" title="Restaurar">
+                            <i class="fa fa-undo"></i>&nbsp; Restaurar Base de Datos
+                        </button>
+                    </form>
+
+                    <hr>
+
+                    <form action="{{ url('/admin/backup/upload') }}" method="POST" enctype="multipart/form-data"
+                        id="form-subir">
+                        @csrf
+                        <div class="custom-file">
+                            <label for="uploaded_backup">O suba un archivo de restauración:</label>
+                            <input type="file" name="uploaded_backup" accept=".zip" class="custom-file-input"
+                                id="uploaded_backup" lang="es" onchange="validateFileSize(this)" required>
+                            <label class="custom-file-label" for="uploaded_backup">O seleccione un archivo de
+                                respaldo (.zip)...</label>
+                        </div>
+                        <button type="submit" id="btn-subir" class="btn btn-warning mt-0 w-100" title="Subir y Restaurar">
+                            <i class="fa fa-upload"></i>&nbsp; Subir y Restaurar Respaldo
                         </button>
                     </form>
                 </div>
@@ -232,6 +261,10 @@
             color: #212529;
             border: none;
         }
+
+        .custom-file-input:lang(es)~.custom-file-label::after {
+            content: "Buscar";
+        }
     </style>
 @stop
 
@@ -284,5 +317,65 @@
 
             })
         });
+    </script>
+
+    <script>
+        $(function() {
+            $('#btn-restaurar').on('click', function(e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: '¿Está seguro de restaurar la base de datos?',
+                    text: "Esta acción reemplazará la información actual.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, restaurar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#17a2b8',
+                    cancelButtonColor: '#949494'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#form-restaurar').submit();
+                    }
+                });
+            });
+        });
+
+        $('#btn-subir').on('click', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Desea subir y restaurar este respaldo?',
+                text: "Esto reemplazará la base de datos actual.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, subir y restaurar',
+                cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#ffc107',
+                cancelButtonColor: '#949494'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form-subir').submit();
+                }
+            });
+        });
+
+        $('.custom-file-input').on('change', function() {
+            let fileName = $(this).val().split('\\').pop();
+            $(this).next('.custom-file-label').addClass("selected").html(fileName);
+        });
+
+        function validateFileSize(input) {
+            const file = input.files[0];
+            const maxSizeMB = 200;
+
+            if (file && file.size > maxSizeMB * 1024 * 1024) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Archivo demasiado grande',
+                    text: `El archivo supera los ${maxSizeMB} MB permitidos.`,
+                });
+
+                input.value = '';
+            }
+        }
     </script>
 @stop

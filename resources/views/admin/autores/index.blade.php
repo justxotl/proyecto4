@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @section('content_header')
-<div class="row">
-    <h1 class="ml-4 mt-2"><b>Listado de Autores</b></h1>
-</div>
+    <div class="row">
+        <h1 class="ml-4 mt-2"><b>Listado de Autores</b></h1>
+    </div>
     <hr>
 @stop
 
@@ -15,7 +15,8 @@
                     <h2 class="card-title mt-2">Autores registrados</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Autor</a>
+                        <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary"><i
+                                class="fa fa-plus"></i>&nbsp; Nuevo Autor</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -37,15 +38,15 @@
                                     $contador = 1;
                                 @endphp
                                 @foreach ($autores as $autor)
-                        
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td>{{ $autor->nombre_autor}}</td>
-                                        <td>{{ $autor->apellido_autor}}</td>
+                                        <td>{{ $autor->nombre_autor }}</td>
+                                        <td>{{ $autor->apellido_autor }}</td>
                                         <td>{{ $autor->ci_autor }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button"
+                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                                 <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
                                                     onclick="preguntar{{ $autor->id }}(event)"
                                                     id="miFormulario{{ $autor->id }}">
@@ -109,7 +110,7 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -126,7 +127,7 @@
         button.btn {
             display: inline-block;
             /* Asegura que ambas etiquetas se comporten igual */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Relleno interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -210,6 +211,10 @@
         $(function() {
             $("#example1").DataTable({
                 "pageLength": 5,
+                "lengthMenu": [
+                    [5, 10, 25, 50],
+                    [5, 10, 25, 50]
+                ],
                 "language": {
                     "emptyTable": "No hay información",
                     "info": "Mostrando _START_ a _END_ de _TOTAL_ Autores",
@@ -231,11 +236,6 @@
                 "lengthChange": true,
                 "autoWidth": false,
                 buttons: [{
-                        text: '<i class="fas fa-copy"></i> COPIAR',
-                        extend: 'copy',
-                        className: 'btn btn-dark'
-                    },
-                    {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger',
@@ -263,7 +263,8 @@
                                 };
                             };
 
-                            doc.content[1].table.widths = ['5%', '40%', '40%', '15%']; // ancho por columna
+                            doc.content[1].table.widths = ['5%', '40%', '40%',
+                            '15%']; // ancho por columna
 
                             // Centrar el texto de todas las celdas
                             var body = doc.content[1].table.body;
@@ -282,6 +283,27 @@
                         }
 
                     },
+                    {
+                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                        className: 'btn btn-success',
+                        action: function(e, dt, node, config) {
+                            Swal.fire({
+                                title: '¿Desea exportar la tabla en un archivo Excel?',
+                                text: '',
+                                icon: 'question',
+                                showDenyButton: true,
+                                confirmButtonText: 'Exportar',
+                                confirmButtonColor: '#28a745',
+                                denyButtonColor: '#949494',
+                                denyButtonText: 'Cancelar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href =
+                                        "{{ route('autores.exportar') }}";
+                                }
+                            });
+                        },
+                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

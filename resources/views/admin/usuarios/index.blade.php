@@ -220,6 +220,10 @@
             $("#example1").DataTable({
 
                 "pageLength": 5,
+                "lengthMenu": [
+                    [5, 10, 25, 50],
+                    [5, 10, 25, 50]
+                ],
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,

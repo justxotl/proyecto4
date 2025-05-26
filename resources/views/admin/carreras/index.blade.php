@@ -103,7 +103,7 @@
         #example1_wrapper .btn {
             color: #fff;
             /* Color del texto en blanco */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Espaciado interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -120,7 +120,7 @@
         button.btn {
             display: inline-block;
             /* Asegura que ambas etiquetas se comporten igual */
-            padding: 5px 15px;
+            padding: 5px 10px;
             /* Relleno interno */
             font-size: 14px;
             /* Tamaño de fuente */
@@ -204,6 +204,10 @@
         $(function() {
             $("#example1").DataTable({
                 "pageLength": 5,
+                "lengthMenu": [
+                    [5, 10, 25, 50],
+                    [5, 10, 25, 50]
+                ],
                 "language": {
                     "emptyTable": "No hay información",
                     "info": "Mostrando _START_ a _END_ de _TOTAL_ Autores",
@@ -225,11 +229,6 @@
                 "lengthChange": true,
                 "autoWidth": false,
                 buttons: [{
-                        text: '<i class="fas fa-copy"></i> COPIAR',
-                        extend: 'copy',
-                        className: 'btn btn-dark'
-                    },
-                    {
                         extend: 'pdfHtml5',
                         text: '<i class="fas fa-file-pdf"></i> PDF',
                         className: 'btn btn-danger',
@@ -276,6 +275,27 @@
                         }
 
                     },
+                    {
+                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                        className: 'btn btn-success',
+                        action: function(e, dt, node, config) {
+                            Swal.fire({
+                                title: '¿Desea exportar la tabla en un archivo Excel?',
+                                text: '',
+                                icon: 'question',
+                                showDenyButton: true,
+                                confirmButtonText: 'Exportar',
+                                confirmButtonColor: '#28a745',
+                                denyButtonColor: '#949494',
+                                denyButtonText: 'Cancelar',
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href =
+                                        "{{ route('carreras.exportar') }}";
+                                }
+                            });
+                        },
+                    }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

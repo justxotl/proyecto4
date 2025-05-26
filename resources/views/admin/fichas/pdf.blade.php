@@ -45,6 +45,16 @@
             font-weight: bold;
         }
 
+        h3.text-center {
+            word-break: break-word;
+            white-space: normal;
+            max-width: 100%;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            overflow-wrap: break-word;
+        }
+
         table {
             width: 100%;
             font-size: 0.75rem;
@@ -116,7 +126,7 @@
         </div>
 
         <!-- Título de la ficha -->
-        <h3 class="text-center">{{ $ficha->titulo }}</h3>
+        <h3 class="text-center ">{{ $ficha->titulo }}</h3>
 
         <!-- Tabla de autores -->
         <h2>Autores</h2>

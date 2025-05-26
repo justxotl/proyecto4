@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-05-2025 a las 03:12:23
+-- Tiempo de generación: 20-05-2025 a las 23:40:55
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -42,13 +42,16 @@ CREATE TABLE `autors` (
 
 INSERT INTO `autors` (`id`, `ci_autor`, `nombre_autor`, `apellido_autor`, `created_at`, `updated_at`) VALUES
 (1, '12345678', 'Autor', 'Autor', '2025-04-14 00:05:30', '2025-04-14 00:05:30'),
-(2, '11111111', 'nuevo', 'nuevo', '2025-04-14 00:06:47', '2025-04-14 00:06:47'),
-(3, '22222222', 'dasdasdasd', 'asdasdasdasd', '2025-04-14 00:06:47', '2025-04-14 00:06:47'),
-(4, '54545454', 'nuevesito', 'nuevo', '2025-04-14 01:08:46', '2025-04-14 01:08:46'),
+(2, '11111111', 'Nuevo', 'Nuevo', '2025-04-14 00:06:47', '2025-05-14 21:41:12'),
+(3, '22222222', 'José', 'José', '2025-04-14 00:06:47', '2025-05-14 21:41:29'),
+(4, '54545454', 'Juan', 'Rivas', '2025-04-14 01:08:46', '2025-05-14 21:41:50'),
 (5, '34957861', 'Antonio', 'Perez', '2025-04-14 01:15:58', '2025-05-10 02:05:58'),
-(6, '76948521', 'carajito', 'manolo', '2025-04-14 01:40:20', '2025-04-14 01:40:20'),
-(7, '14798652', 'pedro', 'alcachofa', '2025-04-14 01:40:20', '2025-04-14 01:40:20'),
-(9, '30040201', 'Gabriel', 'Perdomo', '2025-05-13 00:46:15', '2025-05-13 00:46:15');
+(6, '76948521', 'Manuel', 'Gonzalez', '2025-04-14 01:40:20', '2025-05-14 21:44:07'),
+(7, '14798652', 'Pedro', 'Pérez', '2025-04-14 01:40:20', '2025-05-14 21:43:46'),
+(9, '30040201', 'Gabriel', 'Perdomo', '2025-05-13 00:46:15', '2025-05-13 00:46:15'),
+(10, '28668715', 'Alvarez', 'Ricardo', '2025-05-14 01:15:59', '2025-05-14 01:15:59'),
+(11, '2222222', 'José', 'José', '2025-05-15 00:15:53', '2025-05-15 00:15:53'),
+(12, '28736583', 'RAUL', 'SANCHEZ', '2025-05-15 03:23:44', '2025-05-15 03:23:44');
 
 -- --------------------------------------------------------
 
@@ -69,16 +72,31 @@ CREATE TABLE `autor_ficha` (
 --
 
 INSERT INTO `autor_ficha` (`id`, `ficha_id`, `autor_id`, `created_at`, `updated_at`) VALUES
-(30, 1, 2, NULL, NULL),
-(31, 1, 3, NULL, NULL),
 (38, 5, 6, NULL, NULL),
 (39, 5, 7, NULL, NULL),
 (40, 7, 5, NULL, NULL),
-(42, 2, 1, NULL, NULL),
-(43, 2, 3, NULL, NULL),
-(44, 9, 3, NULL, NULL),
 (46, 8, 6, NULL, NULL),
-(47, 10, 9, NULL, NULL);
+(47, 10, 9, NULL, NULL),
+(48, 11, 6, NULL, NULL),
+(52, 12, 6, NULL, NULL),
+(53, 12, 1, NULL, NULL),
+(54, 13, 6, NULL, NULL),
+(55, 13, 1, NULL, NULL),
+(56, 13, 2, NULL, NULL),
+(57, 9, 6, NULL, NULL),
+(58, 14, 3, NULL, NULL),
+(59, 14, 10, NULL, NULL),
+(60, 15, 10, NULL, NULL),
+(61, 15, 9, NULL, NULL),
+(65, 2, 1, NULL, NULL),
+(66, 2, 11, NULL, NULL),
+(67, 2, 4, NULL, NULL),
+(68, 16, 12, NULL, NULL),
+(69, 16, 4, NULL, NULL),
+(70, 1, 4, NULL, NULL),
+(71, 17, 2, NULL, NULL),
+(72, 18, 10, NULL, NULL),
+(73, 19, 9, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -129,7 +147,8 @@ INSERT INTO `carreras` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
 (6, 'Tabla', '2025-05-12 01:49:34', '2025-05-12 01:49:34'),
 (7, 'Otra Carrera Más', '2025-05-12 02:27:06', '2025-05-12 02:27:06'),
 (8, 'Ingeniería Industrial', '2025-05-13 00:17:07', '2025-05-13 00:17:07'),
-(9, 'Ludopatía General', '2025-05-13 00:45:54', '2025-05-13 00:45:54');
+(9, 'Ludopatía General', '2025-05-13 00:45:54', '2025-05-13 00:45:54'),
+(10, 'gané', '2025-05-15 03:24:55', '2025-05-15 03:24:55');
 
 -- --------------------------------------------------------
 
@@ -169,12 +188,21 @@ CREATE TABLE `fichas` (
 
 INSERT INTO `fichas` (`id`, `titulo`, `fecha`, `carrera_id`, `resumen`, `created_at`, `updated_at`) VALUES
 (1, 'asdaklñjsdaljsdk', '2025-01-01', 4, 'asldkuajsldkjasldkajsdlakjsd', '2025-04-14 00:06:47', '2025-04-30 03:12:08'),
-(2, 'ioooooooooooooo', '2025-04-02', 1, 'coherencia', '2025-04-14 01:08:46', '2025-04-30 03:01:55'),
+(2, 'Agarrando', '2025-04-02', 3, 'AGARRATE', '2025-04-14 01:08:46', '2025-05-15 03:14:38'),
 (5, 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.', '2025-04-08', 1, '\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"', '2025-04-14 01:40:20', '2025-05-09 23:42:58'),
 (7, 'lorem ipsum', '2025-05-02', 3, '\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"', '2025-05-10 02:08:30', '2025-05-10 02:08:30'),
 (8, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2025-05-01', 3, '\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"', '2025-05-10 02:16:17', '2025-05-12 21:32:09'),
 (9, 'prueba', '2024-10-09', 6, 'prueba de resumen', '2025-05-12 02:35:50', '2025-05-12 02:35:50'),
-(10, 'Ahorro de diamantes profesional.', '2020-09-15', 9, '¿Cómo ahorrar diamantes sin caer en la desesperación?, cinco pasos que te salvarán la vida.', '2025-05-13 00:48:40', '2025-05-13 00:48:40');
+(10, 'Ahorro de diamantes profesional.', '2020-09-15', 9, '¿Cómo ahorrar diamantes sin caer en la desesperación?, cinco pasos que te salvarán la vida.', '2025-05-13 00:48:40', '2025-05-13 00:48:40'),
+(11, 'Título del Trabajo de Grado de Ingeniería en Sistema', '2025-05-06', 6, 'ad', '2025-05-13 04:32:14', '2025-05-13 04:32:14'),
+(12, 'A ver si inserta', '2025-05-13', 5, 'al diablo', '2025-05-13 04:34:16', '2025-05-13 04:34:16'),
+(13, 'Nueva Esta', '2022-10-02', 7, 'Manual Técnico', '2025-05-13 04:38:31', '2025-05-13 04:38:31'),
+(14, 'Prueba y error', '2025-05-13', 8, 'Resumen', '2025-05-14 01:15:59', '2025-05-14 01:15:59'),
+(15, 'Titulo de Ejemplo', '2021-11-21', 5, 'Historia de los Ejemplos', '2025-05-14 21:46:14', '2025-05-14 21:46:14'),
+(16, 'VAMOS', '2024-03-30', 4, 'POR FAVOR', '2025-05-15 03:23:44', '2025-05-15 03:23:44'),
+(17, 'nuevo', '2023-12-02', 5, 'resumen', '2025-05-15 04:38:26', '2025-05-15 04:38:26'),
+(18, 'big brain', '2025-05-15', 1, 'big brain', '2025-05-15 04:45:10', '2025-05-15 04:45:10'),
+(19, 'Heladería Kreisel Supra', '2023-06-14', 10, 'Hace helados de verdad en solo minutos', '2025-05-16 21:08:58', '2025-05-16 21:08:58');
 
 -- --------------------------------------------------------
 
@@ -353,7 +381,7 @@ CREATE TABLE `preguntas_user` (
 
 INSERT INTO `preguntas_user` (`id`, `user_id`, `pregunta_uno`, `respuesta_uno`, `pregunta_dos`, `respuesta_dos`, `created_at`, `updated_at`) VALUES
 (1, 1, NULL, NULL, NULL, NULL, '2025-05-07 03:31:19', '2025-05-11 03:33:24'),
-(3, 2, 'a', 'a', 'a', 'a', '2025-05-07 17:34:08', '2025-05-12 23:00:30'),
+(3, 2, 'agua', 'agua', 'regia', 'pesada', '2025-05-07 17:34:08', '2025-05-15 03:26:01'),
 (4, 4, NULL, NULL, NULL, NULL, '2025-05-08 02:55:17', '2025-05-08 02:55:17'),
 (5, 3, 'guacala', 'no', 'se', 'se', '2025-05-08 02:55:35', '2025-05-11 03:48:01'),
 (6, 5, 'Cuál es el apodo de Escanor', 'El Papocho', 'Decepción Total', 'Galan', '2025-05-13 00:52:33', '2025-05-13 00:52:33');
@@ -412,9 +440,9 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('ar62S2CYIYUWYhaCHirmCuKk1Ykr6nHlbSAcLQYg', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoiNXp1TjZkSmJUNjd0MkdtdkQxT0lNSUR4aVhwcjVORkZyelo5Z3VTaiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL2JhY2t1cCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToyO3M6NDoiYXV0aCI7YToxOntzOjIxOiJwYXNzd29yZF9jb25maXJtZWRfYXQiO2k6MTc0NzA5NTQwMzt9fQ==', 1747095912),
-('Ta3khQy4GUYNk6Z7YAIXkyoGD6QVh7Z3avNHVq0G', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiOXo5N1NjWWh2M1dJZlJkMWpMRWVSdXBFYU1FTnB3VG9uYXlEalBGRCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2xvZ2luIjt9czozOiJ1cmwiO2E6MTp7czo4OiJpbnRlbmRlZCI7czo1MDoiaHR0cDovL2xvY2FsaG9zdC9sYXJhdmVsL2JpYmxpby9wdWJsaWMvYWRtaW4vcm9sZXMiO319', 1747097994),
-('yPFro7gNuKv1K1lrWFF9JuZ3bRH47soq4vB5nORv', 5, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiSzFhYmo2Z2podUFJaXIyQ2haZWZFdzBEVWpBclF1dGVGNFQ4YXo1NSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL2JhY2t1cCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzQ3MDk3NjkyO319', 1747097694);
+('csualJ4kM6XatGFIg2s56AX7rOOYLMhBRlJxDGHK', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoic0N0emZoUlh5QjdCcnUwVTZRYUk3eUo1b3ZCcTNmVk9tSllERXRobiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1747712559),
+('e0FqrY8fYgKRkDJTfYP3Iczl8pM5Itgxb1SXcPAS', 2, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiWERTWjVxTHVUbG96eXVQY0JIQlRHTWhGdzZSMkZlOVVRVkZCMmFQNCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL3BlcmZpbCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjI7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzQ3NzcwMzc0O319', 1747777128),
+('Ym8EbKAromB403EudAvQv1maH1FIXZq608nmzkEV', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiRGYxZUNNQk0wbTB2dmlZMVRxdGhsOFppb2ZIdW5rR3hPakpvT1hNZyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2xvZ2luIjt9fQ==', 1747535804);
 
 -- --------------------------------------------------------
 
@@ -439,7 +467,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'User', 'test@ejemplo.com', '2025-04-14 00:05:30', '$2y$12$f7./EB9P9cQ0bKSDb.qKhOCWD69.ZDW6sw5lfskRLmKk.sCiAVy/y', 'lcVHX8BORsVKgitKhYGop17CJed7XvHHMkqsg2soBHwut7jyvCUoO4l0JQLX', '2025-04-14 00:05:30', '2025-05-11 03:33:24'),
-(2, 'admin', 'admin@admin.com', NULL, '$2y$12$r/Sm6NV28OxV4FFzzDYS6uzMOhOZWpHIVJ0yB/gj62/tu2Gw9o0FS', NULL, '2025-05-07 17:20:48', '2025-05-12 23:13:53'),
+(2, 'admin', 'admin@admin.com', NULL, '$2y$12$4JBE2zyimnbKX3mzlmbPB.Ha20JY/yQwEPdrwgCyAsIoQOJXQ1WEK', NULL, '2025-05-07 17:20:48', '2025-05-15 03:26:31'),
 (3, 'Hermenejildo', 'ochoa@gmail.com', NULL, '$2y$12$VZ7yq7zIuGe87gB5Dql16ucQPiJ5Pnwcn9dC7zG2esBAfXH59gt/u', NULL, '2025-05-08 02:05:37', '2025-05-08 02:05:37'),
 (4, 'gladys', 'gladys@gmail.com', NULL, '$2y$12$z85yvnG81ZRsgL/ZZ3DhC.A5c0bD6D00u0XbNoOCIU2zXQ7fk2CX6', NULL, '2025-05-08 02:24:46', '2025-05-08 02:24:46'),
 (5, 'nolose', 'noloseqwq@gmail.com', NULL, '$2y$12$IIKPypKpeD/gJYhgSPXCK.iHOUBngcgRQ9hZHVW9d8RlHU2U5HrO6', NULL, '2025-05-13 00:44:00', '2025-05-13 00:53:37');
@@ -593,19 +621,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `autors`
 --
 ALTER TABLE `autors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `autor_ficha`
 --
 ALTER TABLE `autor_ficha`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -617,7 +645,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `fichas`
 --
 ALTER TABLE `fichas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `infopers`

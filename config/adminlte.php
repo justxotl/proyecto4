@@ -319,6 +319,11 @@ return [
             'icon' => 'fas fa-fw fa-book',
         ],
         [
+            'text' => 'Préstamos de Fichas',
+            'url' => 'admin/prestamos',
+            'icon' => 'fas fa-fw fa-people-arrows',
+        ],
+        [
             'text' => 'Autores',
             'url' => 'admin/autores',
             'icon' => 'fas fa-fw fa-pen-nib',
@@ -437,7 +442,7 @@ return [
         ],
 
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

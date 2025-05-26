@@ -100,7 +100,7 @@ class BackupController extends Controller
 
         if (Storage::disk('local')->exists($file)) {
             Storage::disk('local')->delete($file);
-            
+
             return redirect()->route('admin.backup.index')
                 ->with('mensaje', 'Respaldo eliminado con éxito.')
                 ->with('icono', 'success');
@@ -109,5 +109,70 @@ class BackupController extends Controller
                 ->with('mensaje', 'El archivo no existe.')
                 ->with('icono', 'error');
         }
+    }
+
+    public function uploadRestore(Request $request)
+    {
+        $request->validate([
+            'uploaded_backup' => 'required|file|mimes:zip|max:204800',
+        ], [
+            'uploaded_backup.required' => 'Debe seleccionar un archivo.',
+            'uploaded_backup.file' => 'Debe ser un archivo válido.',
+            'uploaded_backup.mimes' => 'Solo se permiten archivos .zip.',
+            'uploaded_backup.max' => 'El archivo no debe superar los 200 MB.',
+        ]);
+
+        try {
+            $file = $request->file('uploaded_backup');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $storagePath = 'private/laravel-backup';
+
+            // Guardar el archivo ZIP
+            $file->move(storage_path('app/' . $storagePath), $filename);
+
+            $fullFilePath = storage_path("app/$storagePath/$filename");
+
+            // Extraer y restaurar desde ZIP
+            $zip = new ZipArchive;
+            $extractPath = storage_path('app/backup-temp-' . time());
+
+            if ($zip->open($fullFilePath) === true) {
+                $zip->extractTo($extractPath);
+                $zip->close();
+
+                $sqlFile = $this->findSqlFile($extractPath);
+
+                if ($sqlFile) {
+                    $this->runSqlFile($sqlFile);
+                    File::deleteDirectory($extractPath);
+                    File::delete($fullFilePath);
+
+                    return redirect()->back()
+                        ->with('mensaje', 'Respaldo ZIP subido y restaurado correctamente.')
+                        ->with('icono', 'success');
+                }
+
+                File::deleteDirectory($extractPath);
+                File::delete($fullFilePath);
+                return redirect()->back()
+                    ->with('mensaje', 'No se encontró archivo .sql dentro del ZIP.')
+                    ->with('icono', 'error');
+            }
+
+            return redirect()->back()
+                ->with('mensaje', 'No se pudo abrir el archivo ZIP.')
+                ->with('icono', 'error');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('mensaje', 'Error al restaurar respaldo: ' . $e->getMessage())
+                ->with('icono', 'error');
+        }
+    }
+
+    // Método para ejecutar SQL
+    private function runSqlFile($path)
+    {
+        $sql = File::get($path);
+        DB::unprepared($sql);
     }
 }

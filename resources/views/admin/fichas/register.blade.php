@@ -41,16 +41,19 @@
                 <div class="card-body">
 
                     <form action="{{ url('admin/fichas/register') }}" id="form_ficha" method="post">
+
                         @csrf
+                        
                         <button type="submit" disabled hidden aria-hidden="true"></button>
                         <input type="hidden" id="uri" value="{{ route('admin.fichas.index') }}">
+
                         <div class="row">
                             {{-- CI field --}}
                             <div class="input-group mb-3 col-md-4">
                                 <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
                                     class="form-control @error('ci_autor') is-invalid @enderror"
                                     value="{{ old('ci_autor') }}" placeholder="CI del Autor" id="ciautor" required
-                                    autofocus>
+                                    autofocus autocomplete="off">
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>

@@ -1,8 +1,12 @@
 @extends('adminlte::page')
 
+@php
+    use Carbon\Carbon;
+@endphp
+
 @section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-2"><b>Listado de Fichas</b></h1>
+        <h1 class="ml-4 mt-2"><b>Listado de Préstamos</b></h1>
     </div>
     <hr>
 @stop
@@ -12,11 +16,12 @@
         <div class="col-md-12">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h2 class="card-title mt-2">Fichas Bibliográficas</h2>
+                    <h2 class="card-title mt-2">Préstamos Realizados</h2>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
-                            Nueva Ficha</a>
+                        <a href="{{ route('admin.prestamos.register') }}" class="btn btn-primary"><i
+                                class="fa fa-plus"></i>&nbsp;
+                            Nuevo Préstamo</a>
                     </div>
                     <!-- /.card-tools -->
                 </div>
@@ -27,10 +32,11 @@
                             <thead>
                                 <tr>
                                     <th style="text-align: center">#</th>
-                                    <th style="text-align: center">Fecha</th>
                                     <th style="text-align: center">Título</th>
-                                    <th style="text-align: center">Autor(es)</th>
-                                    <th style="text-align: center">Materia</th>
+                                    <th style="text-align: center">CI. Prestatario</th>
+                                    <th style="text-align: center">F. Préstamo</th>
+                                    <th style="text-align: center">F. Devolución</th>
+                                    <th style="text-align: center">Estado</th>
                                     <th style="text-align: center">Acción</th>
                                 </tr>
                             </thead>
@@ -38,51 +44,118 @@
                                 @php
                                     $contador = 1;
                                 @endphp
-                                @foreach ($fichas as $ficha)
+                                @foreach ($prestamos as $prestamo)
                                     <tr>
-                                        <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td style="text-align: center">
-                                            {{ \Carbon\Carbon::parse($ficha->fecha)->format('d-m-Y') }}</td>
-                                        <td class="titulo-columna" title="{{ $ficha->titulo }}">{{ $ficha->titulo }}</td>
-                                        <td style="text-align: center">
-                                            @if (count($ficha->autor) > 1)
-                                                <a href="#" class="ver-autores-link" data-toggle="modal"
-                                                    data-target="#modalAutores" data-ficha-id="{{ $ficha->id }}"
-                                                    data-autores='@json($ficha->autor)'>
-                                                    Ver ({{ count($ficha->autor) }}) autores
-                                                </a>
-                                            @elseif (count($ficha->autor) === 1)
-                                                {{ $ficha->autor[0]->nombre_autor }} {{ $ficha->autor[0]->apellido_autor }}
+                                        <td>{{ $contador++ }}</td>
+                                        <td class="truncate-3-lines" title="{{ $prestamo->ficha->titulo }}">
+                                            {{ $prestamo->ficha->titulo }}</td>
+                                        <td>{{ $prestamo->ci_prestatario }}</td>
+                                        <td>{{ $prestamo->fecha_prestamo }}</td>
+                                        <td>{{ $prestamo->fecha_devolucion }}</td>
+                                        @php
+                                            $hoy = Carbon::today();
+                                            $fechaPrestamo = Carbon::createFromFormat(
+                                                'd/m/Y',
+                                                $prestamo->fecha_prestamo,
+                                            );
+                                            $fechaDevolucion = Carbon::createFromFormat(
+                                                'd/m/Y',
+                                                $prestamo->fecha_devolucion,
+                                            );
+
+                                            $fechaEntrega = $prestamo->fecha_entrega
+                                                ? Carbon::parse($prestamo->fecha_entrega)
+                                                : null;
+                                        @endphp
+
+                                        <td>
+                                            @php
+                                                $estadoCalculado = '';
+                                                if ($prestamo->estado === 'devuelto') {
+                                                    if ($fechaEntrega && $fechaEntrega->lte($fechaDevolucion)) {
+                                                        $estadoCalculado = 'Devuelto';
+                                                    } elseif ($fechaEntrega && $fechaEntrega->gt($fechaDevolucion)) {
+                                                        $estadoCalculado = 'Devolución Tardía';
+                                                    } else {
+                                                        $estadoCalculado = 'Devuelto';
+                                                    }
+                                                } else {
+                                                    if ($hoy->gte($fechaPrestamo) && $hoy->lte($fechaDevolucion)) {
+                                                        $estadoCalculado = 'Prestado';
+                                                    } elseif ($hoy->gt($fechaDevolucion)) {
+                                                        $estadoCalculado = 'Atrasado';
+                                                    } else {
+                                                        $estadoCalculado = 'Pendiente';
+                                                    }
+                                                }
+                                            @endphp
+                                            <span class="d-none">{{ $estadoCalculado }}</span>
+                                            @if ($estadoCalculado === 'Devuelto')
+                                                <span class="badge badge-success">Devuelto</span>
+                                            @elseif ($estadoCalculado === 'Devolución Tardía')
+                                                <span class="badge badge-warning">Devolución Tardía</span>
+                                            @elseif ($estadoCalculado === 'Prestado')
+                                                <span class="badge badge-primary">Prestado</span>
+                                            @elseif ($estadoCalculado === 'Atrasado')
+                                                <span class="badge badge-danger">Atrasado</span>
                                             @else
-                                                Sin autores
+                                                <span class="badge badge-secondary">Pendiente</span>
                                             @endif
                                         </td>
-                                        <td>{{ $ficha->carrera->nombre }}</td>
-                                        <td style="text-align: center">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}"
-                                                    class="btn btn-success btn-sm">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a href="{{ url('admin/fichas/' . $ficha->id) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
-                                                    class="btn btn-dark btn-sm" target="_blank">
-                                                    <i class="fas fa-file-pdf"></i>
-                                                </a>
-                                                <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
-                                                    onclick="preguntar{{ $ficha->id }}(event)"
-                                                    id="miFormulario{{ $ficha->id }}">
+                                        <td>
+                                            <div class="btn-group">
+                                                @if ($prestamo->estado === 'prestado')
+                                                    <a href="{{ route('admin.prestamos.edit', $prestamo->id) }}"
+                                                        class="btn btn-success btn-sm" title="Editar"><i
+                                                            class="fas fa-pen"></i></a>
+                                                @endif
+                                                <a href="{{ route('admin.prestamos.show', $prestamo->id) }}"
+                                                    class="btn btn-info btn-sm"><i class="fas fa-eye"
+                                                        title="Ver Más"></i></a>
+                                                @if ($prestamo->estado === 'prestado')
+                                                    <form action="{{ route('admin.prestamos.devolver', $prestamo->id) }}"
+                                                        method="post" style="display:inline;"
+                                                        onclick="ask{{ $prestamo->id }}(event)"
+                                                        id="miFormularioDevolver{{ $prestamo->id }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit" class="btn btn-warning btn-sm"
+                                                            title="Marcar como Devuelto">
+                                                            <i class="fas fa-undo"></i>
+                                                        </button>
+                                                    </form>
+                                                    <script>
+                                                        function ask{{ $prestamo->id }}(event) {
+                                                            event.preventDefault();
+                                                            Swal.fire({
+                                                                title: '¿Desea marcar este préstamo como devuelto?',
+                                                                text: '',
+                                                                icon: 'question',
+                                                                showDenyButton: true,
+                                                                confirmButtonText: 'Marcar como devuelto',
+                                                                confirmButtonColor: '#ffc107',
+                                                                denyButtonColor: '#949494',
+                                                                denyButtonText: 'Cancelar',
+                                                            }).then((result) => {
+                                                                if (result.isConfirmed) {
+                                                                    var form = $('#miFormularioDevolver{{ $prestamo->id }}');
+                                                                    form.submit();
+                                                                }
+                                                            });
+                                                        }
+                                                    </script>
+                                                @endif
+                                                <form action="{{ route('admin.prestamos.destroy', $prestamo->id) }}"
+                                                    method="post" onclick="preguntar{{ $prestamo->id }}(event)"
+                                                    id="miFormulario{{ $prestamo->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
                                                 </form>
                                                 <script>
-                                                    function preguntar{{ $ficha->id }}(event) {
+                                                    function preguntar{{ $prestamo->id }}(event) {
                                                         event.preventDefault();
                                                         Swal.fire({
                                                             title: '¿Desea eliminar este registro?',
@@ -95,7 +168,7 @@
                                                             denyButtonText: 'Cancelar',
                                                         }).then((result) => {
                                                             if (result.isConfirmed) {
-                                                                var form = $('#miFormulario{{ $ficha->id }}');
+                                                                var form = $('#miFormulario{{ $prestamo->id }}');
                                                                 form.submit();
                                                             }
                                                         });
@@ -107,23 +180,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                        <!-- Modal -->
-                        <div class="modal fade" id="modalAutores" tabindex="-1" role="dialog"
-                            aria-labelledby="modalAutoresLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Autores de la ficha</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <ul id="lista-autores" class="list-group"></ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -149,6 +205,19 @@
             /* Separar botones de la tabla */
         }
 
+        /* Truncar contenido a 3 líneas con puntos suspensivos */
+        .truncate-3-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            text-align: center;
+            vertical-align: top;
+            word-break: break-word;
+        }
+
         /* Estilo personalizado para los botones */
         #example1_wrapper .btn {
             color: #fff;
@@ -164,18 +233,6 @@
             /* Centra verticalmente el contenido */
             text-align: center;
             /* Centra horizontalmente el contenido */
-        }
-
-        .titulo-columna {
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: normal;
-            text-align: center;
-            vertical-align: top;
-            word-break: break-word;
         }
 
         a.btn,
@@ -271,29 +328,33 @@
                     [5, 10, 25, 50]
                 ],
                 "columnDefs": [{
-                        "width": "5%",
+                        "width": "4%",
                         "targets": 0
                     },
                     {
-                        "width": "10%",
+                        "width": "30%",
                         "targets": 1
                     },
                     {
-                        "width": "30%",
+                        "width": "12%",
                         "targets": 2
                     },
                     {
-                        "width": "25%",
+                        "width": "12%",
                         "targets": 3
                     },
                     {
-                        "width": "15%",
+                        "width": "12%",
                         "targets": 4
                     },
                     {
-                        "width": "15%",
+                        "width": "10%",
                         "targets": 5
                     },
+                    {
+                        "width": "20%",
+                        "targets": 6
+                    }
                 ],
                 "language": {
                     "emptyTable": "No hay información",
@@ -380,31 +441,13 @@
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     window.location.href =
-                                        "{{ route('fichas.exportar') }}";
+                                        "{{ route('prestamos.exportar') }}";
                                 }
                             });
                         },
                     }
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            $('.ver-autores-link').on('click', function() {
-                const autores = $(this).data('autores');
-                const lista = $('#lista-autores');
-                lista.empty(); // Limpia el contenido anterior
-
-                if (Array.isArray(autores)) {
-                    autores.forEach(function(autor) {
-                        lista.append(
-                            `<li class="list-group-item">${autor.nombre_autor} ${autor.apellido_autor}</li>`
-                            );
-                    });
-                }
-            });
         });
     </script>
 @stop

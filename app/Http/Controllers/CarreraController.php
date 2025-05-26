@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrera;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class CarreraController extends Controller
@@ -87,5 +89,12 @@ class CarreraController extends Controller
         return redirect()->route('admin.carreras.index')
             ->with('mensaje', 'Carrera eliminada correctamente.')
             ->with('icono', 'success');
+    }
+
+    public function exportarCarreras()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $nombreArchivo = "listado_de_carreras_registradas_{$fecha}.xlsx";
+        return Excel::download(new \App\Exports\CarreraExport, $nombreArchivo);
     }
 }

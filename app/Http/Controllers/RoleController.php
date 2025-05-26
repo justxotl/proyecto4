@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Spatie\Permission\Models\Role;
+use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 
@@ -88,5 +90,12 @@ class RoleController extends Controller
         return redirect()->route('admin.roles.index')
             ->with('mensaje', 'Rol eliminado correctamente.')
             ->with('icono', 'success');
+    }
+
+    public function exportarRoles()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $nombreArchivo = "listado_de_roles_registrados_{$fecha}.xlsx";
+        return Excel::download(new \App\Exports\RolesExport, $nombreArchivo);
     }
 }
