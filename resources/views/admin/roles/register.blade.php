@@ -27,7 +27,14 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title">Ingrese la información solicitada:</h3>
+                    <h3 class="card-title mt-1">Ingrese la información solicitada:</h3>
+
+                    <div class="card-tools">
+                        <a href="{{ route('admin.roles.index') }}" class="btn btn-sm btn-secondary">Volver</a>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-angle-down"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <div class="card-body">
@@ -41,7 +48,7 @@
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    placeholder="Nombre del Rol" required autofocus>
+                                    placeholder="Nombre del Rol" autocomplete="off" required autofocus>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-pen {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -56,7 +63,6 @@
                         </div>
 
                         {{-- Register button --}}
-                        <a href="{{ url('/admin/roles') }}" class="btn btn-secondary">Volver</a> &nbsp;
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
                 </div>

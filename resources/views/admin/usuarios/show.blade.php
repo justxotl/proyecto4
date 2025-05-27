@@ -17,10 +17,10 @@
         <div class="col-md-12">
             <div class="card card-outline card-info">
                 <div class="card-header">
-                    <h3 class="card-title mt-2"><b>Datos Registrados:</b></h3>
+                    <h3 class="card-title mt-1"><b>Datos Registrados:</b></h3>
 
                     <div class="card-tools">
-                        <a href="{{ url('/admin/usuarios') }}" class="btn btn-secondary">Volver</a>
+                        <a href="{{ url('/admin/usuarios') }}" class="btn btn-sm btn-secondary">Volver</a>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-angle-down"></i>
                         </button>

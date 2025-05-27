@@ -13,9 +13,10 @@
         <div class="col-md-12">
             <div class="card card-outline card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Coloque los datos a modificar:</h3>
+                    <h3 class="card-title mt-1">Coloque los datos a modificar:</h3>
 
                     <div class="card-tools">
+                        <a href="{{ route('admin.usuarios.index') }}" class="btn btn-sm btn-secondary">Volver</a>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse">
                             <i class="fas fa-minus"></i>
                         </button>
@@ -124,7 +125,6 @@
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="form group">
-                                    <a href="{{ url('admin/usuarios') }}" class="btn btn-danger">Cancelar</a>
                                     <button type="submit" class="btn btn-success">Actualizar Usuario</button>
                                 </div>
                             </div>
