@@ -13,9 +13,12 @@
             <div class="card card-outline card-primary">
                 <div class="card-header">
                     <h2 class="card-title mt-2">Carreras Registradas</h2>
-                    <div class="card-tools">
-                        <a href="{{ url('/admin/carreras/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nueva Carrera</a>
-                    </div>
+                    @can('Registrar Carrera')
+                        <div class="card-tools">
+                            <a href="{{ url('/admin/carreras/register') }}" class="btn btn-primary"><i
+                                    class="fa fa-plus"></i>&nbsp; Nueva Carrera</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -36,18 +39,24 @@
                                 @foreach ($carreras as $carrera)
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td>{{ $carrera->nombre}}</td>
+                                        <td>{{ $carrera->nombre }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}" type="button" class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                                <form action="{{ url('/admin/carreras', $carrera->id) }}" method="post"
-                                                    onclick="preguntar{{ $carrera->id }}(event)"
-                                                    id="miFormulario{{ $carrera->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fas fa-trash"></i></button>
-                                                </form>
+                                                @can('Editar Carrera')
+                                                    <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}"
+                                                        type="button" class="btn btn-success btn-sm"><i
+                                                            class="fas fa-pencil-alt"></i></a>
+                                                @endcan
+                                                @can('Eliminar Carrera')
+                                                    <form action="{{ url('/admin/carreras', $carrera->id) }}" method="post"
+                                                        onclick="preguntar{{ $carrera->id }}(event)"
+                                                        id="miFormulario{{ $carrera->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fas fa-trash"></i></button>
+                                                    </form>
+                                                @endcan
                                                 <script>
                                                     function preguntar{{ $carrera->id }}(event) {
                                                         event.preventDefault();
@@ -228,52 +237,14 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                buttons: [{
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger',
-                        orientation: 'landscape',
-                        pageSize: 'A4',
-                        title: 'Listado de Carreras',
-                        exportOptions: {
-                            columns: [0, 1] // columnas a exportar
-                        },
-                        customize: function(doc) {
-                            doc.styles.title = {
-                                fontSize: 16,
-                                alignment: 'center',
-                                bold: true
-                            };
-
-                            doc.pageMargins = [40, 60, 40, 60];
-
-                            doc.footer = function(currentPage, pageCount) {
-                                return {
-                                    text: 'Página ' + currentPage.toString() + ' de ' +
-                                        pageCount,
-                                    alignment: 'right',
-                                    margin: [0, 0, 20, 0]
-                                };
-                            };
-
-                            doc.content[1].table.widths = ['15%', '85%']; // ancho por columna
-
-                            // Centrar el texto de todas las celdas
-                            var body = doc.content[1].table.body;
-                            body.forEach(function(row, rowIndex) {
-                                row.forEach(function(cell, cellIndex) {
-                                    if (rowIndex === 0) {
-                                        // Encabezados de la tabla
-                                        cell.alignment = 'center';
-                                        cell.bold = true;
-                                    } else {
-                                        // Celdas del cuerpo
-                                        cell.alignment = 'center';
-                                    }
-                                });
-                            });
-                        }
-
+                buttons: [
+                    @can('Exportar Reporte de Carreras')
+                    {
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn btn-danger',
+                            action: function() {
+                                window.open('{{ route('carreras.exportar.pdf') }}', '_blank');
+                            }
                     },
                     {
                         text: '<i class="fas fa-file-csv"></i>  EXCEL',
@@ -296,6 +267,7 @@
                             });
                         },
                     }
+                    @endcan 
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

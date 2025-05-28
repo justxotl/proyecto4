@@ -312,36 +312,43 @@ return [
             'text' => 'Usuarios',
             'url' => 'admin/usuarios',
             'icon' => 'fas fa-fw fa-users',
+            'can' => 'Ver Lista de Usuarios'
         ],
         [
             'text' => 'Fichas Bibliográficas',
             'url' => 'admin/fichas',
             'icon' => 'fas fa-fw fa-book',
+            'can' => 'Ver Lista de Fichas'
         ],
         [
             'text' => 'Préstamos de Fichas',
             'url' => 'admin/prestamos',
             'icon' => 'fas fa-fw fa-people-arrows',
+            'can' => 'Ver Lista de Préstamos'
         ],
         [
             'text' => 'Autores',
             'url' => 'admin/autores',
             'icon' => 'fas fa-fw fa-pen-nib',
+            'can' => 'Ver Lista de Autores'
         ],
         [
             'text' => 'Carreras',
             'url' => 'admin/carreras',
             'icon' => 'fas fa-fw fa-graduation-cap',
+            'can' => 'Ver Lista de Carreras'
         ],
         [
             'text' => 'Roles',
             'url' => 'admin/roles',
             'icon' => 'fas fa-fw fa-address-book',
+            'can' => 'Ver Lista de Roles'
         ],
         [
             'text' => 'Base de Datos',
             'url' => 'admin/backup',
             'icon' => 'fas fa-fw fa-database',
+            'can' => 'Ver Lista de Respaldos'
         ],
     ],
 

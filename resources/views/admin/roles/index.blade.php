@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @section('content_header')
-<div class="row">
-    <h1 class="ml-4 mt-2"><b>Listado de Roles</b></h1>
-</div>
+    <div class="row">
+        <h1 class="ml-4 mt-2"><b>Listado de Roles</b></h1>
+    </div>
     <hr>
 @stop
 
@@ -14,9 +14,12 @@
                 <div class="card-header">
                     <h2 class="card-title mt-2">Roles registrados:</h2>
 
-                    <div class="card-tools">
-                        <a href="{{ url('/admin/roles/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp; Nuevo Rol</a>
-                    </div>
+                    @can('Registrar Rol')
+                        <div class="card-tools">
+                            <a href="{{ url('/admin/roles/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
+                                Nuevo Rol</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -35,22 +38,30 @@
                                     $contador = 1;
                                 @endphp
                                 @foreach ($roles as $rol)
-                        
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
-                                        <td>{{$rol->name}}</td>
+                                        <td>{{ $rol->name }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/roles/' . $rol->id . '/edit') }}" type="button"
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                                <form action="{{ url('/admin/roles', $rol->id) }}" method="post"
-                                                    onclick="preguntar{{ $rol->id }}(event)"
-                                                    id="miFormulario{{ $rol->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fas fa-trash"></i></button>
-                                                </form>
+                                                @can('Editar Rol')
+                                                    <a href="{{ url('/admin/roles/' . $rol->id . '/edit') }}" type="button"
+                                                        class="btn btn-success btn-sm" title="Editar Rol"><i
+                                                            class="fas fa-pencil-alt"></i></a>
+
+                                                    <a href="{{ url('/admin/roles/' . $rol->id . '/asignar') }}" type="button"
+                                                        class="btn btn-info btn-sm" title="Asignar Permisos"><i
+                                                            class="fas fa-tasks"></i></a>
+                                                @endcan
+                                                @can('Eliminar Rol')
+                                                    <form action="{{ url('/admin/roles', $rol->id) }}" method="post"
+                                                        onclick="preguntar{{ $rol->id }}(event)"
+                                                        id="miFormulario{{ $rol->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar Rol"><i class="fas fa-trash"></i></button>
+                                                    </form>
+                                                @endcan
                                                 <script>
                                                     function preguntar{{ $rol->id }}(event) {
                                                         event.preventDefault();
@@ -231,74 +242,37 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                buttons: [{
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger',
-                        orientation: 'landscape',
-                        pageSize: 'A4',
-                        title: 'Listado de Roles',
-                        exportOptions: {
-                            columns: [0, 1] // columnas a exportar
-                        },
-                        customize: function(doc) {
-                            doc.styles.title = {
-                                fontSize: 16,
-                                alignment: 'center',
-                                bold: true
-                            };
-
-                            doc.pageMargins = [40, 60, 40, 60];
-
-                            doc.footer = function(currentPage, pageCount) {
-                                return {
-                                    text: 'Página ' + currentPage.toString() + ' de ' +
-                                        pageCount,
-                                    alignment: 'right',
-                                    margin: [0, 0, 20, 0]
-                                };
-                            };
-
-                            doc.content[1].table.widths = ['15%', '85%']; // ancho por columna
-
-                            // Centrar el texto de todas las celdas
-                            var body = doc.content[1].table.body;
-                            body.forEach(function(row, rowIndex) {
-                                row.forEach(function(cell, cellIndex) {
-                                    if (rowIndex === 0) {
-                                        // Encabezados de la tabla
-                                        cell.alignment = 'center';
-                                        cell.bold = true;
-                                    } else {
-                                        // Celdas del cuerpo
-                                        cell.alignment = 'center';
+                buttons: [
+                    @can('Exportar Reporte de Roles')
+                        {
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn btn-danger',
+                            action: function() {
+                                window.open('{{ route('roles.exportar.pdf') }}', '_blank');
+                            }
+                    }, 
+                    {
+                            text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                            className: 'btn btn-success',
+                            action: function(e, dt, node, config) {
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo Excel?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#28a745',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            "{{ route('roles.exportar') }}";
                                     }
                                 });
-                            });
+                            },
                         }
-
-                    },
-                    {
-                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
-                        className: 'btn btn-success',
-                        action: function(e, dt, node, config) {
-                            Swal.fire({
-                                title: '¿Desea exportar la tabla en un archivo Excel?',
-                                text: '',
-                                icon: 'question',
-                                showDenyButton: true,
-                                confirmButtonText: 'Exportar',
-                                confirmButtonColor: '#28a745',
-                                denyButtonColor: '#949494',
-                                denyButtonText: 'Cancelar',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href =
-                                        "{{ route('roles.exportar') }}";
-                                }
-                            });
-                        },
-                    }
+                    @endcan
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

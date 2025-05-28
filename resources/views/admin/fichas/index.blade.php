@@ -14,10 +14,12 @@
                 <div class="card-header">
                     <h2 class="card-title mt-2">Fichas Bibliográficas</h2>
 
-                    <div class="card-tools">
-                        <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
-                            Nueva Ficha</a>
-                    </div>
+                    @can('Registrar Ficha')
+                        <div class="card-tools">
+                            <a href="{{ url('/admin/fichas/register') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
+                                Nueva Ficha</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -51,6 +53,11 @@
                                                     data-autores='@json($ficha->autor)'>
                                                     Ver ({{ count($ficha->autor) }}) autores
                                                 </a>
+                                                <span style="display:none">
+                                                    {{ collect($ficha->autor)->map(function ($a) {
+                                                            return $a->nombre_autor . ' ' . $a->apellido_autor;
+                                                        })->implode(' ') }}
+                                                </span>
                                             @elseif (count($ficha->autor) === 1)
                                                 {{ $ficha->autor[0]->nombre_autor }} {{ $ficha->autor[0]->apellido_autor }}
                                             @else
@@ -60,27 +67,35 @@
                                         <td>{{ $ficha->carrera->nombre }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}"
-                                                    class="btn btn-success btn-sm">
-                                                    <i class="fas fa-pen"></i>
-                                                </a>
-                                                <a href="{{ url('admin/fichas/' . $ficha->id) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
-                                                    class="btn btn-dark btn-sm" target="_blank">
-                                                    <i class="fas fa-file-pdf"></i>
-                                                </a>
-                                                <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
-                                                    onclick="preguntar{{ $ficha->id }}(event)"
-                                                    id="miFormulario{{ $ficha->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
+                                                @can('Editar Ficha')
+                                                    <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}"
+                                                        class="btn btn-success btn-sm">
+                                                        <i class="fas fa-pen"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('Ver Información de Ficha')
+                                                    <a href="{{ url('admin/fichas/' . $ficha->id) }}"
+                                                        class="btn btn-info btn-sm">
+                                                        <i class="fas fa-eye"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('Exportar Reporte de Ficha Única')
+                                                    <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
+                                                        class="btn btn-secondary btn-sm" target="_blank">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('Eliminar Ficha')
+                                                    <form action="{{ url('/admin/fichas', $ficha->id) }}" method="post"
+                                                        onclick="preguntar{{ $ficha->id }}(event)"
+                                                        id="miFormulario{{ $ficha->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
                                                 <script>
                                                     function preguntar{{ $ficha->id }}(event) {
                                                         event.preventDefault();
@@ -112,7 +127,7 @@
                             aria-labelledby="modalAutoresLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header">
+                                    <div class="modal-header mt-2 ml-3">
                                         <h5 class="modal-title">Autores de la ficha</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                                             <span aria-hidden="true">&times;</span>
@@ -315,76 +330,37 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                buttons: [{
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger',
-                        orientation: 'landscape',
-                        pageSize: 'letter',
-                        title: 'Listado de Fichas',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4] // columnas a exportar
-                        },
-                        customize: function(doc) {
-                            doc.styles.title = {
-                                fontSize: 16,
-                                alignment: 'center',
-                                bold: true
-                            };
-
-                            doc.pageMargins = [40, 60, 40, 60];
-
-                            doc.footer = function(currentPage, pageCount) {
-                                return {
-                                    text: 'Página ' + currentPage.toString() + ' de ' +
-                                        pageCount,
-                                    alignment: 'right',
-                                    margin: [0, 0, 20, 0]
-                                };
-                            };
-
-                            doc.content[1].table.widths = ['5%', '10%', '40%', '20%',
-                                '25%'
-                            ]; // ancho por columna
-
-                            // Centrar el texto de todas las celdas
-                            var body = doc.content[1].table.body;
-                            body.forEach(function(row, rowIndex) {
-                                row.forEach(function(cell, cellIndex) {
-                                    if (rowIndex === 0) {
-                                        // Encabezados de la tabla
-                                        cell.alignment = 'center';
-                                        cell.bold = true;
-                                    } else {
-                                        // Celdas del cuerpo
-                                        cell.alignment = 'center';
+                buttons: [
+                    @can('Exportar Reporte de Fichas')
+                        {
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn btn-danger',
+                            action: function() {
+                                window.open('{{ route('fichas.exportar.pdf') }}', '_blank');
+                            }
+                        }, 
+                        {
+                            text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                            className: 'btn btn-success',
+                            action: function(e, dt, node, config) {
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo Excel?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#28a745',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            "{{ route('fichas.exportar') }}";
                                     }
                                 });
-                            });
+                            },
                         }
-
-                    },
-                    {
-                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
-                        className: 'btn btn-success',
-                        action: function(e, dt, node, config) {
-                            Swal.fire({
-                                title: '¿Desea exportar la tabla en un archivo Excel?',
-                                text: '',
-                                icon: 'question',
-                                showDenyButton: true,
-                                confirmButtonText: 'Exportar',
-                                confirmButtonColor: '#28a745',
-                                denyButtonColor: '#949494',
-                                denyButtonText: 'Cancelar',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href =
-                                        "{{ route('fichas.exportar') }}";
-                                }
-                            });
-                        },
-                    }
+                    @endcan
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });
@@ -395,13 +371,13 @@
             $('.ver-autores-link').on('click', function() {
                 const autores = $(this).data('autores');
                 const lista = $('#lista-autores');
-                lista.empty(); // Limpia el contenido anterior
+                lista.empty();
 
                 if (Array.isArray(autores)) {
                     autores.forEach(function(autor) {
                         lista.append(
-                            `<li class="list-group-item">${autor.nombre_autor} ${autor.apellido_autor}</li>`
-                            );
+                            `<li class="list-group-item">${autor.nombre_autor} ${autor.apellido_autor} (C.I: ${autor.ci_autor})</li>`
+                        );
                     });
                 }
             });

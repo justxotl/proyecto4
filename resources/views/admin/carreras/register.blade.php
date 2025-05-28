@@ -27,7 +27,13 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title">Ingrese la información solicitada:</h3>
+                    <h3 class="card-title mt-1">Ingrese la información solicitada:</h3>
+                    <div class="card-tools">
+                        <a href="{{ url('/admin/carreras') }}" class="btn btn-sm btn-secondary">Volver</a>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                    </div>
+
                 </div>
 
                 <div class="card-body">
@@ -58,7 +64,6 @@
                         </div>
 
                         {{-- Register button --}}
-                        <a href="{{ url('/admin/carreras') }}" class="btn btn-secondary">Volver</a> &nbsp;
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
                 </div>

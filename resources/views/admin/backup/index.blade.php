@@ -22,11 +22,13 @@
         <div class="col-md-6">
             <div class="card card-outline card-primary">
                 <div class="card-header">
-                    <h2 class="card-title mt-2">Respaldos Creados:</h2>
-                    <div class="card-tools">
-                        <a href="{{ url('/admin/backup/create') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
-                            Nuevo Respaldo</a>
-                    </div>
+                    <h2 class="card-title mt-1">Respaldos Creados:</h2>
+                    @can('Crear Respaldo')
+                        <div class="card-tools">
+                            <a href="{{ url('/admin/backup/create') }}" class="btn btn-primary"><i class="fa fa-plus"></i>&nbsp;
+                                Nuevo Respaldo</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -53,24 +55,30 @@
                                             {{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($backup))->setTimezone('America/Caracas')->format('d-m-Y') }}
                                         </td>
                                         <td style="text-align: center">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('admin/backup/descargar/' . basename($backup)) }}"
-                                                    class="btn btn-success btn-sm"><i class="fa fa-download"
-                                                        title="Descargar"></i></a>
+
+                                            @can('Descargar Respaldo')
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <a href="{{ url('admin/backup/descargar/' . basename($backup)) }}"
+                                                        class="btn btn-success btn-sm"><i class="fa fa-download"
+                                                            title="Descargar"></i></a>
+                                                @endcan
+
                                                 @php
                                                     $backupName = basename($backup);
                                                     $backupId = md5($backupName);
                                                 @endphp
 
-                                                <form action="{{ url('admin/backup/eliminar/' . $backupName) }}"
-                                                    method="post" onclick="preguntar{{ $backupId }}(event)"
-                                                    id="miFormulario{{ $backupId }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                                        <i class="fa fa-trash" title="Eliminar"></i>
-                                                    </button>
-                                                </form>
+                                                @can('Eliminar Respaldo')
+                                                    <form action="{{ url('admin/backup/eliminar/' . $backupName) }}"
+                                                        method="post" onclick="preguntar{{ $backupId }}(event)"
+                                                        id="miFormulario{{ $backupId }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                                            <i class="fa fa-trash" title="Eliminar"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
 
                                                 <script>
                                                     function preguntar{{ $backupId }}(event) {
@@ -107,40 +115,44 @@
         <div class="col-md-6">
             <div class="card card-outline card-info">
                 <div class="card-header">
-                    <h2 class="card-title mt-2">Restaurar desde Respaldo:</h2>
+                    <h2 class="card-title mt-1">Restaurar desde Respaldo:</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{ url('/admin/backup/restore') }}" method="POST" id="form-restaurar">
-                        @csrf
-                        <div class="form-group">
-                            <label for="backup_file">Seleccione un punto de restauración:</label>
-                            <select name="backup_file" size="5" class="form-control" required>
-                                @foreach ($backups as $backup)
-                                    <option value="{{ basename($backup) }}">{{ basename($backup) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" id="btn-restaurar" class="btn btn-info mt-1 w-100" title="Restaurar">
-                            <i class="fa fa-undo"></i>&nbsp; Restaurar Base de Datos
-                        </button>
-                    </form>
-
+                    @can('Restaurar Respaldo')
+                        <form action="{{ url('/admin/backup/restore') }}" method="POST" id="form-restaurar">
+                            @csrf
+                            <div class="form-group">
+                                <label for="backup_file">Seleccione un punto de restauración:</label>
+                                <select name="backup_file" size="5" class="form-control" required>
+                                    @foreach ($backups as $backup)
+                                        <option value="{{ basename($backup) }}">{{ basename($backup) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" id="btn-restaurar" class="btn btn-info mt-1 w-100" title="Restaurar">
+                                <i class="fa fa-undo"></i>&nbsp; Restaurar Base de Datos
+                            </button>
+                        </form>
+                    @endcan
+                    
+                    @can('Restaurar Respaldo desde Dispositivo')
                     <hr>
 
-                    <form action="{{ url('/admin/backup/upload') }}" method="POST" enctype="multipart/form-data"
-                        id="form-subir">
-                        @csrf
-                        <div class="custom-file">
-                            <label for="uploaded_backup">O suba un archivo de restauración:</label>
-                            <input type="file" name="uploaded_backup" accept=".zip" class="custom-file-input"
-                                id="uploaded_backup" lang="es" onchange="validateFileSize(this)" required>
-                            <label class="custom-file-label" for="uploaded_backup">O seleccione un archivo de
-                                respaldo (.zip)...</label>
-                        </div>
-                        <button type="submit" id="btn-subir" class="btn btn-warning mt-0 w-100" title="Subir y Restaurar">
-                            <i class="fa fa-upload"></i>&nbsp; Subir y Restaurar Respaldo
-                        </button>
-                    </form>
+                        <form action="{{ url('/admin/backup/upload') }}" method="POST" enctype="multipart/form-data"
+                            id="form-subir">
+                            @csrf
+                            <div class="custom-file">
+                                <label for="uploaded_backup">O suba un archivo de restauración:</label>
+                                <input type="file" name="uploaded_backup" accept=".zip" class="custom-file-input"
+                                    id="uploaded_backup" lang="es" onchange="validateFileSize(this)" required>
+                                <label class="custom-file-label" for="uploaded_backup">O seleccione un archivo de
+                                    respaldo (.zip)...</label>
+                            </div>
+                            <button type="submit" id="btn-subir" class="btn btn-warning mt-0 w-100" title="Subir y Restaurar">
+                                <i class="fa fa-upload"></i>&nbsp; Subir y Restaurar Respaldo
+                            </button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

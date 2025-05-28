@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Cédula:</label>
-                                    <input type="text" name="ci_us" value="{{ $usuario->infoper->ci_us }}"
+                                    <input type="text" name="ci_us" maxlength="8" value="{{ $usuario->infoper->ci_us }}"
                                         class="form-control" required>
                                     @error('ci_us')
                                         <small style="color: red;">{{ $message }}</small>
@@ -103,8 +103,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Contraseña:</label>
-                                    <input type="password" name="password" value="{{ old('password') }}"
-                                        class="form-control">
+                                    <input type="password" name="password" value="{{ old('password') }}" placeholder="{{ __('adminlte::adminlte.password') }}" class="form-control">
                                     @error('password')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -114,7 +113,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Verificación de contraseña:</label>
-                                    <input type="password" name="password_confirmation" class="form-control">
+                                    <input type="password" name="password_confirmation" placeholder="{{ __('adminlte::adminlte.retype_password') }}" class="form-control">
                                     @error('password_confirmation')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror

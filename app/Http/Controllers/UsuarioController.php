@@ -7,6 +7,7 @@ use App\Models\infoper;
 use App\Models\User;
 use App\Models\PreguntaUser;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
@@ -251,4 +252,14 @@ class UsuarioController extends Controller
         $nombreArchivo = "listado_de_usuarios_registrados_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\UsersExport, $nombreArchivo);
     }
+
+    public function exportPdf()
+{
+    $fecha = Carbon::now()->format('d-m-Y');
+    $usuarios = User::with(['roles', 'infoper'])->get();
+    $nombreArchivo = "listado_de_usuarios_registrados_{$fecha}.pdf";
+    $pdf = Pdf::loadView('admin.usuarios.reportepdf', compact('usuarios'))->setOption(['isPhpEnabled' => true]);
+
+    return $pdf->stream($nombreArchivo);
+}
 }

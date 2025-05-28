@@ -74,7 +74,7 @@ function registrarAutor(event) {
                     timer: 3000,
                 });
                 setTimeout(() => {
-                    window.location.href = uri
+                    window.location.href = uri;
                 }, 1000);
             }
         },
@@ -85,7 +85,7 @@ $(".card-tools").on("click", ".addRow", function () {
     let html = `
     <div class="row autor-item">
                             <div class="input-group mb-3 col-md-3">
-                                <input type="text" name="ci_autor[]"
+                                <input type="text" name="ci_autor[]" maxlength="8"
                                     class="form-control cedulaBuscar" placeholder="CI del Autor"  required autofocus>
 
                                 <div class="input-group-append">
@@ -121,7 +121,8 @@ $(".card-tools").on("click", ".addRow", function () {
                                 </div>
                                     <span class="invalid-feedback" role="alert"></span>
                             </div>
-                                <a href='javascript:void(0)' class=' col-md-3 mb-3 btn btn-danger deleteRow'><i class="fas fa-user-times"></i></a>
+
+                            <a href='javascript:void(0)' class=' col-md-3 mb-3 btn btn-danger deleteRow'><i class="fas fa-user-times"></i></a>                            
 
                     </div>
     `;

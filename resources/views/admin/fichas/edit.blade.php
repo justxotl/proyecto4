@@ -32,10 +32,10 @@
             <div class="card card-outline card-success">
 
                 <div class="card-header">
-                    <h3 class="card-title mt-2">Modifique la información correspondiente:</h3>
+                    <h3 class="card-title mt-1">Modifique la información correspondiente:</h3>
                     <div class="card-tools">
-                        <a href="{{ url('/admin/fichas') }}" class="btn btn-secondary">Volver</a>
-                        <a href="javascript:void(0)" class="btn btn-primary addRow"><i
+                        <a href="{{ url('/admin/fichas') }}" class="btn btn-sm btn-secondary">Volver</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary addRow"><i
                                 class="fas fa-plus {{ config('adminlte.classes_auth_icon', '') }}"></i>&nbsp; Autor
                             Adicional</a>
                     </div>
@@ -51,7 +51,7 @@
                             <div class="row">
                                 {{-- CI field --}}
                                 <div class="input-group mb-3 col-md-3">
-                                    <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
+                                    <input type="text" name="ci_autor[]" maxlength="8" onkeyup="buscarAutor(event)"
                                         class="form-control @error('ci_autor') is-invalid @enderror"
                                         value="{{ $autor->ci_autor }}" placeholder="CI del Autor" autofocus
                                         required>

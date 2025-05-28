@@ -13,7 +13,7 @@
         <div class="col-md-12">
             <div class="card card-outline card-success">
                 <div class="card-header">
-                    <h3 class="card-title">Ingrese los datos a modificar:</h3>
+                    <h3 class="card-title mt-1">Ingrese los datos a modificar:</h3>
 
                     <div class="card-tools">
                         <a href="{{ route('admin.roles.index') }}" class="btn btn-sm btn-secondary">Volver</a>
@@ -33,7 +33,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form group">
-                                    <label for="">Nombre(s)</label>
+                                    <label for="">Nombre del Rol:</label>
                                     <input type="text" name="name" value="{{ old('name', $rol->name) }}"
                                         placeholder="Nombre del Rol" class="form-control" required autofocus>
                                     @error('name')

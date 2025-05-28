@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Illuminate\Http\Request;
 
@@ -34,7 +37,7 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:roles',
         ]);
-        
+
         $rol = new Role();
         $rol->name = $request->name;
         $rol->save();
@@ -79,6 +82,51 @@ class RoleController extends Controller
             ->with('icono', 'success');
     }
 
+    public function asignar($id)
+    {
+        $rol = Role::find($id);
+        //$permisos = Permission::all();
+
+        $permisos = Permission::all()->groupBy(function ($permiso) {
+
+            if (stripos($permiso->name, 'usuario') !== false) {
+                return "Usuarios";
+            } elseif (stripos($permiso->name, 'autor') !== false) {
+                return "Autores";
+            } elseif (stripos($permiso->name, 'carrera') !== false) {
+                return "Carreras";
+            } elseif (stripos($permiso->name, 'ficha') !== false) {
+                return "Fichas";
+            } elseif (stripos($permiso->name, 'préstamo') !== false) {
+                return "Préstamos";
+            } elseif (stripos($permiso->name, 'rol') !== false) {
+                return "Roles";
+            } elseif (stripos($permiso->name, 'sistema') !== false) {
+                return "Estadística";
+            } elseif (stripos($permiso->name, 'respaldo') !== false) {
+                return "Respaldos de Base de Datos";
+            }
+        });
+        return view('admin.roles.asignar', compact('rol', 'permisos'));
+    }
+
+    public function otorgar(Request $request, $id)
+    {
+        //dd($request, $id);    
+
+        $request->validate([
+            'permisos' => 'required|array',
+        ]);
+
+        $rol = Role::find($id);
+        $rol->permissions()->sync($request->input('permisos'));
+
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
+
+        return redirect()->back()->with('mensaje', 'Permisos asignados correctamente.')
+            ->with('icono', 'success');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -97,5 +145,15 @@ class RoleController extends Controller
         $fecha = Carbon::now()->format('d-m-Y');
         $nombreArchivo = "listado_de_roles_registrados_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\RolesExport, $nombreArchivo);
+    }
+
+    public function exportPdf()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $roles = Role::with('permissions')->get();
+        $nombreArchivo = "listado_de_roles_registrados_{$fecha}.pdf";
+        $pdf = Pdf::loadView('admin.roles.reportepdf', compact('roles'))->setOption(['isPhpEnabled' => true]);
+
+        return $pdf->stream($nombreArchivo);
     }
 }

@@ -62,7 +62,7 @@
 
                             {{-- CI User field --}}
                             <div class="input-group mb-3 col-md-6">
-                                <input type="text" name="ci_us"
+                                <input type="text" name="ci_us" maxlength="8"
                                     class="form-control @error('ci_us') is-invalid @enderror" value="{{ old('ci_us') }}"
                                     placeholder="Cédula de Identidad" required>
                                 <div class="input-group-append">

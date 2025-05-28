@@ -19,6 +19,28 @@
 
 @section('adminlte_css')
     @stack('css')
+    <style>
+        body.login-page {
+            background-image: url('{{ asset('/images/fachada_blur.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+        }
+
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.9);
+            /* Fondo blanco con transparencia */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+    </style>
     @yield('css')
 @stop
 

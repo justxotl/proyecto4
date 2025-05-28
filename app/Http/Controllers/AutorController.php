@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Autor;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class AutorController extends Controller
@@ -106,5 +107,15 @@ class AutorController extends Controller
         $fecha = Carbon::now()->format('d-m-Y');
         $nombreArchivo = "listado_de_autores_registrados_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\AutorExport, $nombreArchivo);
+    }
+
+    public function exportPdf()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $autores = Autor::all();
+        $nombreArchivo = "listado_de_autores_registrados_{$fecha}.pdf";
+        $pdf = Pdf::loadView('admin.autores.reportepdf', compact('autores'))->setOption(['isPhpEnabled' => true]);
+
+        return $pdf->stream($nombreArchivo);
     }
 }

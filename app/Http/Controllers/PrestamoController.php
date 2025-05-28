@@ -146,4 +146,26 @@ class PrestamoController extends Controller
         $nombreArchivo = "listado_de_prestamos_registrados_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\PrestamoExport, $nombreArchivo);
     }
+
+    public function exportPdf()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $prestamos = Prestamo::with(['ficha'])->get();
+        $nombreArchivo = "listado_de_prestamos_registrados_{$fecha}.pdf";
+        $pdf = Pdf::loadView('admin.prestamos.reportepdf', compact('prestamos'))->setOption(['isPhpEnabled' => true]);
+
+        return $pdf->stream($nombreArchivo);
+    }
+
+    public function pdf($id)
+    {
+        $prestamo = Prestamo::with('ficha')->where('id', $id)->first();
+        $pdf = Pdf::loadView('admin.prestamos.pdf', compact('prestamo'))
+            ->setPaper('letter', 'portrait') // Configura el tamaño y orientación de la página
+            ->setOption('isHtml5ParserEnabled', true) // Habilita el parser HTML5
+            ->setOption('isPhpEnabled', true); // Habilita el uso de PHP en las vistas
+
+        return $pdf->stream();
+    }
+
 }

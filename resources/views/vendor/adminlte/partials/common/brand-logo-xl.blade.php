@@ -8,7 +8,7 @@
     @php( $dashboard_url = $dashboard_url ? url($dashboard_url) : '' )
 @endif
 
-<a href="{{ $dashboard_url }}"
+<a href="{{ auth()->check() && auth()->user()->can('Ver Estadísticas del Sistema') ? route('home') : route('admin.perfil', auth()->user()->id) }}"
     @if($layoutHelper->isLayoutTopnavEnabled())
         class="navbar-brand logo-switch {{ config('adminlte.classes_brand') }}"
     @else

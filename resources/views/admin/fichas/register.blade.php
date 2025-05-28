@@ -30,9 +30,10 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title mt-2">Ingrese la información solicitada:</h3>
-                    <div class="card-tools">
-                        <a href="javascript:void(0)" class="btn btn-info addRow"><i
+                    <h3 class="card-title mt-1">Ingrese la información solicitada:</h3>
+                    <div class="card-tools mt-1">
+                        <a href="{{ url('/admin/fichas') }}" class="btn btn-sm btn-secondary">Volver</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-info addRow"><i
                                 class="fas fa-plus {{ config('adminlte.classes_auth_icon', '') }}"></i>&nbsp; Autor
                             Adicional</a>
                     </div>
@@ -50,7 +51,7 @@
                         <div class="row">
                             {{-- CI field --}}
                             <div class="input-group mb-3 col-md-4">
-                                <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)"
+                                <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)" maxlength="8"
                                     class="form-control @error('ci_autor') is-invalid @enderror"
                                     value="{{ old('ci_autor') }}" placeholder="CI del Autor" id="ciautor" required
                                     autofocus autocomplete="off">
@@ -170,8 +171,6 @@
                                 @enderror
                             </div>
 
-
-
                             {{-- Resumen field --}}
                             <div class="input-group mb-3 col-md-12">
 
@@ -194,7 +193,6 @@
                         </div>
 
                         {{-- Register button --}}
-                        <a href="{{ url('/admin/fichas') }}" class="btn btn-secondary">Volver</a> &nbsp;
                         <button type="button" class="btn btn-primary" onclick="registrarAutor(event)">Registrar</button>
                     </form>
                 </div>

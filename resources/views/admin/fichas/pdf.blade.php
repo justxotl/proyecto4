@@ -3,130 +3,122 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ficha PDF</title>
-
-    <!-- Bootstrap CSS -->
+    <title>Ficha Bibliográfica</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
         body {
-            font-family: 'Times New Roman', Times, serif, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            page-break-inside: avoid;
-            /* Evita cortes dentro de contenedores */
+            font-family: 'Times New Roman', serif;
+            font-size: 13px;
+            margin: 40px 30px;
         }
 
         .header {
             display: flex;
             align-items: center;
-            margin-bottom: 30px;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .header img {
             float: right;
-            width: 60px;
+            width: 50px;
             height: auto;
             margin-right: 20px;
         }
 
-        .header-text h2 {
+        .header-text h1 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 18px;
+            color: #003366;
         }
 
-        h2.text-center {
-            margin-top: 20px;
-            margin-bottom: 30px;
-            font-weight: bold;
+        .header-text p {
+            margin: 0;
+            font-size: 13px;
         }
 
-        h3.text-center {
-            word-break: break-word;
-            white-space: normal;
-            max-width: 100%;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            overflow-wrap: break-word;
+        h2 {
+            font-size: 16px;
+            margin-top: 25px;
+            color: #003366;
+            border-bottom: 1px solid #ccc;
+        }
+
+        h3 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 15px;
         }
 
         table {
             width: 100%;
-            font-size: 0.75rem;
             border-collapse: collapse;
+            margin-top: 10px;
         }
 
         th,
         td {
-            border: 1px solid black !important;
-            padding: 8px;
+            border: 1px solid #000;
+            padding: 6px 8px;
             vertical-align: middle;
         }
 
         thead th {
-            background-color: #d1e7ff !important;
+            background-color: #d1e7ff;
             text-align: center;
         }
 
-        /* Ancho de columnas de la tabla de autores */
-        .tabla-autores th,
-        .tabla-autores td {
-            width: 33.33%;
-            text-align: center;
-        }
-
-        /* Ancho personalizado para la tabla de detalles */
         .tabla-detalles th {
-            background-color: #d1e7ff !important;
+            background-color: #d1e7ff;
+            width: 20%;
             text-align: center;
-            width: 15%;
         }
 
         .tabla-detalles td {
-            width: 85%;
+            width: 80%;
         }
 
-        thead {
-            display: table-header-group;
-            /* Asegura que los encabezados de tabla se repitan en cada página */
+        .firmas {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        tbody {
-            display: table-row-group;
+        .firma-encargado {
+            text-align: center;
         }
 
-        tr {
-            page-break-inside: auto;
-            /* Evita cortes dentro de filas de tabla */
+        .footer {
+            position: fixed;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 11px;
+            color: #888;
         }
 
-        .page-break {
-            page-break-before: always;
-            /* Fuerza un salto de página */
-        }
     </style>
 </head>
 
 <body>
-
     <div class="container">
         <!-- Encabezado -->
         <div class="header">
             <img src="{{ public_path('images/LogoUDO.png') }}" alt="Logo UDO">
             <div class="header-text">
-                <h2>Universidad de Oriente — Núcleo Bolívar</h2>
-                <h2>Ciudad Bolívar, Estado Bolívar, {{ \Carbon\Carbon::now()->format('d/m/Y') }}</h2>
-                <h2>Formato de Ficha Bibliográfica</h2>
+                <h1>UNIVERSIDAD DE ORIENTE</h1>
+                <p>Núcleo Bolívar — Biblioteca</p>
+                <p>Ciudad Bolívar, {{ \Carbon\Carbon::now()->format('d/m/Y') }}</p>
             </div>
         </div>
 
-        <!-- Título de la ficha -->
-        <h3 class="text-center ">{{ $ficha->titulo }}</h3>
+        <!-- Título -->
+        <h3>Comprobante de Ficha Bibliográfica</h3>
+        <h3 class="text-center">{{ $ficha->titulo }}</h3>
 
         <!-- Tabla de autores -->
         <h2>Autores</h2>
@@ -167,6 +159,18 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Firma -->
+        <div class="firmas">
+            <div class="firma-encargado">
+                <p>______________________________</p>
+                <p>Firma del Encargado</p>
+            </div>
+        </div>
+        <!-- Pie de página -->
+        <div class="footer">
+            Biblioteca UDO Núcleo Bolívar — Tel: 0285-XXXXXXX — Email: biblioteca@udo.edu.ve
+        </div>
     </div>
 </body>
 

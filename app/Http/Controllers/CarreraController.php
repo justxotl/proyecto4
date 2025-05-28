@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carrera;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class CarreraController extends Controller
@@ -64,7 +65,7 @@ class CarreraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'nombre_carrera' => 'required|string|max:255|unique:carreras,nombre',
@@ -72,7 +73,7 @@ class CarreraController extends Controller
         $carrera = Carrera::find($id);
         $carrera->nombre = $request->nombre_carrera;
         $carrera->save();
-        
+
         return redirect()->route('admin.carreras.index')
             ->with('mensaje', 'Carrera Editada correctamente.')
             ->with('icono', 'success');
@@ -96,5 +97,15 @@ class CarreraController extends Controller
         $fecha = Carbon::now()->format('d-m-Y');
         $nombreArchivo = "listado_de_carreras_registradas_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\CarreraExport, $nombreArchivo);
+    }
+
+    public function exportPdf()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $carreras = Carrera::all();
+        $nombreArchivo = "listado_de_carreras_registradas_{$fecha}.pdf";
+        $pdf = Pdf::loadView('admin.carreras.reportepdf', compact('carreras'))->setOption(['isPhpEnabled' => true]);
+
+        return $pdf->stream($nombreArchivo);
     }
 }

@@ -14,10 +14,12 @@
                 <div class="card-header">
                     <h2 class="card-title mt-2">Autores registrados</h2>
 
-                    <div class="card-tools">
-                        <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary"><i
-                                class="fa fa-plus"></i>&nbsp; Nuevo Autor</a>
-                    </div>
+                    @can('Registrar Autor')
+                        <div class="card-tools">
+                            <a href="{{ url('/admin/autores/register') }}" class="btn btn-primary"><i
+                                    class="fa fa-plus"></i>&nbsp; Nuevo Autor</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -45,16 +47,20 @@
                                         <td>{{ $autor->ci_autor }}</td>
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
-                                                <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button"
-                                                    class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                                <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
-                                                    onclick="preguntar{{ $autor->id }}(event)"
-                                                    id="miFormulario{{ $autor->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i
-                                                            class="fas fa-trash"></i></button>
-                                                </form>
+                                                @can('Editar Autor')
+                                                    <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button"
+                                                        class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                @endcan
+                                                @can('Eliminar Autor')
+                                                    <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
+                                                        onclick="preguntar{{ $autor->id }}(event)"
+                                                        id="miFormulario{{ $autor->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                                class="fas fa-trash"></i></button>
+                                                    </form>
+                                                @endcan
                                                 <script>
                                                     function preguntar{{ $autor->id }}(event) {
                                                         event.preventDefault();
@@ -235,75 +241,37 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                buttons: [{
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger',
-                        orientation: 'landscape',
-                        pageSize: 'A4',
-                        title: 'Listado de Autores',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3] // columnas a exportar
-                        },
-                        customize: function(doc) {
-                            doc.styles.title = {
-                                fontSize: 16,
-                                alignment: 'center',
-                                bold: true
-                            };
-
-                            doc.pageMargins = [40, 60, 40, 60];
-
-                            doc.footer = function(currentPage, pageCount) {
-                                return {
-                                    text: 'Página ' + currentPage.toString() + ' de ' +
-                                        pageCount,
-                                    alignment: 'right',
-                                    margin: [0, 0, 20, 0]
-                                };
-                            };
-
-                            doc.content[1].table.widths = ['5%', '40%', '40%',
-                            '15%']; // ancho por columna
-
-                            // Centrar el texto de todas las celdas
-                            var body = doc.content[1].table.body;
-                            body.forEach(function(row, rowIndex) {
-                                row.forEach(function(cell, cellIndex) {
-                                    if (rowIndex === 0) {
-                                        // Encabezados de la tabla
-                                        cell.alignment = 'center';
-                                        cell.bold = true;
-                                    } else {
-                                        // Celdas del cuerpo
-                                        cell.alignment = 'center';
+                buttons: [
+                    @can('Exportar Reporte de Autores')
+                        {
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn btn-danger',
+                            action: function() {
+                                window.open('{{ route('autores.exportar.pdf') }}', '_blank');
+                            }
+                        }, 
+                        {
+                            text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                            className: 'btn btn-success',
+                            action: function(e, dt, node, config) {
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo Excel?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#28a745',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            "{{ route('autores.exportar') }}";
                                     }
                                 });
-                            });
+                            },
                         }
-
-                    },
-                    {
-                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
-                        className: 'btn btn-success',
-                        action: function(e, dt, node, config) {
-                            Swal.fire({
-                                title: '¿Desea exportar la tabla en un archivo Excel?',
-                                text: '',
-                                icon: 'question',
-                                showDenyButton: true,
-                                confirmButtonText: 'Exportar',
-                                confirmButtonColor: '#28a745',
-                                denyButtonColor: '#949494',
-                                denyButtonText: 'Cancelar',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href =
-                                        "{{ route('autores.exportar') }}";
-                                }
-                            });
-                        },
-                    }
+                    @endcan
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });

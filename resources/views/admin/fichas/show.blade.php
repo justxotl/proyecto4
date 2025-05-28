@@ -27,9 +27,9 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title mt-2">Ingrese la información solicitada:</h3>
+                    <h3 class="card-title mt-1">Datos de la ficha seleccionada:</h3>
                     <div class="card-tools">
-                        <a href="{{ url('/admin/fichas') }}" class="btn btn-secondary">Volver</a>
+                        <a href="{{ url('/admin/fichas') }}" class="btn btn-sm btn-secondary">Volver</a>
                     </div>
                 </div>
 

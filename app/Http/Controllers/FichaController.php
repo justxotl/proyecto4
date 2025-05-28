@@ -287,4 +287,14 @@ class FichaController extends Controller
         $nombreArchivo = "listado_de_fichas_registradas_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\FichasExport, $nombreArchivo);
     }
+
+    public function exportPdf()
+    {
+        $fecha = Carbon::now()->format('d-m-Y');
+        $fichas = Ficha::with(['carrera', 'autor'])->get();
+        $nombreArchivo = "listado_de_fichas_registradas_{$fecha}.pdf";
+        $pdf = Pdf::loadView('admin.fichas.reportepdf', compact('fichas'))->setOption(['isPhpEnabled' => true]);
+
+        return $pdf->stream($nombreArchivo);
+    }
 }

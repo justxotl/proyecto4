@@ -17,12 +17,13 @@
             <div class="card card-outline card-primary">
                 <div class="card-header">
                     <h2 class="card-title mt-2">Préstamos Realizados</h2>
-
-                    <div class="card-tools">
-                        <a href="{{ route('admin.prestamos.register') }}" class="btn btn-primary"><i
-                                class="fa fa-plus"></i>&nbsp;
-                            Nuevo Préstamo</a>
-                    </div>
+                    @can('Registrar Préstamo')
+                        <div class="card-tools">
+                            <a href="{{ route('admin.prestamos.register') }}" class="btn btn-primary"><i
+                                    class="fa fa-plus"></i>&nbsp;
+                                Nuevo Préstamo</a>
+                        </div>
+                    @endcan
                     <!-- /.card-tools -->
                 </div>
                 <!-- /.card-header -->
@@ -73,7 +74,7 @@
                                                 $estadoCalculado = '';
                                                 if ($prestamo->estado === 'devuelto') {
                                                     if ($fechaEntrega && $fechaEntrega->lte($fechaDevolucion)) {
-                                                        $estadoCalculado = 'Devuelto';
+                                                        $estadoCalculado = 'Devuelto a Tiempo';
                                                     } elseif ($fechaEntrega && $fechaEntrega->gt($fechaDevolucion)) {
                                                         $estadoCalculado = 'Devolución Tardía';
                                                     } else {
@@ -89,9 +90,9 @@
                                                     }
                                                 }
                                             @endphp
-                                            <span class="d-none">{{ $estadoCalculado }}</span>
-                                            @if ($estadoCalculado === 'Devuelto')
-                                                <span class="badge badge-success">Devuelto</span>
+                                            <span class="sr-only">{{ $estadoCalculado }}</span>
+                                            @if ($estadoCalculado === 'Devuelto a Tiempo')
+                                                <span class="badge badge-success">Devuelto a Tiempo</span>
                                             @elseif ($estadoCalculado === 'Devolución Tardía')
                                                 <span class="badge badge-warning">Devolución Tardía</span>
                                             @elseif ($estadoCalculado === 'Prestado')
@@ -104,26 +105,34 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                @if ($prestamo->estado === 'prestado')
-                                                    <a href="{{ route('admin.prestamos.edit', $prestamo->id) }}"
-                                                        class="btn btn-success btn-sm" title="Editar"><i
-                                                            class="fas fa-pen"></i></a>
-                                                @endif
-                                                <a href="{{ route('admin.prestamos.show', $prestamo->id) }}"
-                                                    class="btn btn-info btn-sm"><i class="fas fa-eye"
-                                                        title="Ver Más"></i></a>
-                                                @if ($prestamo->estado === 'prestado')
-                                                    <form action="{{ route('admin.prestamos.devolver', $prestamo->id) }}"
-                                                        method="post" style="display:inline;"
-                                                        onclick="ask{{ $prestamo->id }}(event)"
-                                                        id="miFormularioDevolver{{ $prestamo->id }}">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit" class="btn btn-warning btn-sm"
-                                                            title="Marcar como Devuelto">
-                                                            <i class="fas fa-undo"></i>
-                                                        </button>
-                                                    </form>
+                                                @can('Editar Préstamo')
+                                                    @if ($prestamo->estado === 'prestado')
+                                                        <a href="{{ route('admin.prestamos.edit', $prestamo->id) }}"
+                                                            class="btn btn-success btn-sm" title="Editar"><i
+                                                                class="fas fa-pen"></i></a>
+                                                    @endif
+                                                @endcan
+
+                                                @can('Ver Información de Préstamo')
+                                                    <a href="{{ route('admin.prestamos.show', $prestamo->id) }}"
+                                                        class="btn btn-info btn-sm"><i class="fas fa-eye"
+                                                            title="Ver Más"></i></a>
+                                                @endcan
+
+                                                @can('Marcar Préstamo como Devuelto')
+                                                    @if ($prestamo->estado === 'prestado')
+                                                        <form action="{{ route('admin.prestamos.devolver', $prestamo->id) }}"
+                                                            method="post" style="display:inline;"
+                                                            onclick="ask{{ $prestamo->id }}(event)"
+                                                            id="miFormularioDevolver{{ $prestamo->id }}">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit" class="btn btn-warning btn-sm"
+                                                                title="Marcar como Devuelto">
+                                                                <i class="fas fa-undo"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endcan
                                                     <script>
                                                         function ask{{ $prestamo->id }}(event) {
                                                             event.preventDefault();
@@ -143,17 +152,28 @@
                                                                 }
                                                             });
                                                         }
-                                                    </script>
+                                                        </script>
                                                 @endif
-                                                <form action="{{ route('admin.prestamos.destroy', $prestamo->id) }}"
-                                                    method="post" onclick="preguntar{{ $prestamo->id }}(event)"
-                                                    id="miFormulario{{ $prestamo->id }}">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </form>
+
+                                                @can('Exportar Reporte de Préstamos')
+                                                    <a href="{{ url('admin/prestamos/pdf/' . $prestamo->id) }}"
+                                                        class="btn btn-secondary btn-sm" target="_blank">
+                                                        <i class="fas fa-file-pdf"></i>
+                                                    </a>
+                                                @endcan
+
+                                                @can('Eliminar Préstamo')
+                                                    <form action="{{ route('admin.prestamos.destroy', $prestamo->id) }}"
+                                                        method="post" onclick="preguntar{{ $prestamo->id }}(event)"
+                                                        id="miFormulario{{ $prestamo->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar">
+                                                            <i class="fas fa-trash"></i>
+                                                        </button>
+                                                    </form>
+                                                @endcan
+
                                                 <script>
                                                     function preguntar{{ $prestamo->id }}(event) {
                                                         event.preventDefault();
@@ -376,76 +396,36 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                buttons: [{
-                        extend: 'pdfHtml5',
-                        text: '<i class="fas fa-file-pdf"></i> PDF',
-                        className: 'btn btn-danger',
-                        orientation: 'landscape',
-                        pageSize: 'letter',
-                        title: 'Listado de Fichas',
-                        exportOptions: {
-                            columns: [0, 1, 2, 3, 4] // columnas a exportar
-                        },
-                        customize: function(doc) {
-                            doc.styles.title = {
-                                fontSize: 16,
-                                alignment: 'center',
-                                bold: true
-                            };
-
-                            doc.pageMargins = [40, 60, 40, 60];
-
-                            doc.footer = function(currentPage, pageCount) {
-                                return {
-                                    text: 'Página ' + currentPage.toString() + ' de ' +
-                                        pageCount,
-                                    alignment: 'right',
-                                    margin: [0, 0, 20, 0]
-                                };
-                            };
-
-                            doc.content[1].table.widths = ['5%', '10%', '40%', '20%',
-                                '25%'
-                            ]; // ancho por columna
-
-                            // Centrar el texto de todas las celdas
-                            var body = doc.content[1].table.body;
-                            body.forEach(function(row, rowIndex) {
-                                row.forEach(function(cell, cellIndex) {
-                                    if (rowIndex === 0) {
-                                        // Encabezados de la tabla
-                                        cell.alignment = 'center';
-                                        cell.bold = true;
-                                    } else {
-                                        // Celdas del cuerpo
-                                        cell.alignment = 'center';
+                buttons: [
+                    @can('Exportar Reporte de Préstamos')
+                        {
+                            text: '<i class="fas fa-file-pdf"></i> PDF',
+                            className: 'btn btn-danger',
+                            action: function() {
+                                window.open('{{ route('prestamos.exportar.pdf') }}', '_blank');
+                            }
+                        }, {
+                            text: '<i class="fas fa-file-csv"></i>  EXCEL',
+                            className: 'btn btn-success',
+                            action: function(e, dt, node, config) {
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo Excel?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#28a745',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.href =
+                                            "{{ route('prestamos.exportar') }}";
                                     }
                                 });
-                            });
+                            },
                         }
-
-                    },
-                    {
-                        text: '<i class="fas fa-file-csv"></i>  EXCEL',
-                        className: 'btn btn-success',
-                        action: function(e, dt, node, config) {
-                            Swal.fire({
-                                title: '¿Desea exportar la tabla en un archivo Excel?',
-                                text: '',
-                                icon: 'question',
-                                showDenyButton: true,
-                                confirmButtonText: 'Exportar',
-                                confirmButtonColor: '#28a745',
-                                denyButtonColor: '#949494',
-                                denyButtonText: 'Cancelar',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    window.location.href =
-                                        "{{ route('prestamos.exportar') }}";
-                                }
-                            });
-                        },
-                    }
+                    @endcan
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });
