@@ -2,7 +2,7 @@
 
 @section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-2"><b>Bienvenido, {{ Auth::user()->name }} ({{Auth::user()->email}})</b></h1>
+        <h1 class="ml-4 mt-2"><b>Bienvenido, {{ Auth::user()->name }} ({{ Auth::user()->email }})</b></h1>
     </div>
     <hr>
 @stop
@@ -165,5 +165,19 @@
 @stop
 
 @section('js')
+    <script>
+        document.querySelector('form').addEventListener('submit', function(e) {
+            // Obtén los valores de preguntas y respuestas
+            let pregunta1 = document.querySelector('input[name="preguntauno"]').value.trim();
+            let pregunta2 = document.querySelector('input[name="preguntados"]').value.trim();
+            let respuesta1 = document.querySelector('input[name="respuestauno"]').value.trim();
+            let respuesta2 = document.querySelector('input[name="respuestados"]').value.trim();
 
+            // Si alguno está vacío, evita el submit y muestra alerta
+            if (!pregunta1 || !pregunta2 || !respuesta1 || !respuesta2) {
+                e.preventDefault();
+                alert('Debes completar las preguntas y respuestas de seguridad antes de actualizar tus datos.');
+            }
+        });
+    </script>
 @stop

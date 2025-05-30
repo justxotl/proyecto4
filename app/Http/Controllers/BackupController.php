@@ -48,6 +48,12 @@ class BackupController extends Controller
 
     public function restore(Request $request)
     {
+        $request->validate([
+            'backup_file' => 'required'
+        ], [
+            'backup_file.required' => 'Debe seleccionar un respaldo para restaurar.'
+        ]);
+        
         $filename = $request->backup_file;
         $filePath = storage_path('app/private/laravel-backup/' . $filename);
 

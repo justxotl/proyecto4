@@ -11,10 +11,10 @@
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
                 @endforeach
             </ul>
         </div>
@@ -74,8 +74,8 @@
                             <div class="form-group col-md-6">
                                 <label for="ci_prestatario" class="ml-1">Cédula del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="ci_prestatario" maxlength="8"
-                                        class="form-control @error('ci_prestatario') is-invalid @enderror"
+                                    <input type="text" name="ci_prestatario" maxlength="8" inputmode="numeric"
+                                        pattern="[0-9]*" class="form-control @error('ci_prestatario') is-invalid @enderror"
                                         value="{{ old('ci_prestatario') }}" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
@@ -93,8 +93,8 @@
                             <div class="form-group col-md-6">
                                 <label for="telefono_prestatario" class="ml-1">Teléfono del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="tlf_prestatario" maxlength="11"
-                                        class="form-control @error('tlf_prestatario') is-invalid @enderror"
+                                    <input type="text" name="tlf_prestatario" maxlength="11" inputmode="numeric"
+                                        pattern="[0-9]*" class="form-control @error('tlf_prestatario') is-invalid @enderror"
                                         value="{{ old('tlf_prestatario') }}" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
@@ -192,7 +192,7 @@
                         </div>
 
                         {{-- Register button --}}
-                        
+
                         <button type="submit" class="btn btn-primary">Registrar</button>
                     </form>
                 </div>

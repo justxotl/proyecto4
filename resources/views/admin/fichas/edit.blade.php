@@ -51,9 +51,9 @@
                             <div class="row">
                                 {{-- CI field --}}
                                 <div class="input-group mb-3 col-md-3">
-                                    <input type="text" name="ci_autor[]" maxlength="8" onkeyup="buscarAutor(event)"
+                                    <input type="text" name="ci_autor[]" maxlength="8" inputmode="numeric" pattern="[0-9]*" onkeyup="buscarAutor(event)"
                                         class="form-control @error('ci_autor') is-invalid @enderror"
-                                        value="{{ $autor->ci_autor }}" placeholder="CI del Autor" autofocus
+                                        value="{{ $autor->ci_autor }}" placeholder="CI del Autor" autocomplete="off" autofocus
                                         required>
 
                                     <div class="input-group-append">
@@ -73,7 +73,7 @@
                                 <div class="input-group mb-3 col-md-3" id="nombreAutor">
                                     <input type="text" name="nombre_autor[]"
                                         class="form-control @error('nombre_autor') is-invalid @enderror"
-                                        value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor"
+                                        value="{{ $autor->nombre_autor }}" placeholder="Nombre del Autor" autocomplete="off"
                                         required>
 
                                     <div class="input-group-append">
@@ -87,7 +87,7 @@
                                 <div class="input-group mb-3 col-md-3" id="apellidoAutor">
                                     <input type="text" name="apellido_autor[]"
                                         class="form-control @error('apellido_autor') is-invalid @enderror"
-                                        value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor" required>
+                                        value="{{ $autor->apellido_autor }}" placeholder="Apellido del Autor" autocomplete="off" required>
 
                                     <div class="input-group-append">
                                         <div class="input-group-text">
@@ -110,7 +110,7 @@
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="titulo"
                                     class="form-control @error('titulo') is-invalid @enderror" value="{{ $ficha->titulo }}"
-                                    placeholder="Título del Trabajo" id="titulo" required>
+                                    placeholder="Título del Trabajo" id="titulo" autocomplete="off" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span
@@ -171,7 +171,7 @@
 
                                 <textarea name="resumen" id="resumen" rows="4" class="form-control @error('resumen') is-invalid @enderror"
                                     placeholder="Resumen del Trabajo" form="form_ficha" required>{{ $ficha->resumen }}</textarea>
-
+                                    
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span

@@ -36,6 +36,11 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:roles',
+        ], [
+            'name.required' => 'Debe ingresar el nombre del rol.',
+            'name.string' => 'El nombre del rol debe ser texto.',
+            'name.max' => 'El nombre del rol no debe exceder los 255 caracteres.',
+            'name.unique' => 'Ya existe un rol registrado con ese nombre.',
         ]);
 
         $rol = new Role();
@@ -71,6 +76,11 @@ class RoleController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:roles,name,' . $id,
+        ], [
+            'name.required' => 'Debe ingresar el nombre del rol.',
+            'name.string' => 'El nombre del rol debe ser texto.',
+            'name.max' => 'El nombre del rol no debe exceder los 255 caracteres.',
+            'name.unique' => 'Ya existe un rol registrado con ese nombre.',
         ]);
 
         $rol = Role::find($id);
@@ -116,6 +126,9 @@ class RoleController extends Controller
 
         $request->validate([
             'permisos' => 'required|array',
+        ], [
+            'permisos.required' => 'Debe seleccionar al menos un permiso.',
+            'permisos.array' => 'El formato de los permisos no es válido.',
         ]);
 
         $rol = Role::find($id);
@@ -123,7 +136,8 @@ class RoleController extends Controller
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        return redirect()->back()->with('mensaje', 'Permisos asignados correctamente.')
+        return redirect()->back()
+            ->with('mensaje', 'Permisos asignados correctamente.')
             ->with('icono', 'success');
     }
 

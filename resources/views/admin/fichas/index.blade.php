@@ -129,8 +129,8 @@
                                 <div class="modal-content">
                                     <div class="modal-header mt-2 ml-3">
                                         <h5 class="modal-title">Autores de la ficha</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                                            <span aria-hidden="true">&times;</span>
+                                        <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Cerrar">
+                                            <i class="fas fa-times"></i>
                                         </button>
                                     </div>
                                     <div class="modal-body">

@@ -12,10 +12,10 @@
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
                 @endforeach
             </ul>
         </div>
@@ -41,52 +41,55 @@
                     <form action="{{ url('admin/autores', $autor->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-12">
                                 <div class="form group">
-                                    <label for="">Cédula de Identidad:</label>
-                                    <input type="text" name="ci_autor" maxlength="8" value="{{ $autor->ci_autor }}"
+                                    <label for="" class="ml-1">Cédula de Identidad:</label>
+                                    <input type="text" name="ci_autor" maxlength="8" inputmode="numeric"
+                                        pattern="[0-9]*" value="{{ $autor->ci_autor }}"
                                         class="form-control" required>
                                     @error('ci_autor')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
-                        <br>
 
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-12">
                                 <div class="form group">
-                                    <label for="">Nombre(s):</label>
+                                    <label for="" class="ml-1">Nombre(s):</label>
                                     <input type="text" name="nombre_autor" value="{{ $autor->nombre_autor }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('nombre_autor')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
-                        <br>
 
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-12">
                                 <div class="form group">
-                                    <label for="">Apellido(s):</label>
+                                    <label for="" class="ml-1">Apellido(s):</label>
                                     <input type="text" name="apellido_autor" value="{{ $autor->apellido_autor }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('apellido_autor')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                                 </div>
                             </div>
                         </div>
 
-                        <br>
-
-                        <div class="row">
+                        <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="form group">
                                     <button type="submit" class="btn btn-success">Actualizar Autor</button>

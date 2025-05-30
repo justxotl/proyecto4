@@ -124,19 +124,21 @@
                             <div class="form-group">
                                 <label for="backup_file">Seleccione un punto de restauración:</label>
                                 <select name="backup_file" size="5" class="form-control" required>
+                                    <option value="" selected disabled>Seleccione un respaldo...</option>
                                     @foreach ($backups as $backup)
                                         <option value="{{ basename($backup) }}">{{ basename($backup) }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <button type="submit" id="btn-restaurar" class="btn btn-info mt-1 w-100" title="Restaurar">
+                            <button type="submit" id="btn-restaurar" class="btn btn-info mt-1 w-100" title="Restaurar"
+                                @if (count($backups) == 0) disabled @endif>
                                 <i class="fa fa-undo"></i>&nbsp; Restaurar Base de Datos
                             </button>
                         </form>
                     @endcan
-                    
+
                     @can('Restaurar Respaldo desde Dispositivo')
-                    <hr>
+                        <hr>
 
                         <form action="{{ url('/admin/backup/upload') }}" method="POST" enctype="multipart/form-data"
                             id="form-subir">

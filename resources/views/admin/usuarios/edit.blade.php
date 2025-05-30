@@ -68,7 +68,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Cédula:</label>
-                                    <input type="text" name="ci_us" maxlength="8" value="{{ $usuario->infoper->ci_us }}"
+                                    <input type="text" name="ci_us" maxlength="8" inputmode="numeric" pattern="[0-9]*" value="{{ $usuario->infoper->ci_us }}"
                                         class="form-control" required>
                                     @error('ci_us')
                                         <small style="color: red;">{{ $message }}</small>

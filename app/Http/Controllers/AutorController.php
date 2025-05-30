@@ -33,9 +33,22 @@ class AutorController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ci_autor' => 'required|max:8|unique:autors',
-            'nombre_autor' => 'required|max:250',
-            'apellido_autor' => 'required|max:250',
+            'ci_autor' => 'required|numeric|digits_between:6,8|unique:autors',
+            'nombre_autor' => 'required|string|max:255',
+            'apellido_autor' => 'required|string|max:255',
+        ], [
+            'ci_autor.required' => 'Debe ingresar la cédula del autor.',
+            'ci_autor.numeric' => 'La cédula solo puede contener números.',
+            'ci_autor.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+            'ci_autor.unique' => 'Ya existe un autor registrado con esta cédula.',
+
+            'nombre_autor.required' => 'Debe ingresar el nombre del autor.',
+            'nombre_autor.string' => 'El nombre del autor debe ser texto.',
+            'nombre_autor.max' => 'El nombre no debe exceder los 255 caracteres.',
+
+            'apellido_autor.required' => 'Debe ingresar el apellido del autor.',
+            'apellido_autor.string' => 'El apellido del autor debe ser texto.',
+            'apellido_autor.max' => 'El apellido no debe exceder los 255 caracteres.',
         ]);
 
         $autor = new Autor();
@@ -73,9 +86,22 @@ class AutorController extends Controller
     {
         $autor = Autor::find($id);
         $request->validate([
-            'ci_autor' => 'required|max:8|unique:autors,ci_autor,' . $autor->id,
-            'nombre_autor' => 'required|max:250',
-            'apellido_autor' => 'required|max:250',
+            'ci_autor' => 'required|numeric|digits_between:6,8|unique:autors,ci_autor,' . $autor->id,
+            'nombre_autor' => 'required|string|max:255',
+            'apellido_autor' => 'required|string|max:255',
+        ], [
+            'ci_autor.required' => 'Debe ingresar la cédula del autor.',
+            'ci_autor.numeric' => 'La cédula solo puede contener números.',
+            'ci_autor.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+            'ci_autor.unique' => 'Ya existe un autor registrado con esta cédula.',
+
+            'nombre_autor.required' => 'Debe ingresar el nombre del autor.',
+            'nombre_autor.string' => 'El nombre del autor debe ser texto.',
+            'nombre_autor.max' => 'El nombre no debe exceder los 255 caracteres.',
+
+            'apellido_autor.required' => 'Debe ingresar el apellido del autor.',
+            'apellido_autor.string' => 'El apellido del autor debe ser texto.',
+            'apellido_autor.max' => 'El apellido no debe exceder los 255 caracteres.',
         ]);
 
         $autor = Autor::find($id);
@@ -86,7 +112,7 @@ class AutorController extends Controller
 
         return redirect()->route('admin.autores.index')
             ->with('mensaje', 'Autor actualizado correctamente.')
-            ->with('icono', 'success'); 
+            ->with('icono', 'success');
     }
 
     /**

@@ -42,13 +42,39 @@ class PrestamoController extends Controller
     {
         // Validación de los campos
         $request->validate([
-            'ficha_id'           => 'required|exists:fichas,id',
-            'ci_prestatario'     => 'required|string|max:8',
-            'nombre_prestatario' => 'required|string|max:255',
+            'ficha_id'             => 'required|exists:fichas,id',
+            'ci_prestatario'       => 'required|numeric|digits_between:6,8',
+            'nombre_prestatario'   => 'required|string|max:255',
             'apellido_prestatario' => 'required|string|max:255',
-            'tlf_prestatario'    => 'required|string|max:11',
-            'fecha_prestamo'     => 'required|date',
-            'fecha_devolucion'   => 'required|date|after:fecha_prestamo',
+            'tlf_prestatario'      => 'required|numeric|digits:11',
+            'fecha_prestamo'       => 'required|date',
+            'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
+        ], [
+            'ficha_id.required' => 'Debe seleccionar una ficha a prestar.',
+            'ficha_id.exists' => 'La ficha seleccionada no existe.',
+
+            'ci_prestatario.required' => 'Debe ingresar la cédula del prestatario.',
+            'ci_prestatario.numeric' => 'La cédula solo puede contener números.',
+            'ci_prestatario.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+
+            'nombre_prestatario.required' => 'Debe ingresar el nombre del prestatario.',
+            'nombre_prestatario.string' => 'El nombre del prestatario debe ser texto.',
+            'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+
+            'apellido_prestatario.required' => 'Debe ingresar el apellido del prestatario.',
+            'apellido_prestatario.string' => 'El apellido del prestatario debe ser texto.',
+            'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+
+            'tlf_prestatario.required' => 'Debe ingresar el número de teléfono del prestatario.',
+            'tlf_prestatario.numeric' => 'El número de teléfono solo puede contener números.',
+            'tlf_prestatario.digits' => 'El número de teléfono debe tener exactamente 11 dígitos.',
+
+            'fecha_prestamo.required' => 'Debe indicar la fecha del préstamo.',
+            'fecha_prestamo.date' => 'La fecha de préstamo debe ser válida.',
+
+            'fecha_devolucion.required' => 'Debe indicar la fecha de devolución.',
+            'fecha_devolucion.date' => 'La fecha de devolución debe ser válida.',
+            'fecha_devolucion.after' => 'La fecha de devolución debe ser posterior a la fecha de préstamo.',
         ]);
 
         $prestamo = new Prestamo();
@@ -92,13 +118,39 @@ class PrestamoController extends Controller
     {
         // Validación de los campos
         $request->validate([
-            'ficha_id'           => 'required|exists:fichas,id',
-            'ci_prestatario'     => 'required|string|max:8',
-            'nombre_prestatario' => 'required|string|max:255',
+            'ficha_id'             => 'required|exists:fichas,id',
+            'ci_prestatario'       => 'required|numeric|digits_between:6,8',
+            'nombre_prestatario'   => 'required|string|max:255',
             'apellido_prestatario' => 'required|string|max:255',
-            'tlf_prestatario'    => 'required|string|max:11',
-            'fecha_prestamo'     => 'required|date',
-            'fecha_devolucion'   => 'required|date|after:fecha_prestamo',
+            'tlf_prestatario'      => 'required|numeric|digits:11',
+            'fecha_prestamo'       => 'required|date',
+            'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
+        ], [
+            'ficha_id.required' => 'Debe seleccionar una ficha a prestar.',
+            'ficha_id.exists' => 'La ficha seleccionada no existe.',
+
+            'ci_prestatario.required' => 'Debe ingresar la cédula del prestatario.',
+            'ci_prestatario.numeric' => 'La cédula solo puede contener números.',
+            'ci_prestatario.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+
+            'nombre_prestatario.required' => 'Debe ingresar el nombre del prestatario.',
+            'nombre_prestatario.string' => 'El nombre del prestatario debe ser texto.',
+            'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+
+            'apellido_prestatario.required' => 'Debe ingresar el apellido del prestatario.',
+            'apellido_prestatario.string' => 'El apellido del prestatario debe ser texto.',
+            'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+
+            'tlf_prestatario.required' => 'Debe ingresar el número de teléfono del prestatario.',
+            'tlf_prestatario.numeric' => 'El número de teléfono solo puede contener números.',
+            'tlf_prestatario.digits' => 'El número de teléfono debe tener exactamente 11 dígitos.',
+
+            'fecha_prestamo.required' => 'Debe indicar la fecha del préstamo.',
+            'fecha_prestamo.date' => 'La fecha de préstamo debe ser válida.',
+
+            'fecha_devolucion.required' => 'Debe indicar la fecha de devolución.',
+            'fecha_devolucion.date' => 'La fecha de devolución debe ser válida.',
+            'fecha_devolucion.after' => 'La fecha de devolución debe ser posterior a la fecha de préstamo.',
         ]);
 
         $prestamo = Prestamo::findOrFail($id);
@@ -167,5 +219,4 @@ class PrestamoController extends Controller
 
         return $pdf->stream();
     }
-
 }

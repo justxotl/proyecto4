@@ -1,26 +1,25 @@
 @extends ('adminlte::page')
 
-@section('title', 'Registro de Autores')
+@section('title', 'Registro de Carreras')
 
 @section('content_header')
     <div class="row">
         <h1 class="ml-4 mt-3"><b>Registro de Carreras</b></h1>
     </div>
+    <hr>
 @stop
 
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
                 @endforeach
             </ul>
         </div>
     @endif
-
-    <hr>
 
     <div class="row">
         <div class="col-md-12">
@@ -47,7 +46,7 @@
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="nombre_carrera"
                                     class="form-control @error('nombre_carrera') is-invalid @enderror"
-                                    value="{{ old('nombre_carrera') }}" placeholder="Nombre de la Carrera" required autofocus>
+                                    value="{{ old('nombre_carrera') }}" placeholder="Nombre de la Carrera" autocomplete="off" required autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">

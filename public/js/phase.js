@@ -56,6 +56,7 @@ function registrarAutor(event) {
             showConfirmButton: false,
             timer: 3000,
         });
+        return;
     }
     $.ajax({
         url: "register",
@@ -71,11 +72,49 @@ function registrarAutor(event) {
                     icon: "success",
                     title: "Ficha y autores procesados correctamente.",
                     showConfirmButton: false,
-                    timer: 3000,
+                    timer: 2000,
                 });
                 setTimeout(() => {
                     window.location.href = uri;
                 }, 1000);
+            }
+        },
+        error: function (xhr) {
+            // Limpia errores anteriores
+            $(".invalid-feedback").remove();
+            $(".is-invalid").removeClass("is-invalid");
+            if (xhr.status === 422) {
+                let errors = xhr.responseJSON.errors;
+                // Para cada error, busca el campo y muestra el mensaje
+                for (let field in errors) {
+                    let fieldName = field.replace(/\.\d+/, "[]"); // Para arrays como ci_autor.0
+                    let input = $(`[name="${fieldName}"]`).first();
+                    input.addClass("is-invalid");
+                    // Si el input está dentro de un input-group, pon el error después del grupo
+                    if (input.closest(".input-group").length) {
+                        input
+                            .closest(".input-group")
+                            .after(
+                                `<span class="invalid-feedback d-block" role="alert">${errors[field][0]}</span>`
+                            );
+                    } else {
+                        input.after(
+                            `<span class="invalid-feedback d-block" role="alert">${errors[field][0]}</span>`
+                        );
+                    }
+                }
+                // Opcional: scroll al primer error
+                let firstError = $(".is-invalid").first();
+                if (firstError.length) {
+                    $("html, body").animate(
+                        {
+                            scrollTop: firstError.offset().top - 100,
+                        },
+                        500
+                    );
+                }
+            } else {
+                Swal.fire("Error", "Ocurrió un error inesperado.", "error");
             }
         },
     });
@@ -86,7 +125,7 @@ $(".card-tools").on("click", ".addRow", function () {
     <div class="row autor-item">
                             <div class="input-group mb-3 col-md-3">
                                 <input type="text" name="ci_autor[]" maxlength="8"
-                                    class="form-control cedulaBuscar" placeholder="CI del Autor"  required autofocus>
+                                    class="form-control cedulaBuscar" placeholder="CI del Autor" autocomplete="off" inputmode="numeric" pattern="[0-9]*" required autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -100,7 +139,7 @@ $(".card-tools").on("click", ".addRow", function () {
                             
                             <div class="input-group mb-3 col-md-3" id="nombreAutor">
                                 <input type="text" name="nombre_autor[]"
-                                    class="form-control nombreAutor" placeholder="Nombre del Autor" required>
+                                    class="form-control nombreAutor" placeholder="Nombre del Autor" autocomplete="off"  required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -110,9 +149,8 @@ $(".card-tools").on("click", ".addRow", function () {
                                     <span class="invalid-feedback" role="alert"></span>
                             </div>
 
-
                             <div class="input-group mb-3 col-md-3" id="apellidoAutor">
-                                <input type="text" name="apellido_autor[]" class="form-control apellidoAutor" placeholder="Apellido del Autor" required>
+                                <input type="text" name="apellido_autor[]" class="form-control apellidoAutor" placeholder="Apellido del Autor" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">
@@ -161,7 +199,7 @@ $("#ficha_plus").on("click", ".deleteRow", function () {
 function quitar(id, event) {
     event.preventDefault();
     Swal.fire({
-        title: "¿Desea eliminar este registro?",
+        title: "¿Desea eliminar este autor?",
         icon: "question",
         showDenyButton: true,
         confirmButtonText: "Eliminar",

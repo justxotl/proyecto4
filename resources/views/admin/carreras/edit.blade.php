@@ -2,12 +2,24 @@
 
 @section('title', 'Modificar Carrera')
 
-@section('content')
+@section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-3"><b>Modificar "{{ $carreras->nombre}}"</b></h1>
+        <h1 class="ml-4 mt-3"><b>Modificar "{{ $carreras->nombre }}"</b></h1>
     </div>
-
     <hr>
+@stop
+
+@section('content')
+
+    @if ($errors->any())
+        <div class="">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12">
@@ -33,9 +45,12 @@
                                 <div class="form group">
                                     <label for="">Nombre de la Carrera:</label>
                                     <input type="text" name="nombre_carrera" value="{{ $carreras->nombre }}"
-                                        class="form-control" required>
-                                    @error('ci_autor')
-                                        <small style="color: red;">{{ $message }}</small>
+                                        class="form-control @error('nombre_carrera') is-invalid @enderror" autocomplete="off" autofocus required>
+
+                                    @error('nombre_carrera')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
                                     @enderror
                                 </div>
                             </div>

@@ -76,26 +76,55 @@ class FichaController extends Controller
         $validacion = Validator::make(
             $request->all(),
             [
-                'ci_autor.*' => 'required',
-                'nombre_autor.*' => 'required',
-                'apellido_autor.*' => 'required',
-                'titulo' => 'required|unique:fichas',
-                'fecha' => 'required',
+                'ci_autor.*' => 'required|numeric|digits_between:6,8',
+                'nombre_autor.*' => 'required|string|max:100',
+                'apellido_autor.*' => 'required|string|max:100',
+                'titulo' => 'required|string|max:900|unique:fichas,titulo',
+                'fecha' => 'required|date',
                 'carrera' => 'required',
-                'resumen' => 'required',
+                'resumen' => 'required|string|max:5000',
             ],
             [
-                'ci_autor.*.required' => 'La cédula es requerida.',
-                'nombre_autor.*.required' => 'El nombre es requerido.',
-                'apellido_autor.*.required' => 'El apellido es requerido.',
-                'titulo.required' => 'El título es requerido.',
-                'fecha.required' => 'La fecha es requerida.',
-                'carrera.required' => 'La carrera es requerida.',
-                'resumen.required' => 'El resumen es requerido.',
+                // CI AUTOR
+                'ci_autor.*.required' => 'La cédula del autor es requerida.',
+                'ci_autor.*.numeric' => 'La cédula solo puede contener números.',
+                'ci_autor.*.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+
+                // NOMBRE AUTOR
+                'nombre_autor.*.required' => 'El nombre del autor es requerido.',
+                'nombre_autor.*.string' => 'El nombre del autor debe ser texto.',
+                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 100 caracteres.',
+
+                // APELLIDO AUTOR
+                'apellido_autor.*.required' => 'El apellido del autor es requerido.',
+                'apellido_autor.*.string' => 'El apellido del autor debe ser texto.',
+                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 100 caracteres.',
+
+                // TÍTULO
+                'titulo.required' => 'El título del trabajo es requerido.',
+                'titulo.string' => 'El título debe ser texto.',
+                'titulo.max' => 'El título no debe exceder 900 caracteres.',
+                'titulo.unique' => 'Ya existe una ficha registrada con este título.',
+
+                // FECHA
+                'fecha.required' => 'La fecha del trabajo es requerida.',
+                'fecha.date' => 'La fecha debe tener un formato válido.',
+
+                // CARRERA
+                'carrera.required' => 'Debes seleccionar una carrera.',
+
+                // RESUMEN
+                'resumen.required' => 'El resumen del trabajo es requerido.',
+                'resumen.string' => 'El resumen debe ser texto.',
+                'resumen.max' => 'El resumen no debe exceder 5000 caracteres.',
             ]
         );
-
         if ($validacion->fails()) {
+            // Si la petición es AJAX, responde con JSON y 422
+            if ($request->ajax()) {
+                return response()->json(['errors' => $validacion->errors()], 422);
+            }
+            // Si no es AJAX, sigue como antes
             return back()->withErrors($validacion)->withInput();
         }
 
@@ -180,26 +209,56 @@ class FichaController extends Controller
         $validacion =  Validator::make(
             $request->all(),
             [
-                'ci_autor.*' => 'required',
-                'nombre_autor.*' => 'required',
-                'apellido_autor.*' => 'required',
-                'titulo' => 'required|unique:fichas,titulo,' . $id,
-                'fecha' => 'required',
+                'ci_autor.*' => 'required|numeric|digits_between:6,8',
+                'nombre_autor.*' => 'required|string|max:100',
+                'apellido_autor.*' => 'required|string|max:100',
+                'titulo' => 'required|string|max:900|unique:fichas,titulo,' . $id,
+                'fecha' => 'required|date',
                 'carrera' => 'required',
-                'resumen' => 'required',
+                'resumen' => 'required|string|max:5000',
             ],
             [
-                'ci_autor.*.required' => 'La cédula es requerida.',
-                'nombre_autor.*.required' => 'El nombre es requerido.',
-                'apellido_autor.*.required' => 'El apellido es requerido.',
-                'titulo.required' => 'El título es requerido.',
-                'fecha.required' => 'La fecha es requerida.',
-                'carrera.required' => 'La carrera es requerida.',
-                'resumen.required' => 'El resumen es requerido.',
+                // CI AUTOR
+                'ci_autor.*.required' => 'La cédula del autor es requerida.',
+                'ci_autor.*.numeric' => 'La cédula solo puede contener números.',
+                'ci_autor.*.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+
+                // NOMBRE AUTOR
+                'nombre_autor.*.required' => 'El nombre del autor es requerido.',
+                'nombre_autor.*.string' => 'El nombre del autor debe ser texto.',
+                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 100 caracteres.',
+
+                // APELLIDO AUTOR
+                'apellido_autor.*.required' => 'El apellido del autor es requerido.',
+                'apellido_autor.*.string' => 'El apellido del autor debe ser texto.',
+                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 100 caracteres.',
+
+                // TÍTULO
+                'titulo.required' => 'El título del trabajo es requerido.',
+                'titulo.string' => 'El título debe ser texto.',
+                'titulo.max' => 'El título no debe exceder 900 caracteres.',
+                'titulo.unique' => 'Ya existe una ficha registrada con este título.',
+
+                // FECHA
+                'fecha.required' => 'La fecha del trabajo es requerida.',
+                'fecha.date' => 'La fecha debe tener un formato válido.',
+
+                // CARRERA
+                'carrera.required' => 'Debes seleccionar una carrera.',
+
+                // RESUMEN
+                'resumen.required' => 'El resumen del trabajo es requerido.',
+                'resumen.string' => 'El resumen debe ser texto.',
+                'resumen.max' => 'El resumen no debe exceder 5000 caracteres.',
             ]
         );
 
         if ($validacion->fails()) {
+            // Si la petición es AJAX, responde con JSON y 422
+            if ($request->ajax()) {
+                return response()->json(['errors' => $validacion->errors()], 422);
+            }
+            // Si no es AJAX, sigue como antes
             return back()->withErrors($validacion)->withInput();
         }
 

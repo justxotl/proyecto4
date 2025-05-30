@@ -34,6 +34,11 @@ class CarreraController extends Controller
     {
         $request->validate([
             'nombre_carrera' => 'required|string|max:255|unique:carreras,nombre',
+        ], [
+            'nombre_carrera.required' => 'Debe ingresar el nombre de la carrera.',
+            'nombre_carrera.string' => 'El nombre de la carrera debe ser texto.',
+            'nombre_carrera.max' => 'El nombre de la carrera no debe exceder los 255 caracteres.',
+            'nombre_carrera.unique' => 'Ya existe una carrera registrada con ese nombre.',
         ]);
 
         $carrera = new Carrera();
@@ -69,7 +74,13 @@ class CarreraController extends Controller
     {
         $request->validate([
             'nombre_carrera' => 'required|string|max:255|unique:carreras,nombre',
+        ], [
+            'nombre_carrera.required' => 'Debe ingresar el nombre de la carrera.',
+            'nombre_carrera.string' => 'El nombre de la carrera debe ser una cadena de texto válida.',
+            'nombre_carrera.max' => 'El nombre de la carrera no debe exceder los 255 caracteres.',
+            'nombre_carrera.unique' => 'Ya existe una carrera registrada con ese nombre.',
         ]);
+
         $carrera = Carrera::find($id);
         $carrera->nombre = $request->nombre_carrera;
         $carrera->save();

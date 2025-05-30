@@ -11,10 +11,10 @@
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
                 @endforeach
             </ul>
         </div>
@@ -46,9 +46,10 @@
 
                             {{-- CI User field --}}
                             <div class="input-group mb-3 col-md-12">
-                                <input type="text" name="ci_autor" maxlength="8"
+                                <input type="text" name="ci_autor" maxlength="8" inputmode="numeric"
+                                        pattern="[0-9]*"
                                     class="form-control @error('ci_autor') is-invalid @enderror" value="{{ old('ci_autor') }}"
-                                    placeholder="Cédula de Identidad" required autofocus>
+                                    placeholder="Cédula de Identidad del Autor" autocomplete="off" required autofocus>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -65,7 +66,7 @@
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="nombre_autor"
                                     class="form-control @error('nombre_autor') is-invalid @enderror" value="{{ old('nombre_autor') }}"
-                                    placeholder="Nombre" required>
+                                    placeholder="Nombre del Autor" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -73,7 +74,7 @@
                                     </div>
                                 </div>
 
-                                @error('nombre')
+                                @error('nombre_autor')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -84,7 +85,7 @@
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="apellido_autor"
                                     class="form-control @error('apellido_autor') is-invalid @enderror"
-                                    value="{{ old('apellido_autor') }}" placeholder="Apellido" required>
+                                    value="{{ old('apellido_autor') }}" placeholder="Apellido del Autor" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
