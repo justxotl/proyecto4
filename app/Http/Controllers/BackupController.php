@@ -20,8 +20,11 @@ class BackupController extends Controller
     public function create()
     {
         // Para crear un nuevo respaldo
+        set_time_limit(300);
+        ini_set('memory_limit', '512M');
+
         try {
-            Artisan::call('backup:run');
+            Artisan::call('backup:run --only-db');
 
             return redirect()->route('admin.backup.index')
                 ->with('mensaje', 'Respaldo creado con éxito.')
@@ -29,7 +32,7 @@ class BackupController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('admin.backup.index')
                 ->with('mensaje', 'Error:' . $e)
-                ->with('icono', 'success');
+                ->with('icono', 'error');
         }
     }
 
@@ -48,12 +51,15 @@ class BackupController extends Controller
 
     public function restore(Request $request)
     {
+        set_time_limit(300);
+        ini_set('memory_limit', '512M');
+
         $request->validate([
             'backup_file' => 'required'
         ], [
             'backup_file.required' => 'Debe seleccionar un respaldo para restaurar.'
         ]);
-        
+
         $filename = $request->backup_file;
         $filePath = storage_path('app/private/laravel-backup/' . $filename);
 
@@ -76,8 +82,7 @@ class BackupController extends Controller
         $sqlFile = $this->findSqlFile($extractPath);
 
         if ($sqlFile) {
-            $sql = file_get_contents($sqlFile);
-            DB::unprepared($sql);
+            $this->runSqlFile($sqlFile);
 
             File::deleteDirectory($extractPath);
 
@@ -119,6 +124,9 @@ class BackupController extends Controller
 
     public function uploadRestore(Request $request)
     {
+        set_time_limit(300);
+        ini_set('memory_limit', '512M');
+
         $request->validate([
             'uploaded_backup' => 'required|file|mimes:zip|max:204800',
         ], [
@@ -178,7 +186,17 @@ class BackupController extends Controller
     // Método para ejecutar SQL
     private function runSqlFile($path)
     {
-        $sql = File::get($path);
-        DB::unprepared($sql);
+        $db = DB::connection()->getPdo();
+        $templine = '';
+        foreach (file($path) as $line) {
+            if (substr($line, 0, 2) == '--' || $line == '') {
+                continue;
+            }
+            $templine .= $line;
+            if (substr(trim($line), -1, 1) == ';') {
+                $db->exec($templine);
+                $templine = '';
+            }
+        }
     }
 }
