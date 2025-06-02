@@ -346,45 +346,4 @@
     });
 </script>
 
-{{-- <script>
-    $('[data-card-widget="collapse"]').on('click', function() {
-        // Espera un poco para que el card termine de expandirse
-        setTimeout(function() {
-            chartPrestamos.resize();
-            chartPrestamos.update();
-        }, 300);
-    });
-
-    function recreatePrestamosChart() {
-        const ctxPrestamos = document.getElementById('prestamosPorMes').getContext('2d');
-        if (window.chartPrestamos) {
-            window.chartPrestamos.destroy();
-        }
-        window.chartPrestamos = new Chart(ctxPrestamos, {
-            type: 'bar',
-            data: {
-                labels: meses,
-                datasets: [{
-                    label: 'Préstamos',
-                    data: getDataForYear(selectedYear),
-                    backgroundColor: 'rgba(255, 99, 132, 0.3)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            precision: 0
-                        }
-                    }
-                }
-            }
-        });
-    }
-</script> --}}
 @stop

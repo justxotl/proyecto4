@@ -596,7 +596,7 @@
                 },
                 error: function(xhr) {
                     if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
-                        // Junta todos los mensajes de error en un solo string
+    
                         let mensajes = '';
                         Object.values(xhr.responseJSON.errors).forEach(function(msgArr) {
                             mensajes += msgArr.join('<br>') + '<br>';
@@ -604,7 +604,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error de validación de campos.',
-                            html: mensajes, // Usa html para mostrar saltos de línea
+                            html: mensajes,
                         });
                     } else if (xhr.responseJSON && xhr.responseJSON.message) {
                         Swal.fire({

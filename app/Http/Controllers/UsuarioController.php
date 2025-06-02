@@ -110,64 +110,6 @@ class UsuarioController extends Controller
         return view('admin.usuarios.edit', compact('usuario', 'infoper', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    /* public function update(Request $request, $id)
-    {
-        $usuario = User::find($id);
-        $request->validate([
-            'name' => 'required|max:20' . $usuario->id,
-            'nombre' => 'required',
-            'apellido' => 'required',
-            'ci_us' => 'required|unique:infopers,ci_us,' . $usuario->id,
-            'email' => 'required|unique:users,email,' . $usuario->id,
-            'password' => 'nullable|min:8|max:20|confirmed',
-            'preguntauno' => 'nullable|string|max:255',
-            'respuestauno' => 'nullable|string|max:255',
-            'preguntados' => 'nullable|string|max:255',
-            'respuestados' => 'nullable|string|max:255',
-        ]);
-
-        $usuario = User::find($usuario->id);
-        $usuario->name = $request->name;
-        $usuario->email = $request->email;
-        if ($request->filled('password')) {
-            $usuario->password = Hash::make($request['password']);
-        }
-        $usuario->save();
-
-        if ($request->has('rol')) {
-            $usuario->syncRoles($request->rol);
-        }
-
-        $infoPer = infoper::find($usuario->infoper->user_id);
-        $infoPer->ci_us = $request->ci_us;
-        $infoPer->nombre = $request->nombre;
-        $infoPer->apellido = $request->apellido;
-        $infoPer->user_id = $usuario->id;
-        $infoPer->save();
-
-        if ($request->has(['preguntauno', 'preguntados', 'respuestauno', 'respuestados'])) {
-            $preguntas = PreguntaUser::firstOrNew(['user_id' => $usuario->id]);
-            $preguntas->pregunta_uno = $request->preguntauno;
-            $preguntas->pregunta_dos = $request->preguntados;
-            $preguntas->respuesta_uno = $request->respuestauno;
-            $preguntas->respuesta_dos = $request->respuestados;
-            $preguntas->save();
-        }
-
-        if ($request->redirect_to === 'perfil') {
-            return redirect()->route('admin.perfil')
-                ->with('mensaje', 'Usuario actualizado correctamente')
-                ->with('icono', 'success');
-        } else {
-            return redirect()->route('admin.usuarios.index')
-                ->with('mensaje', 'Usuario actualizado correctamente')
-                ->with('icono', 'success');
-        }
-    } */
-
     public function update(Request $request, $id)
     {
         $usuario = User::find($id);
