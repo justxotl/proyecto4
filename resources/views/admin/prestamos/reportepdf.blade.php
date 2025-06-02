@@ -110,10 +110,10 @@
                     <td>
                         {{ $prestamo->ficha->titulo ?? '-' }}
                     </td>
-                    <td>{{ $prestamo->ci_prestatario ?? '-' }}</td>
-                    <td>{{ $prestamo->nombre_prestatario ?? '-' }}</td>
-                    <td>{{ $prestamo->apellido_prestatario ?? '-' }}</td>
-                    <td>{{ $prestamo->tlf_prestatario ?? '-' }}</td>
+                    <td>{{ $prestamo->prestatario->ci_prestatario ?? '-' }}</td>
+                    <td>{{ $prestamo->prestatario->nombre_prestatario ?? '-' }}</td>
+                    <td>{{ $prestamo->prestatario->apellido_prestatario ?? '-' }}</td>
+                    <td>{{ $prestamo->prestatario->tlf_prestatario ?? '-' }}</td>
                     <td>{{ $prestamo->fecha_prestamo ?? '-' }}</td>
                     <td>{{ $prestamo->fecha_devolucion ?? '-' }}</td>
                     <td>{{ $prestamo->fecha_entrega ?? '-' }}</td>

@@ -13,10 +13,7 @@ class Prestamo extends Model
     protected $fillable = [
         'id',
         'ficha_id',
-        'ci_prestatario',
-        'nombre_prestatario',
-        'apellido_prestatario',
-        'tlf_prestatario',
+        'prestatario_id',
         'fecha_prestamo',
         'fecha_devolucion',
         'fecha_entrega',
@@ -26,5 +23,10 @@ class Prestamo extends Model
     public function ficha()
     {
         return $this->belongsTo(Ficha::class);
+    }
+
+    public function prestatario()
+    {
+        return $this->belongsTo(Prestatario::class);
     }
 }

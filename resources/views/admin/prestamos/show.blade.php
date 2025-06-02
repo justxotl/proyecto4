@@ -34,24 +34,24 @@
                         {{-- Cédula --}}
                         <div class="form-group col-md-6">
                             <label class="ml-1">Cédula del Prestatario:</label>
-                            <input type="text" class="form-control" value="{{ $prestamo->ci_prestatario }}" readonly>
+                            <input type="text" class="form-control" value="{{ $prestamo->prestatario->ci_prestatario }}" readonly>
                         </div>
                         {{-- Teléfono --}}
                         <div class="form-group col-md-6">
                             <label class="ml-1">Teléfono del Prestatario:</label>
-                            <input type="text" class="form-control" value="{{ $prestamo->tlf_prestatario }}" readonly>
+                            <input type="text" class="form-control" value="{{ $prestamo->prestatario->tlf_prestatario }}" readonly>
                         </div>
                     </div>
                     <div class="row">
                         {{-- Nombre --}}
                         <div class="form-group col-md-6">
                             <label class="ml-1">Nombre(s) del Prestatario:</label>
-                            <input type="text" class="form-control" value="{{ $prestamo->nombre_prestatario }}" readonly>
+                            <input type="text" class="form-control" value="{{ $prestamo->prestatario->nombre_prestatario }}" readonly>
                         </div>
                         {{-- Apellido --}}
                         <div class="form-group col-md-6">
                             <label class="ml-1">Apellido(s) del Prestatario:</label>
-                            <input type="text" class="form-control" value="{{ $prestamo->apellido_prestatario }}" readonly>
+                            <input type="text" class="form-control" value="{{ $prestamo->prestatario->apellido_prestatario }}" readonly>
                         </div>
                     </div>
                     <div class="row">

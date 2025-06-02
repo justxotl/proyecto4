@@ -27,7 +27,7 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title mt-1">Modifique la información solicitada:</h3>
+                    <h3 class="card-title mt-1">Ingrese la información solicitada:</h3>
                     <div class="card-tools">
                         <a href="{{ route('admin.prestamos.index') }}" class="btn btn-sm btn-secondary">Volver</a>
                         <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -74,9 +74,10 @@
                             <div class="form-group col-md-6">
                                 <label for="ci_prestatario" class="ml-1">Cédula del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="ci_prestatario" maxlength="8" inputmode="numeric"
+                                    <input type="text" name="ci_prestatario" id="ci_prestatario"
+                                        placeholder="Cédula del Prestatario" maxlength="8" inputmode="numeric"
                                         pattern="[0-9]*" class="form-control @error('ci_prestatario') is-invalid @enderror"
-                                        value="{{ old('ci_prestatario') }}" required>
+                                        value="{{ old('ci_prestatario') }}" autocomplete="off" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fas fa-id-card"></i>
@@ -93,9 +94,10 @@
                             <div class="form-group col-md-6">
                                 <label for="telefono_prestatario" class="ml-1">Teléfono del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="tlf_prestatario" maxlength="11" inputmode="numeric"
+                                    <input type="text" name="tlf_prestatario" id="tlf_prestatario"
+                                        placeholder="Teléfono del Prestatario" maxlength="11" inputmode="numeric"
                                         pattern="[0-9]*" class="form-control @error('tlf_prestatario') is-invalid @enderror"
-                                        value="{{ old('tlf_prestatario') }}" required>
+                                        value="{{ old('tlf_prestatario') }}" autocomplete="off" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fas fa-phone"></i>
@@ -115,9 +117,10 @@
                             <div class="form-group col-md-6">
                                 <label for="nombre_prestatario" class="ml-1">Nombre(s) del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="nombre_prestatario"
+                                    <input type="text" name="nombre_prestatario" id="nombre_prestatario"
+                                        placeholder="Nombre(s) del Prestatario"
                                         class="form-control @error('nombre_prestatario') is-invalid @enderror"
-                                        value="{{ old('nombre_prestatario') }}" required>
+                                        value="{{ old('nombre_prestatario') }}" autocomplete="off" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
@@ -134,9 +137,10 @@
                             <div class="form-group col-md-6">
                                 <label for="apellido_prestatario" class="ml-1">Apellido(s) del Prestatario:</label>
                                 <div class="input-group">
-                                    <input type="text" name="apellido_prestatario"
+                                    <input type="text" name="apellido_prestatario" id="apellido_prestatario"
+                                        placeholder="Apellido(s) del Prestatario"
                                         class="form-control @error('apellido_prestatario') is-invalid @enderror"
-                                        value="{{ old('apellido_prestatario') }}" required>
+                                        value="{{ old('apellido_prestatario') }}" autocomplete="off" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
                                             <i class="fas fa-user"></i>
@@ -259,6 +263,7 @@
 @stop
 
 @section('js')
+
     <script>
         $(document).ready(function() {
             $('.select2').select2({
@@ -277,22 +282,42 @@
                 }
             });
 
-            $('#fecha_prestamo').on('change', function() {
-                let fechaMin = $(this).val();
-                $('#fecha_devolucion').attr('min', fechaMin);
-            });
         });
 
-        $('#fecha_prestamo').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            todayHighlight: true
-        });
-
-        $('#fecha_devolucion').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true,
-            todayHighlight: true
+        $('#fecha_prestamo').on('change', function() {
+            let fechaMin = $(this).val();
+            $('#fecha_devolucion').attr('min', fechaMin);
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#ci_prestatario').on('blur', function() {
+                let ci = $(this).val();
+                console.log('blur event', ci); // <-- agrega esto
+                if (ci.length > 0) {
+                    $.ajax({
+                        url: "{{ route('prestatarios.buscar') }}",
+                        method: 'GET',
+                        data: {
+                            ci_prestatario: ci
+                        },
+                        success: function(data) {
+                            console.log('respuesta ajax', data); // <-- agrega esto
+                            if (data) {
+                                $('#nombre_prestatario').val(data.nombre_prestatario);
+                                $('#apellido_prestatario').val(data.apellido_prestatario);
+                                $('#tlf_prestatario').val(data.tlf_prestatario);
+                            } else {
+                                $('#nombre_prestatario').val('');
+                                $('#apellido_prestatario').val('');
+                                $('#tlf_prestatario').val('');
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
 @stop

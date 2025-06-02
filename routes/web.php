@@ -87,7 +87,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/prestamos/{id}/edit', [App\Http\Controllers\PrestamoController::class, 'edit'])->middleware('can:Editar Préstamo')->name('admin.prestamos.edit');
     Route::put('/admin/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'update'])->middleware('can:Editar Préstamo')->name('admin.prestamos.update');
     Route::delete('/admin/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('admin.prestamos.destroy');
-
+    
+    //rutas de prestatario
+    Route::get('/admin/prestatarios/buscar', [App\Http\Controllers\PrestatarioController::class, 'buscarPorCedula'])->middleware('can:Registrar Préstamo')->name('prestatarios.buscar');
+    Route::put('/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'update'])->middleware('can:Editar Préstamo')->name('prestatarios.update');
+    Route::delete('/admin/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('prestatarios.destroy');
+    
     //rutas roles
     Route::get('/admin/roles', [App\Http\Controllers\RoleController::class, 'index'])->middleware('can:Ver Lista de Roles')->name('admin.roles.index');
     Route::get('/admin/roles/register', [App\Http\Controllers\RoleController::class, 'create'])->middleware('can:Registrar Rol')->name('admin.roles.register');

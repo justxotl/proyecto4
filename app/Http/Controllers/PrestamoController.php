@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Prestamo;
 use App\Models\Ficha;
+use App\Models\Prestatario;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
@@ -18,12 +19,13 @@ class PrestamoController extends Controller
      */
     public function index()
     {
+        $prestatarios = Prestatario::all();
         $prestamos = Prestamo::with('ficha')->get();
         $prestamos->each(function ($prestamo) {
             $prestamo->fecha_prestamo = Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y');
             $prestamo->fecha_devolucion = Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y');
         });
-        return view('admin.prestamos.index', compact('prestamos'));
+        return view('admin.prestamos.index', compact('prestamos', 'prestatarios'));
     }
 
     /**
@@ -77,18 +79,26 @@ class PrestamoController extends Controller
             'fecha_devolucion.after' => 'La fecha de devolución debe ser posterior a la fecha de préstamo.',
         ]);
 
+        // Buscar o crear prestatario
+        $prestatario = Prestatario::firstOrCreate(
+            ['ci_prestatario' => $request->ci_prestatario],
+            [
+                'nombre_prestatario' => $request->nombre_prestatario,
+                'apellido_prestatario' => $request->apellido_prestatario,
+                'tlf_prestatario' => $request->tlf_prestatario,
+            ]
+        );
+
+        // Guardar el préstamo
         $prestamo = new Prestamo();
         $prestamo->ficha_id = $request->ficha_id;
-        $prestamo->ci_prestatario = $request->ci_prestatario;
-        $prestamo->nombre_prestatario = $request->nombre_prestatario;
-        $prestamo->apellido_prestatario = $request->apellido_prestatario;
-        $prestamo->tlf_prestatario = $request->tlf_prestatario;
+        $prestamo->prestatario_id = $prestatario->id;
         $prestamo->fecha_prestamo = $request->fecha_prestamo;
         $prestamo->fecha_devolucion = $request->fecha_devolucion;
         $prestamo->save();
 
         return redirect()->route('admin.prestamos.index')
-            ->with('success', 'Préstamo registrado correctamente.');
+            ->with(['mensaje' => 'Préstamo registrado correctamente.', 'icono' => 'success']);
     }
 
     /**
@@ -96,7 +106,7 @@ class PrestamoController extends Controller
      */
     public function show($id)
     {
-        $prestamo = Prestamo::with('ficha')->findOrFail($id);
+        $prestamo = Prestamo::with('ficha', 'prestatario')->findOrFail($id);
 
         return view('admin.prestamos.show', compact('prestamo'));
     }
@@ -106,7 +116,7 @@ class PrestamoController extends Controller
      */
     public function edit($id)
     {
-        $prestamo = Prestamo::with('ficha')->findOrFail($id);
+        $prestamo = Prestamo::with('ficha', 'prestatario')->findOrFail($id);
         $fichas = Ficha::all();
         return view('admin.prestamos.edit', compact('prestamo', 'fichas'));
     }
@@ -153,12 +163,18 @@ class PrestamoController extends Controller
             'fecha_devolucion.after' => 'La fecha de devolución debe ser posterior a la fecha de préstamo.',
         ]);
 
+        $prestatario = Prestatario::firstOrCreate(
+            ['ci_prestatario' => $request->ci_prestatario],
+            [
+                'nombre_prestatario' => $request->nombre_prestatario,
+                'apellido_prestatario' => $request->apellido_prestatario,
+                'tlf_prestatario' => $request->tlf_prestatario,
+            ]
+        );
+
         $prestamo = Prestamo::findOrFail($id);
         $prestamo->ficha_id = $request->ficha_id;
-        $prestamo->ci_prestatario = $request->ci_prestatario;
-        $prestamo->nombre_prestatario = $request->nombre_prestatario;
-        $prestamo->apellido_prestatario = $request->apellido_prestatario;
-        $prestamo->tlf_prestatario = $request->tlf_prestatario;
+        $prestamo->prestatario_id = $prestatario->id;
         $prestamo->fecha_prestamo = $request->fecha_prestamo;
         $prestamo->fecha_devolucion = $request->fecha_devolucion;
         $prestamo->save();
@@ -194,15 +210,15 @@ class PrestamoController extends Controller
 
     public function exportarPrestamos()
     {
-        $fecha = Carbon::now()->format('d-m-Y');
+        $fecha = Carbon::now()->format('d-m-Y H:i:s');
         $nombreArchivo = "listado_de_prestamos_registrados_{$fecha}.xlsx";
         return Excel::download(new \App\Exports\PrestamoExport, $nombreArchivo);
     }
 
     public function exportPdf()
     {
-        $fecha = Carbon::now()->format('d-m-Y');
-        $prestamos = Prestamo::with(['ficha'])->get();
+        $fecha = Carbon::now()->format('d-m-Y H:i:s');
+        $prestamos = Prestamo::with(['ficha', 'prestatario'])->get();
         $nombreArchivo = "listado_de_prestamos_registrados_{$fecha}.pdf";
         $pdf = Pdf::loadView('admin.prestamos.reportepdf', compact('prestamos'))->setOption(['isPhpEnabled' => true]);
 
@@ -211,7 +227,7 @@ class PrestamoController extends Controller
 
     public function pdf($id)
     {
-        $prestamo = Prestamo::with('ficha')->where('id', $id)->first();
+        $prestamo = Prestamo::with('ficha', 'prestatario')->where('id', $id)->first();
         $pdf = Pdf::loadView('admin.prestamos.pdf', compact('prestamo'))
             ->setPaper('letter', 'portrait') // Configura el tamaño y orientación de la página
             ->setOption('isHtml5ParserEnabled', true) // Habilita el parser HTML5

@@ -16,6 +16,7 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use Carbon\Carbon;
 
 class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithEvents
 {
@@ -23,7 +24,7 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
 
     public function __construct()
     {
-        $this->prestamos = Prestamo::with('ficha')->get();
+        $this->prestamos = Prestamo::with(['ficha', 'prestatario'])->get();
     }
 
     public function collection()
@@ -54,13 +55,13 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
             $prestamo->id,
             $prestamo->ficha_id,
             $prestamo->ficha->titulo ?? 'N/A',
-            $prestamo->ci_prestatario,
-            $prestamo->nombre_prestatario,
-            $prestamo->apellido_prestatario,
-            $prestamo->tlf_prestatario,
-            $prestamo->fecha_prestamo,
-            $prestamo->fecha_devolucion,
-            $prestamo->fecha_entrega ?? '—',
+            $prestamo->prestatario->ci_prestatario ?? 'N/A',
+            $prestamo->prestatario->nombre_prestatario ?? 'N/A',
+            $prestamo->prestatario->apellido_prestatario ?? 'N/A',
+            $prestamo->prestatario->tlf_prestatario ?? 'N/A',
+            $prestamo->fecha_prestamo ? Carbon::parse($prestamo->fecha_prestamo)->format('d-m-Y') : '',
+            $prestamo->fecha_devolucion ? Carbon::parse($prestamo->fecha_devolucion)->format('d-m-Y') : '',
+            $prestamo->fecha_entrega ? Carbon::parse($prestamo->fecha_entrega)->format('d-m-Y') : '—',
             ucfirst($prestamo->estado),
         ];
     }
@@ -130,7 +131,7 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
                         ],
                     ],
                     'alignment' => [
-                        'vertical' => Alignment::VERTICAL_TOP,
+                        'vertical' => Alignment::VERTICAL_CENTER,
                         'wrapText' => true,
                     ],
                 ]);
@@ -150,16 +151,25 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
                     $sheet->getRowDimension($row)->setRowHeight(-1);
                 }
 
-                
+                $sheet->getColumnDimension('B')->setAutoSize(false);
+                $sheet->getColumnDimension('B')->setWidth(10);
                 $sheet->getColumnDimension('C')->setAutoSize(false);
                 $sheet->getColumnDimension('C')->setWidth(50);
-                
-                $columnsToAutosize = ['D', 'E', 'F', 'G', 'H', 'I', 'J'];
+                $sheet->getColumnDimension('D')->setAutoSize(false);
+                $sheet->getColumnDimension('D')->setWidth(18);
+                $sheet->getColumnDimension('H')->setAutoSize(false);
+                $sheet->getColumnDimension('H')->setWidth(20);
+                $sheet->getColumnDimension('I')->setAutoSize(false);
+                $sheet->getColumnDimension('I')->setWidth(20);
+                $sheet->getColumnDimension('J')->setAutoSize(false);
+                $sheet->getColumnDimension('J')->setWidth(20);
+
+                $columnsToAutosize = ['E', 'F', 'G', 'K'];
                 foreach ($columnsToAutosize as $column) {
                     $sheet->getColumnDimension($column)->setAutoSize(true);
                 }
-                
-                $sheet->getStyle("B6:C{$lastRow}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+                $sheet->getStyle("A6:C{$lastRow}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle("D6:K{$lastRow}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
             }
         ];

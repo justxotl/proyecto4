@@ -19,6 +19,10 @@
                     <h2 class="card-title mt-2">Préstamos Realizados</h2>
                     @can('Registrar Préstamo')
                         <div class="card-tools">
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal"
+                                data-target="#modalPrestatarios">
+                                <i class="fas fa-users"></i> Ver Prestatarios
+                            </button>
                             <a href="{{ route('admin.prestamos.register') }}" class="btn btn-primary"><i
                                     class="fa fa-plus"></i>&nbsp;
                                 Nuevo Préstamo</a>
@@ -50,7 +54,7 @@
                                         <td>{{ $contador++ }}</td>
                                         <td class="truncate-3-lines" title="{{ $prestamo->ficha->titulo }}">
                                             {{ $prestamo->ficha->titulo }}</td>
-                                        <td>{{ $prestamo->ci_prestatario }}</td>
+                                        <td>{{ $prestamo->prestatario->ci_prestatario }}</td>
                                         <td>{{ $prestamo->fecha_prestamo }}</td>
                                         <td>{{ $prestamo->fecha_devolucion }}</td>
                                         @php
@@ -152,7 +156,7 @@
                                                                 }
                                                             });
                                                         }
-                                                        </script>
+                                                    </script>
                                                 @endif
 
                                                 @can('Exportar Reporte de Préstamos')
@@ -205,6 +209,87 @@
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modalPrestatarios" tabindex="-1" role="dialog" aria-labelledby="modalPrestatariosLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPrestatariosLabel">Listado de Prestatarios</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="tablaPrestatarios" class="table table-bordered table-hover table-striped table-sm">
+                            <thead>
+                                <tr>
+                                    <th style="text-align: center">#</th>
+                                    <th style="text-align: center">Cédula</th>
+                                    <th style="text-align: center">Nombre</th>
+                                    <th style="text-align: center">Apellido</th>
+                                    <th style="text-align: center">Teléfono</th>
+                                    <th style="text-align: center">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($prestatarios as $prestatario)
+                                    <tr id="fila-prestatario-{{ $prestatario->id }}">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td class="editable" data-campo="ci_prestatario">{{ $prestatario->ci_prestatario }}
+                                        </td>
+                                        <td class="editable" data-campo="nombre_prestatario">
+                                            {{ $prestatario->nombre_prestatario }}</td>
+                                        <td class="editable" data-campo="apellido_prestatario">
+                                            {{ $prestatario->apellido_prestatario }}</td>
+                                        <td class="editable" data-campo="tlf_prestatario">
+                                            {{ $prestatario->tlf_prestatario }}</td>
+
+                                        <td class="acciones">
+                                            <a href="javascript:void(0);"
+                                                onclick="editarPrestatario({{ $prestatario->id }})"
+                                                class="btn btn-success btn-sm" title="Editar"><i
+                                                    class="fas fa-pen"></i></a>
+                                            <form action="{{ route('prestatarios.destroy', $prestatario->id) }}"
+                                                method="POST" style="display:inline;"
+                                                onclick="ask{{ $prestatario->id }}(event)"
+                                                id="form{{ $prestatario->id }}">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </form>
+                                            <script>
+                                                function ask{{ $prestatario->id }}(event) {
+                                                    event.preventDefault();
+                                                    Swal.fire({
+                                                        title: '¿Desea eliminar este registro?',
+                                                        text: '',
+                                                        icon: 'question',
+                                                        showDenyButton: true,
+                                                        confirmButtonText: 'Eliminar',
+                                                        confirmButtonColor: '#a5161d',
+                                                        denyButtonColor: '#949494',
+                                                        denyButtonText: 'Cancelar',
+                                                    }).then((result) => {
+                                                        if (result.isConfirmed) {
+                                                            var form = $('#form{{ $prestatario->id }}');
+                                                            form.submit();
+                                                        }
+                                                    });
+                                                }
+                                            </script>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @stop
@@ -342,6 +427,7 @@
     <script>
         $(function() {
             $("#example1").DataTable({
+                destroy: true,
                 "pageLength": 5,
                 "lengthMenu": [
                     [5, 10, 25, 50],
@@ -378,10 +464,10 @@
                 ],
                 "language": {
                     "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Fichas",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 Fichas",
-                    "infoFiltered": "(Filtrado de _MAX_ total Fichas)",
-                    "lengthMenu": "Mostrar _MENU_ Fichas",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Préstamos",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 Préstamos",
+                    "infoFiltered": "(Filtrado de _MAX_ total Préstamos)",
+                    "lengthMenu": "Mostrar _MENU_ Préstamos",
                     "loadingRecords": "Cargando...",
                     "processing": "Procesando...",
                     "search": "Buscador:",
@@ -429,5 +515,112 @@
                 ]
             }).buttons().container().appendTo('#example1_wrapper .row:eq(0)');
         });
+
+        $('#modalPrestatarios').on('shown.bs.modal', function() {
+            $('#tablaPrestatarios').DataTable({
+                pageLength: 5,
+                lengthMenu: [
+                    [5, 10, 20],
+                    [5, 10, 20]
+                ],
+                responsive: true,
+                lengthChange: true,
+                autoWidth: false,
+                destroy: true,
+
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                }
+            });
+        });
+
+        function editarPrestatario(id) {
+            var fila = $('#fila-prestatario-' + id);
+            fila.find('.editable').each(function() {
+                var valor = $(this).text().trim();
+                var campo = $(this).data('campo');
+                // Guarda el valor original antes de reemplazarlo
+                $(this).attr('data-valor-original', valor);
+                $(this).html('<input type="text" class="form-control form-control-sm" value="' + valor +
+                    '" name="' + campo + '">');
+            });
+            fila.find('.acciones').html(
+                '<button class="btn btn-primary btn-sm" onclick="guardarPrestatario(' + id +
+                ')"><i class="fas fa-save"></i></button>' +
+                '<button class="btn btn-secondary btn-sm ms-2 ml-1" onclick="cancelarEdicion(' + id +
+                ')"><i class="fas fa-times"></i></button>'
+            );
+        }
+
+        function cancelarEdicion(id) {
+            var fila = $('#fila-prestatario-' + id);
+            fila.find('.editable').each(function() {
+                var valorOriginal = $(this).attr('data-valor-original');
+                $(this).html(valorOriginal);
+            });
+            // Restaura los botones originales
+            fila.find('.acciones').html(
+                `<a href="javascript:void(0);" onclick="editarPrestatario(${id})" class="btn btn-success btn-sm" title="Editar"><i class="fas fa-pen"></i></a>
+        <form action="/prestatarios/${id}" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro de eliminar este prestatario?')">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
+        </form>`
+            );
+        }
+
+        function guardarPrestatario(id) {
+            var fila = $('#fila-prestatario-' + id);
+            var data = {
+                _token: '{{ csrf_token() }}',
+                ci_prestatario: fila.find('input[name=ci_prestatario]').val(),
+                nombre_prestatario: fila.find('input[name=nombre_prestatario]').val(),
+                apellido_prestatario: fila.find('input[name=apellido_prestatario]').val(),
+                tlf_prestatario: fila.find('input[name=tlf_prestatario]').val(),
+            };
+            $.ajax({
+                url: "{{ route('prestatarios.update', ':id') }}".replace(':id', id),
+                method: 'PUT',
+                data: data,
+                success: function(response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actualizado!',
+                        text: 'El prestatario ha sido actualizado correctamente.',
+                        timer: 1800,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1800);
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+                        // Junta todos los mensajes de error en un solo string
+                        let mensajes = '';
+                        Object.values(xhr.responseJSON.errors).forEach(function(msgArr) {
+                            mensajes += msgArr.join('<br>') + '<br>';
+                        });
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de validación de campos.',
+                            html: mensajes, // Usa html para mostrar saltos de línea
+                        });
+                    } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: xhr.responseJSON.message,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo guardar el cambio.',
+                        });
+                    }
+                }
+            });
+        }
     </script>
 @stop

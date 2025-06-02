@@ -150,19 +150,19 @@
     <table class="tabla-detalles">
         <tr>
             <th>Cédula</th>
-            <td>{{ $prestamo->ci_prestatario }}</td>
+            <td>{{ $prestamo->prestatario->ci_prestatario }}</td>
         </tr>
         <tr>
             <th>Nombre</th>
-            <td>{{ $prestamo->nombre_prestatario }}</td>
+            <td>{{ $prestamo->prestatario->nombre_prestatario }}</td>
         </tr>
         <tr>
             <th>Apellido</th>
-            <td>{{ $prestamo->apellido_prestatario }}</td>
+            <td>{{ $prestamo->prestatario->apellido_prestatario }}</td>
         </tr>
         <tr>
             <th>Teléfono</th>
-            <td>{{ $prestamo->tlf_prestatario }}</td>
+            <td>{{ $prestamo->prestatario->tlf_prestatario }}</td>
         </tr>
     </table>
 

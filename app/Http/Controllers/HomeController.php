@@ -7,6 +7,7 @@ use App\Models\Ficha;
 use App\Models\Carrera;
 use App\Models\Autor;
 use App\Models\Prestamo;
+use App\Models\Prestatario;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 
@@ -36,6 +37,7 @@ class HomeController extends Controller
         $fichas = Ficha::all();
         $autores = Autor::all();
         $carreras = Carrera::all();
+        $prestatarios = Prestatario::all();
         $prestamoActivo = Prestamo::where('estado', 'prestado')->count();
 
         $hascarreras = Carrera::withCount('ficha')->get();
@@ -54,6 +56,6 @@ class HomeController extends Controller
             ->get()
             ->groupBy('year');
 
-        return view('home', compact('users', 'roles', 'fichas', 'carreras', 'autores', 'hascarreras', 'fichasPorYear', 'prestamoActivo', 'prestamosPorMes'));
+        return view('home', compact('users', 'roles', 'fichas', 'carreras', 'autores', 'hascarreras', 'fichasPorYear', 'prestamoActivo', 'prestamosPorMes', 'prestatarios'));
     }
 }
