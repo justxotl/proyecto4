@@ -53,7 +53,6 @@ class DatabaseSeeder extends Seeder
             'Exportar Reporte de Autores',
             'Editar Autor',
             'Eliminar Autor',
-            'Quitar Autor de Ficha', //este podría obviarse
 
             'Ver Lista de Carreras',
             'Registrar Carrera',
@@ -103,7 +102,7 @@ class DatabaseSeeder extends Seeder
         $user = User::factory()->create([
             'name' => 'User',
             'email' => 'test@example.com',
-            'password' => Hash::make('master1234'),
+            'password' => Hash::make('12345678'),
         ]);
 
         $user->assignRole('MASTER');
@@ -129,7 +128,7 @@ class DatabaseSeeder extends Seeder
         $adminUser = User::factory()->create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
-            'password' => Hash::make('admin1234'),
+            'password' => Hash::make('12345678'),
         ]);
 
         $adminUser->assignRole('ADMIN');
@@ -153,7 +152,7 @@ class DatabaseSeeder extends Seeder
         $userOnly = User::factory()->create([
             'name' => 'Usuario',
             'email' => 'usuario@example.com',
-            'password' => Hash::make('usuario1234'),
+            'password' => Hash::make('12345678'),
         ]);
 
         $userOnly->assignRole('USER');
