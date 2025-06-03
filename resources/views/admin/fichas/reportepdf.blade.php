@@ -7,8 +7,7 @@
     <title>Reporte de Fichas PDF</title>
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <style>
         @page {
             margin: 60px 40px 60px 40px;

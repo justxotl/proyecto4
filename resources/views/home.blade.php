@@ -183,7 +183,7 @@
 @stop
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('plugins/chart.js') }}"></script>
 <script>
     const ctx = document.getElementById('fichasPorCarrera').getContext('2d');
 

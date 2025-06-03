@@ -82,7 +82,7 @@
         });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('plugins/sweetalert2.all.min.js') }}"></script>
 
     @if (($mensaje = Session::get('mensaje')) && ($icono = Session::get('icono')))
         <script>
@@ -142,4 +142,8 @@
         </div>
         <button type="submit" class="btn btn-primary btn-flat btn-block">Restablecer Contraseña</button>
     </form>
+
+    <a href="{{ route('login') }}" class="btn btn-secondary btn-flat btn-block mt-2">
+        <i class="fas fa-arrow-left"></i>&nbsp;Volver al Login
+    </a>
 @stop

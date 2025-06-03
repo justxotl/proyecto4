@@ -488,7 +488,22 @@
                             text: '<i class="fas fa-file-pdf"></i> PDF',
                             className: 'btn btn-danger',
                             action: function() {
-                                window.open('{{ route('prestamos.exportar.pdf') }}', '_blank');
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo PDF?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#dc3545',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.open(
+                                            '{{ route('prestamos.exportar.pdf') }}',
+                                            '_blank');
+                                    }
+                                });
                             }
                         }, {
                             text: '<i class="fas fa-file-csv"></i>  EXCEL',
@@ -529,7 +544,7 @@
                 destroy: true,
 
                 language: {
-                    url: '//cdn.datatables.net/plug-ins/1.13.4/i18n/es-ES.json'
+                    url: '{{ asset('plugins/es-ES.json') }}'
                 }
             });
         });
@@ -539,10 +554,20 @@
             fila.find('.editable').each(function() {
                 var valor = $(this).text().trim();
                 var campo = $(this).data('campo');
-                // Guarda el valor original antes de reemplazarlo
+                let atributos = 'class="form-control form-control-sm"';
+
+                if (campo === 'ci_prestatario') {
+                    atributos += ' autocomplete="off" maxlength="8" minlength="6" inputmode="numeric"';
+                }
+                if (campo === 'tlf_prestatario') {
+                    atributos += ' autocomplete="off" maxlength="11" minlength="11" inputmode="numeric"';
+                }
+                if (campo === 'nombre_prestatario' || campo === 'apellido_prestatario') {
+                    atributos += ' autocomplete="off" maxlength="255"';
+                }
+
                 $(this).attr('data-valor-original', valor);
-                $(this).html('<input type="text" class="form-control form-control-sm" value="' + valor +
-                    '" name="' + campo + '">');
+                $(this).html('<input type="text" ' + atributos + ' value="' + valor + '" name="' + campo + '">');
             });
             fila.find('.acciones').html(
                 '<button class="btn btn-primary btn-sm" onclick="guardarPrestatario(' + id +
@@ -561,11 +586,11 @@
             // Restaura los botones originales
             fila.find('.acciones').html(
                 `<a href="javascript:void(0);" onclick="editarPrestatario(${id})" class="btn btn-success btn-sm" title="Editar"><i class="fas fa-pen"></i></a>
-        <form action="/prestatarios/${id}" method="POST" style="display:inline;" onsubmit="return confirm('¿Seguro de eliminar este prestatario?')">
+            <form action="/prestatarios/${id}" method="POST" style="display:inline;" onclick="askEliminarPrestatario(${id}, event)" id="form${id}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
-        </form>`
+            </form>`
             );
         }
 
@@ -596,7 +621,7 @@
                 },
                 error: function(xhr) {
                     if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
-    
+
                         let mensajes = '';
                         Object.values(xhr.responseJSON.errors).forEach(function(msgArr) {
                             mensajes += msgArr.join('<br>') + '<br>';
@@ -619,6 +644,24 @@
                             text: 'No se pudo guardar el cambio.',
                         });
                     }
+                }
+            });
+        }
+
+        function askEliminarPrestatario(id, event) {
+            event.preventDefault();
+            Swal.fire({
+                title: '¿Desea eliminar este registro?',
+                text: '',
+                icon: 'question',
+                showDenyButton: true,
+                confirmButtonText: 'Eliminar',
+                confirmButtonColor: '#a5161d',
+                denyButtonColor: '#949494',
+                denyButtonText: 'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#form' + id).submit();
                 }
             });
         }

@@ -257,7 +257,22 @@
                             text: '<i class="fas fa-file-pdf"></i> PDF',
                             className: 'btn btn-danger',
                             action: function() {
-                                window.open('{{ route('usuarios.exportar.pdf') }}', '_blank');
+                                Swal.fire({
+                                    title: '¿Desea exportar la tabla en un archivo PDF?',
+                                    text: '',
+                                    icon: 'question',
+                                    showDenyButton: true,
+                                    confirmButtonText: 'Exportar',
+                                    confirmButtonColor: '#dc3545',
+                                    denyButtonColor: '#949494',
+                                    denyButtonText: 'Cancelar',
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.open(
+                                            '{{ route('usuarios.exportar.pdf') }}',
+                                            '_blank');
+                                    }
+                                });
                             }
                         }, {
                             text: '<i class="fas fa-file-csv"></i>  EXCEL',
