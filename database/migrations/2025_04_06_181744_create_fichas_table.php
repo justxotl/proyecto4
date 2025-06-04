@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo', 900);
             $table->date('fecha');
-            $table->foreignId('carrera_id')->constrained()->onDelete('cascade')->onUpdate('cascade'); // Relación con la tabla de carreras
+            $table->foreignId('carrera_id')->constrained('carreras')->onUpdate('cascade'); // Relación con la tabla de carreras
             $table->text('resumen');
             $table->timestamps();
         });

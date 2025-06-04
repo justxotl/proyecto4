@@ -100,7 +100,7 @@
             @foreach ($fichas as $ficha)
                 <tr>
                     <td>{{ $ficha->id }}</td>
-                    <td>{{ $ficha->fecha }}</td>
+                    <td>{{ Carbon\Carbon::parse($ficha->fecha)->format('d/m/Y') }}</td>
                     <td class="wrap-col">{{ $ficha->titulo }}</td>
                     <td>{{ $ficha->carrera->nombre ?? '-' }}</td>
                     <td class="wrap-col">

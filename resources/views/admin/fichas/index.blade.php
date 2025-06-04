@@ -44,7 +44,7 @@
                                     <tr>
                                         <td style="text-align: center">{{ $contador++ }}</td>
                                         <td style="text-align: center">
-                                            {{ \Carbon\Carbon::parse($ficha->fecha)->format('d-m-Y') }}</td>
+                                            {{ \Carbon\Carbon::parse($ficha->fecha)->format('d/m/Y') }}</td>
                                         <td class="titulo-columna" title="{{ $ficha->titulo }}">{{ $ficha->titulo }}</td>
                                         <td style="text-align: center">
                                             @if (count($ficha->autor) > 1)

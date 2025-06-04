@@ -132,7 +132,7 @@ $(".card-tools").on("click", ".addRow", function () {
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                            
+                                
                                     <span class="invalid-feedback" role="alert"></span>
                                 
                             </div>

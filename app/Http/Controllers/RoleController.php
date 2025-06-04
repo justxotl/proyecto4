@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Permission;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -146,7 +147,18 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $rol = Role::find($id);
+
+        $rol = Role::findOrFail($id);
+
+        $userCount = DB::table('model_has_roles')
+            ->where('role_id', $id)
+            ->count();
+
+        if ($userCount > 0) {
+            return redirect()->back()
+                ->with('mensaje', 'No se puede eliminar el rol porque tiene usuarios asociados.')
+                ->with('icono', 'error');
+        }
         $rol->delete();
 
         return redirect()->route('admin.roles.index')

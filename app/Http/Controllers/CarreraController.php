@@ -96,6 +96,11 @@ class CarreraController extends Controller
     public function destroy($id)
     {
         $carreras = Carrera::find($id);
+
+        if ($carreras->ficha()->count() > 0) {
+            return redirect()->back()->with('mensaje', 'No se puede eliminar la carrera porque tiene fichas asociadas.')->with('icono', 'error');
+        }
+
         $carreras->delete();
 
         return redirect()->route('admin.carreras.index')

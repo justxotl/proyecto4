@@ -141,7 +141,7 @@
         </tr>
         <tr>
             <th>Fecha de la Ficha</th>
-            <td>{{ $prestamo->ficha->fecha ?? 'No registrada' }}</td>
+            <td>{{ \Carbon\Carbon::parse($prestamo->ficha->fecha)->format('d/m/Y') ?? 'Sin fecha' }}</td>
         </tr>
     </table>
 

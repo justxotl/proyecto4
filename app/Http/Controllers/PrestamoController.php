@@ -21,10 +21,6 @@ class PrestamoController extends Controller
     {
         $prestatarios = Prestatario::all();
         $prestamos = Prestamo::with('ficha')->get();
-        $prestamos->each(function ($prestamo) {
-            $prestamo->fecha_prestamo = Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y');
-            $prestamo->fecha_devolucion = Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y');
-        });
         return view('admin.prestamos.index', compact('prestamos', 'prestatarios'));
     }
 

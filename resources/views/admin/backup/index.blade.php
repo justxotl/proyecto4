@@ -52,7 +52,7 @@
                                         <td style="text-align: center">{{ $contador++ }}</td>
                                         <td style="text-align: center">{{ basename($backup) }}</td>
                                         <td style="text-align: center">
-                                            {{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($backup))->setTimezone('America/Caracas')->format('d-m-Y') }}
+                                            {{ \Carbon\Carbon::createFromTimestamp(Storage::lastModified($backup))->setTimezone('America/Caracas')->format('d/m/Y') }}
                                         </td>
                                         <td style="text-align: center">
 

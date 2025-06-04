@@ -75,7 +75,7 @@
                                 <div class="form group">
                                     <label for="">Nombre de Usuario:</label>
                                     <input type="text" name="name" value="{{ Auth::User()->name }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('name')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -86,7 +86,7 @@
                                 <div class="form group">
                                     <label for="">Email:</label>
                                     <input type="email" name="email" value="{{ Auth::User()->email }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('email')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -99,7 +99,7 @@
                                 <div class="form group">
                                     <label for="">Pregunta #1:</label>
                                     <input type="text" name="preguntauno" value="{{ $preguntas->pregunta_uno }}"
-                                        class="form-control">
+                                        class="form-control" autocomplete="off">
                                     @error('preguntauno')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -110,7 +110,7 @@
                                 <div class="form group">
                                     <label for="">Pregunta #2:</label>
                                     <input type="text" name="preguntados" value="{{ $preguntas->pregunta_dos }}"
-                                        class="form-control">
+                                        class="form-control" autocomplete="off">
                                     @error('preguntados')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -123,7 +123,7 @@
                                 <div class="form group">
                                     <label for="">Respuesta #1:</label>
                                     <input type="text" name="respuestauno" value="{{ $preguntas->respuesta_uno }}"
-                                        class="form-control">
+                                        class="form-control" autocomplete="off">
                                     @error('respuestauno')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -134,7 +134,7 @@
                                 <div class="form group">
                                     <label for="">Respuesta #2:</label>
                                     <input type="text" name="respuestados" value="{{ $preguntas->respuesta_dos }}"
-                                        class="form-control">
+                                        class="form-control" autocomplete="off">
                                     @error('respuestados')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror

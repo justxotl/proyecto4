@@ -15,10 +15,7 @@ return new class extends Migration
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ficha_id')->constrained('fichas')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('ci_prestatario', 8);
-            $table->string('nombre_prestatario', 255);
-            $table->string('apellido_prestatario', 255);
-            $table->string('tlf_prestatario');
+            $table->foreignId('prestatario_id')->constrained('prestatarios')->onUpdate('cascade');
             $table->date('fecha_prestamo');
             $table->date('fecha_devolucion');
             $table->date('fecha_entrega')->nullable();

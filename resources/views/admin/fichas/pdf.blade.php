@@ -147,7 +147,7 @@
             <tbody>
                 <tr>
                     <th>Fecha</th>
-                    <td>{{ $ficha->fecha }}</td>
+                    <td>{{ Carbon\Carbon::parse($ficha->fecha)->format('d/m/Y') }}</td>
                 </tr>
                 <tr>
                     <th>Carrera</th>

@@ -96,7 +96,7 @@
                 <th style="width: 10%;">CI</th>
                 <th style="width: 10%;" class="wrap-col">Nombre(s)</th>
                 <th style="width: 10%;" class="wrap-col">Apellido(s)</th>
-                <th style="width: 12%;" >TLF.</th>
+                <th style="width: 12%;">TLF.</th>
                 <th style="width: 10%;">Fecha Préstamo</th>
                 <th style="width: 10%;">Fecha Devolución</th>
                 <th style="width: 10%;">Fecha Entrega</th>
@@ -114,9 +114,9 @@
                     <td>{{ $prestamo->prestatario->nombre_prestatario ?? '-' }}</td>
                     <td>{{ $prestamo->prestatario->apellido_prestatario ?? '-' }}</td>
                     <td>{{ $prestamo->prestatario->tlf_prestatario ?? '-' }}</td>
-                    <td>{{ $prestamo->fecha_prestamo ?? '-' }}</td>
-                    <td>{{ $prestamo->fecha_devolucion ?? '-' }}</td>
-                    <td>{{ $prestamo->fecha_entrega ?? '-' }}</td>
+                    <td>{{ Carbon\Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y') ?? '-' }}</td>
+                    <td>{{ Carbon\Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y') ?? '-' }}</td>
+                    <td>{{ $prestamo->fecha_entrega ? \Carbon\Carbon::parse($prestamo->fecha_entrega)->format('d/m/Y') : '-' }}</td>
                     <td>{{ ucfirst($prestamo->estado) }}</td>
                 </tr>
             @endforeach

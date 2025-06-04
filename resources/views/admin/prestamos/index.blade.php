@@ -55,16 +55,14 @@
                                         <td class="truncate-3-lines" title="{{ $prestamo->ficha->titulo }}">
                                             {{ $prestamo->ficha->titulo }}</td>
                                         <td>{{ $prestamo->prestatario->ci_prestatario }}</td>
-                                        <td>{{ $prestamo->fecha_prestamo }}</td>
-                                        <td>{{ $prestamo->fecha_devolucion }}</td>
+                                        <td>{{ Carbon::parse($prestamo->fecha_prestamo)->format('d/m/Y') }}</td>
+                                        <td>{{ Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y') }}</td>
                                         @php
                                             $hoy = Carbon::today();
-                                            $fechaPrestamo = Carbon::createFromFormat(
-                                                'd/m/Y',
+                                            $fechaPrestamo = Carbon::parse(
                                                 $prestamo->fecha_prestamo,
                                             );
-                                            $fechaDevolucion = Carbon::createFromFormat(
-                                                'd/m/Y',
+                                            $fechaDevolucion = Carbon::parse(
                                                 $prestamo->fecha_devolucion,
                                             );
 
@@ -127,7 +125,7 @@
                                                     @if ($prestamo->estado === 'prestado')
                                                         <form action="{{ route('admin.prestamos.devolver', $prestamo->id) }}"
                                                             method="post" style="display:inline;"
-                                                            onclick="ask{{ $prestamo->id }}(event)"
+                                                            onclick="askDevolver{{ $prestamo->id }}(event)"
                                                             id="miFormularioDevolver{{ $prestamo->id }}">
                                                             @csrf
                                                             @method('PUT')
@@ -138,7 +136,7 @@
                                                         </form>
                                                     @endcan
                                                     <script>
-                                                        function ask{{ $prestamo->id }}(event) {
+                                                        function askDevolver{{ $prestamo->id }}(event) {
                                                             event.preventDefault();
                                                             Swal.fire({
                                                                 title: '¿Desea marcar este préstamo como devuelto?',
@@ -586,7 +584,7 @@
             // Restaura los botones originales
             fila.find('.acciones').html(
                 `<a href="javascript:void(0);" onclick="editarPrestatario(${id})" class="btn btn-success btn-sm" title="Editar"><i class="fas fa-pen"></i></a>
-            <form action="/prestatarios/${id}" method="POST" style="display:inline;" onclick="askEliminarPrestatario(${id}, event)" id="form${id}">
+            <form action="{{ route('prestatarios.destroy', $prestatario->id) }}" method="POST" style="display:inline;" onclick="askEliminarPrestatario(${id}, event)" id="form${id}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
