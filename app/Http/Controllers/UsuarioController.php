@@ -118,12 +118,15 @@ class UsuarioController extends Controller
 
         $rules = [
             'name' => 'required|max:250',
-            'nombre' => 'required|max:250',
-            'apellido' => 'required|max:250',
-            'ci_us' => 'required|digits_between:6,8|numeric|unique:infopers,ci_us,' . $usuario->infoper->user_id,
             'email' => 'required|max:250|unique:users,email,' . $usuario->id,
             'password' => 'nullable|min:8|max:20|confirmed',
         ];
+
+        if (!$desdePerfil) {
+            $rules['nombre'] = 'required|max:250';
+            $rules['apellido'] = 'required|max:250';
+            $rules['ci_us'] = 'required|digits_between:6,8|numeric|unique:infopers,ci_us,' . $usuario->infoper->user_id;
+        }
 
         if ($desdePerfil) {
             $rules['preguntauno'] = 'required|string|max:255';
@@ -175,9 +178,11 @@ class UsuarioController extends Controller
         }
 
         $infoPer = infoper::find($usuario->infoper->user_id);
-        $infoPer->ci_us = $request->ci_us;
-        $infoPer->nombre = $request->nombre;
-        $infoPer->apellido = $request->apellido;
+        if (!$desdePerfil) {
+            $infoPer->ci_us = $request->ci_us;
+            $infoPer->nombre = $request->nombre;
+            $infoPer->apellido = $request->apellido;
+        }
         $infoPer->user_id = $usuario->id;
         $infoPer->save();
 
