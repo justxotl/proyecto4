@@ -23,7 +23,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios = User::all();
+        $usuarios = User::where('id', '!=', Auth::user()->id)->get();
         return view('admin.usuarios.index', compact('usuarios'));
     }
 
@@ -233,11 +233,15 @@ class UsuarioController extends Controller
     {
         $usuario = User::findOrFail($id);
 
-        if ($usuario->hasRole('MASTER')) {
-            
-            $usuariosConMaster = Role::where('name', 'MASTER')->first()->users()->count();
+        if (Auth::id() == $id) {
+            return redirect()->back()
+                ->with('mensaje', 'No se puede eliminar el usuario actual.')
+                ->with('icono', 'error');
+        }
 
-            if ($usuariosConMaster <= 1) {
+        if ($usuario->hasRole('MASTER')) {
+            $rolMaster = Role::where('name', 'MASTER')->first();
+            if ($rolMaster->users()->count() <= 1) {
                 return redirect()->back()
                     ->with('mensaje', 'Debe existir al menos un usuario con el rol MASTER.')
                     ->with('icono', 'error');

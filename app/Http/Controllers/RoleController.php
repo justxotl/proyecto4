@@ -66,7 +66,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $rol = Role::find($id);
+        $rol = Role::findOrFail($id);
         return view('admin.roles.edit', compact('rol'));
     }
 
@@ -75,7 +75,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rol = Role::find($id);
+        $rol = Role::findOrFail($id);
 
         if ($rol->name === 'MASTER') {
             return redirect()->route('admin.roles.index')
@@ -131,7 +131,7 @@ class RoleController extends Controller
     public function otorgar(Request $request, $id)
     {
         //dd($request, $id);    
-        $rol = Role::find($id);
+        $rol = Role::findOrFail($id);
 
         if ($rol->name === 'MASTER') {
             return redirect()->back()
