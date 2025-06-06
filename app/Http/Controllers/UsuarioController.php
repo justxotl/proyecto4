@@ -174,7 +174,27 @@ class UsuarioController extends Controller
         $usuario->save();
 
         if ($request->has('rol')) {
-            $usuario->syncRoles($request->rol);
+            $rolMaster = Role::where('name', 'MASTER')->first();
+
+            if ($rolMaster) {
+                $hasMaster = $usuario->hasRole('MASTER');
+                $rolUpdate = (array) $request->rol;
+                $masterRemove = $hasMaster && !in_array($rolMaster->id, $rolUpdate);
+
+                if ($masterRemove) {
+                    $usuariosConMaster = $rolMaster->users()
+                        ->where('id', '!=', $usuario->id)
+                        ->count();
+
+                    if ($usuariosConMaster === 0) {
+                        return redirect()->back()
+                            ->with('mensaje', 'Debe existir al menos un usuario con el rol MASTER.')
+                            ->with('icono', 'error');
+                    }
+                }
+            }
+
+            $usuario->syncRoles($rolUpdate);
         }
 
         $infoPer = infoper::find($usuario->infoper->user_id);
@@ -211,7 +231,19 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        $usuario = User::find($id);
+        $usuario = User::findOrFail($id);
+
+        if ($usuario->hasRole('MASTER')) {
+            
+            $usuariosConMaster = Role::where('name', 'MASTER')->first()->users()->count();
+
+            if ($usuariosConMaster <= 1) {
+                return redirect()->back()
+                    ->with('mensaje', 'Debe existir al menos un usuario con el rol MASTER.')
+                    ->with('icono', 'error');
+            }
+        }
+
         $usuario->delete();
 
         return redirect()->route('admin.usuarios.index')

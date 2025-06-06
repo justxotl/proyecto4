@@ -75,6 +75,14 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $rol = Role::find($id);
+
+        if ($rol->name === 'MASTER') {
+            return redirect()->route('admin.roles.index')
+                ->with('mensaje', 'No está permitido modificar este rol.')
+                ->with('icono', 'error');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255|unique:roles,name,' . $id,
         ], [
@@ -84,7 +92,6 @@ class RoleController extends Controller
             'name.unique' => 'Ya existe un rol registrado con ese nombre.',
         ]);
 
-        $rol = Role::find($id);
         $rol->name = $request->name;
         $rol->save();
 
@@ -124,6 +131,13 @@ class RoleController extends Controller
     public function otorgar(Request $request, $id)
     {
         //dd($request, $id);    
+        $rol = Role::find($id);
+
+        if ($rol->name === 'MASTER') {
+            return redirect()->back()
+                ->with('mensaje', 'No está permitido modificar los permisos de este rol.')
+                ->with('icono', 'error');
+        }
 
         $request->validate([
             'permisos' => 'required|array',
@@ -132,7 +146,6 @@ class RoleController extends Controller
             'permisos.array' => 'El formato de los permisos no es válido.',
         ]);
 
-        $rol = Role::find($id);
         $rol->permissions()->sync($request->input('permisos'));
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
@@ -159,6 +172,13 @@ class RoleController extends Controller
                 ->with('mensaje', 'No se puede eliminar el rol porque tiene usuarios asociados.')
                 ->with('icono', 'error');
         }
+
+        if ($rol->name === 'MASTER') {
+            return redirect()->back()
+                ->with('mensaje', 'No se puede eliminar el rol porque es el principal.')
+                ->with('icono', 'error');
+        }
+
         $rol->delete();
 
         return redirect()->route('admin.roles.index')
