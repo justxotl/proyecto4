@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
             'Editar Usuario',
             'Eliminar Usuario',
             'Ver Perfil de Usuario',
+            'Editar Perfil de Usuario',
 
             'Ver Lista de Autores',
             'Registrar Autor',

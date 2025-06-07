@@ -199,21 +199,6 @@
         @endforeach
     ];
 
-    var backgroundColors = [
-        'rgba(255, 99, 132, 0.3)',
-        'rgba(54, 162, 235, 0.3)',
-        'rgba(255, 206, 86, 0.3)',
-        'rgba(75, 192, 192, 0.3)',
-        'rgba(153, 102, 255, 0.3)',
-        'rgba(255, 159, 64, 0.3)',
-        'rgba(199, 199, 199, 0.3)',
-        'rgba(83, 102, 255, 0.3)',
-        'rgba(255, 102, 204, 0.3)',
-        'rgba(0, 204, 102, 0.3)'
-    ];
-
-    var borderColors = backgroundColors.map(color => color.replace('0.3', '1'));
-
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -221,8 +206,8 @@
             datasets: [{
                 label: 'Cantidad de Trabajos',
                 data: fichasCount,
-                backgroundColor: backgroundColors.slice(0, carreras.length),
-                borderColor: borderColors.slice(0, carreras.length),
+                backgroundColor: 'rgba(54, 162, 235, 0.3)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },

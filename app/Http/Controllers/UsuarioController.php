@@ -112,9 +112,17 @@ class UsuarioController extends Controller
 
     public function update(Request $request, $id)
     {
-        $usuario = User::find($id);
-
         $desdePerfil = $request->redirect_to === 'perfil';
+
+        if ($desdePerfil && $id != Auth::id()) {
+            abort(403, 'No autorizado');
+        }
+
+        if ($desdePerfil) {
+            $id = Auth::id();
+        }
+
+        $usuario = User::find($id);
 
         $rules = [
             'name' => 'required|max:250',

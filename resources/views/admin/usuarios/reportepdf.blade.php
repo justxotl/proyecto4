@@ -91,7 +91,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 5%;">ID</th>
+                <th style="width: 5%;">#</th>
                 <th style="width: 15%;">Nombre de Usuario</th>
                 <th style="width: 10%;">Cédula</th>
                 <th style="width: 22%;">Nombre(s)</th>
@@ -103,7 +103,7 @@
         <tbody>
             @foreach ($usuarios as $usuario)
                 <tr>
-                    <td>{{ $usuario->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->infoper->ci_us ?? '-' }}</td>
                     <td>{{ $usuario->infoper->nombre ?? '-' }}</td>

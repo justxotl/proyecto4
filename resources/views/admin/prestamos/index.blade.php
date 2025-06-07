@@ -59,12 +59,8 @@
                                         <td>{{ Carbon::parse($prestamo->fecha_devolucion)->format('d/m/Y') }}</td>
                                         @php
                                             $hoy = Carbon::today();
-                                            $fechaPrestamo = Carbon::parse(
-                                                $prestamo->fecha_prestamo,
-                                            );
-                                            $fechaDevolucion = Carbon::parse(
-                                                $prestamo->fecha_devolucion,
-                                            );
+                                            $fechaPrestamo = Carbon::parse($prestamo->fecha_prestamo);
+                                            $fechaDevolucion = Carbon::parse($prestamo->fecha_devolucion);
 
                                             $fechaEntrega = $prestamo->fecha_entrega
                                                 ? Carbon::parse($prestamo->fecha_entrega)
@@ -210,84 +206,153 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="modalPrestatarios" tabindex="-1" role="dialog" aria-labelledby="modalPrestatariosLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modalPrestatarios" tabindex="-1" role="dialog" data-backdrop="static"
+        data-keyboard="false" aria-labelledby="modalPrestatariosLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalPrestatariosLabel">Listado de Prestatarios</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <table id="tablaPrestatarios" class="table table-bordered table-hover table-striped table-sm">
-                            <thead>
-                                <tr>
-                                    <th style="text-align: center">#</th>
-                                    <th style="text-align: center">Cédula</th>
-                                    <th style="text-align: center">Nombre</th>
-                                    <th style="text-align: center">Apellido</th>
-                                    <th style="text-align: center">Teléfono</th>
-                                    <th style="text-align: center">Acción</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($prestatarios as $prestatario)
-                                    <tr id="fila-prestatario-{{ $prestatario->id }}">
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td class="editable" data-campo="ci_prestatario">{{ $prestatario->ci_prestatario }}
-                                        </td>
-                                        <td class="editable" data-campo="nombre_prestatario">
-                                            {{ $prestatario->nombre_prestatario }}</td>
-                                        <td class="editable" data-campo="apellido_prestatario">
-                                            {{ $prestatario->apellido_prestatario }}</td>
-                                        <td class="editable" data-campo="tlf_prestatario">
-                                            {{ $prestatario->tlf_prestatario }}</td>
-
-                                        <td class="acciones">
-                                            <a href="javascript:void(0);"
-                                                onclick="editarPrestatario({{ $prestatario->id }})"
-                                                class="btn btn-success btn-sm" title="Editar"><i
-                                                    class="fas fa-pen"></i></a>
-                                            <form action="{{ route('prestatarios.destroy', $prestatario->id) }}"
-                                                method="POST" style="display:inline;"
-                                                onclick="ask{{ $prestatario->id }}(event)"
-                                                id="form{{ $prestatario->id }}">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i
-                                                        class="fas fa-trash"></i></button>
-                                            </form>
-                                            <script>
-                                                function ask{{ $prestatario->id }}(event) {
-                                                    event.preventDefault();
-                                                    Swal.fire({
-                                                        title: '¿Desea eliminar este registro?',
-                                                        text: '',
-                                                        icon: 'question',
-                                                        showDenyButton: true,
-                                                        confirmButtonText: 'Eliminar',
-                                                        confirmButtonColor: '#a5161d',
-                                                        denyButtonColor: '#949494',
-                                                        denyButtonText: 'Cancelar',
-                                                    }).then((result) => {
-                                                        if (result.isConfirmed) {
-                                                            var form = $('#form{{ $prestatario->id }}');
-                                                            form.submit();
-                                                        }
-                                                    });
-                                                }
-                                            </script>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h4 class="card-title mt-2">Listado de Prestatarios</h4>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#modalRegistrarPrestatario">
+                                    <i class="fas fa-plus"></i> Nuevo Prestatario
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tablaPrestatarios"
+                                    class="table table-bordered table-hover table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center">#</th>
+                                            <th style="text-align: center">Cédula</th>
+                                            <th style="text-align: center">Nombre</th>
+                                            <th style="text-align: center">Apellido</th>
+                                            <th style="text-align: center">Teléfono</th>
+                                            <th style="text-align: center">Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($prestatarios as $prestatario)
+                                            <tr id="fila-prestatario-{{ $prestatario->id }}">
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td class="editable" data-campo="ci_prestatario">
+                                                    {{ $prestatario->ci_prestatario }}
+                                                </td>
+                                                <td class="editable" data-campo="nombre_prestatario">
+                                                    {{ $prestatario->nombre_prestatario }}</td>
+                                                <td class="editable" data-campo="apellido_prestatario">
+                                                    {{ $prestatario->apellido_prestatario }}</td>
+                                                <td class="editable" data-campo="tlf_prestatario">
+                                                    {{ $prestatario->tlf_prestatario }}</td>
+                                                <td class="acciones">
+                                                    <a href="javascript:void(0);"
+                                                        onclick="editarPrestatario({{ $prestatario->id }})"
+                                                        class="btn btn-success btn-sm" title="Editar"><i
+                                                            class="fas fa-pen"></i></a>
+                                                    <form action="{{ route('prestatarios.destroy', $prestatario->id) }}"
+                                                        method="POST" style="display:inline;"
+                                                        onclick="askEliminarPrestatario({{ $prestatario->id }}, event)"
+                                                        id="form{{ $prestatario->id }}">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm"
+                                                            title="Eliminar"><i class="fas fa-trash"></i></button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- Modal para registrar prestatario -->
+    <div class="modal fade col-md-12" id="modalRegistrarPrestatario" data-backdrop="static" data-keyboard="false"
+        tabindex="-1" role="dialog" aria-labelledby="modalRegistrarPrestatarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form id="formNuevoPrestatario">
+                @csrf
+                <div class="modal-content">
+                    <div class="card card-outline card-success m-0">
+                        <div class="card-header">
+                            <h4 class="card-title mt-1">Registrar Prestatario</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="form-group col-md-12">
+                                    <label>Cédula del prestatario:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Cédula del Prestatario"
+                                            maxlength="8" inputmode="numeric" pattern="[0-9]*" name="ci_prestatario"
+                                            autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-id-card"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Nombre(s) del prestatario:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                            placeholder="Nombre(s) del Prestatario" name="nombre_prestatario"
+                                            autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Apellido(s) del prestatario:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control"
+                                            placeholder="Apellido(s) del Prestatario" name="apellido_prestatario"
+                                            autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Teléfono del prestatario:</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Teléfono del Prestatario"
+                                            maxlength="11" inputmode="numeric" pattern="[0-9]*" name="tlf_prestatario"
+                                            autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-phone"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-success">Registrar</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+            </form>
         </div>
     </div>
 @stop
@@ -530,7 +595,7 @@
         });
 
         $('#modalPrestatarios').on('shown.bs.modal', function() {
-            $('#tablaPrestatarios').DataTable({
+            var table = $('#tablaPrestatarios').DataTable({
                 pageLength: 5,
                 lengthMenu: [
                     [5, 10, 20],
@@ -540,12 +605,12 @@
                 lengthChange: true,
                 autoWidth: false,
                 destroy: true,
-
                 language: {
                     url: '{{ asset('plugins/es-ES.json') }}'
-                }
+                },
             });
         });
+
 
         function editarPrestatario(id) {
             var fila = $('#fila-prestatario-' + id);
@@ -584,7 +649,7 @@
             // Restaura los botones originales
             fila.find('.acciones').html(
                 `<a href="javascript:void(0);" onclick="editarPrestatario(${id})" class="btn btn-success btn-sm" title="Editar"><i class="fas fa-pen"></i></a>
-            <form action="{{ route('prestatarios.destroy', $prestatario->id) }}" method="POST" style="display:inline;" onclick="askEliminarPrestatario(${id}, event)" id="form${id}">
+            <form action="${'{{ route('prestatarios.destroy', ':id') }}'.replace(':id', id)}" method="POST" style="display:inline;" onclick="askEliminarPrestatario(${id}, event)" id="form${id}">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="_method" value="DELETE">
             <button type="submit" class="btn btn-danger btn-sm" title="Eliminar"><i class="fas fa-trash"></i></button>
@@ -663,5 +728,70 @@
                 }
             });
         }
+
+        let registroExitoso = false;
+
+        $('#formNuevoPrestatario').submit(function(e) {
+            e.preventDefault();
+
+            const datos = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('prestatarios.store') }}",
+                method: "POST",
+                data: datos,
+                success: function(response) {
+                    registroExitoso = true;
+                    $('#modalRegistrarPrestatario').modal('hide');
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Prestatario registrado!',
+                        text: 'El prestatario ha sido registrado correctamente.',
+                        timer: 1500,
+                        showConfirmButton: false
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function(xhr) {
+                    if (xhr.status === 422 && xhr.responseJSON && xhr.responseJSON.errors) {
+
+                        let mensajes = '';
+                        Object.values(xhr.responseJSON.errors).forEach(function(msgArr) {
+                            mensajes += msgArr.join('<br>') + '<br>';
+                        });
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error de validación de campos.',
+                            html: mensajes,
+                        });
+                    } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: xhr.responseJSON.message,
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo guardar el cambio.',
+                        });
+                    }
+                }
+            });
+        });
+
+        $('#modalRegistrarPrestatario').on('show.bs.modal', function() {
+            $('#modalPrestatarios').modal('hide');
+        });
+
+        $('#modalRegistrarPrestatario').on('hidden.bs.modal', function() {
+            if (!registroExitoso) {
+                $('#modalPrestatarios').modal('show');
+            }
+            registroExitoso = false;
+        });
     </script>
 @stop

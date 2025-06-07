@@ -33,9 +33,9 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Nombre:</label>
+                                    <label for="">Nombre(s):</label>
                                     <input type="text" name="nombre" value="{{ $usuario->infoper->nombre }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('nombre')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -44,9 +44,9 @@
 
                             <div class="col-md-6">
                                 <div class="form group">
-                                    <label for="">Apellido:</label>
+                                    <label for="">Apellido(s):</label>
                                     <input type="text" name="apellido" value="{{ $usuario->infoper->apellido }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('apellido')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -58,7 +58,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Nombre de Usuario:</label>
-                                    <input type="text" name="name" value="{{ $usuario->name }}" class="form-control" required>
+                                    <input type="text" name="name" value="{{ $usuario->name }}" class="form-control" autocomplete="off" required>
                                     @error('name')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -69,7 +69,7 @@
                                 <div class="form group">
                                     <label for="">Cédula:</label>
                                     <input type="text" name="ci_us" maxlength="8" inputmode="numeric" pattern="[0-9]*" value="{{ $usuario->infoper->ci_us }}"
-                                        class="form-control" required>
+                                        class="form-control" autocomplete="off" required>
                                     @error('ci_us')
                                         <small style="color: red;">{{ $message }}</small>
                                     @enderror
@@ -81,7 +81,7 @@
                             <div class="col-md-6">
                                 <div class="form group">
                                     <label for="">Email:</label>
-                                    <input type="email" name="email" value="{{ $usuario->email }}" class="form-control"
+                                    <input type="email" name="email" value="{{ $usuario->email }}" class="form-control" autocomplete="off"
                                         required>
                                     @error('email')
                                         <small style="color: red;">{{ $message }}</small>

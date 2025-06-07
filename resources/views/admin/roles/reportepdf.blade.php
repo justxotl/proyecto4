@@ -90,7 +90,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 5%;">ID</th>
+                <th style="width: 5%;">#</th>
                 <th style="width: 15%;">Nombre del Rol</th>
                 <th style="width: 80%;">Permisos del Rol</th>
             </tr>
@@ -98,7 +98,7 @@
         <tbody>
             @foreach ($roles as $rol)
                 <tr>
-                    <td>{{ $rol->id }}</td>
+                    <td>{{ $loop->iteration }}</td>
                     <td class="wrap-col">{{ $rol->name }}</td>
                     <td class="wrap-col">
                         @if ($rol->permissions->isEmpty())

@@ -90,7 +90,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 10%;">ID</th>
+                <th style="width: 10%;">#</th>
                 <th style="width: 30%;">Cédula del Autor</th>
                 <th style="width: 30%;">Nombre(s) del Autor</th>
                 <th style="width: 30%;">Apellido(s) del Autor</th>
@@ -99,7 +99,7 @@
         <tbody>
             @foreach ($autores as $autor)
                 <tr>
-                    <td>{{ $autor->id }}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td class="wrap-col">{{ $autor->ci_autor }}</td>
                     <td class="wrap-col">{{ $autor->nombre_autor }}</td>
                     <td class="wrap-col">{{ $autor->apellido_autor }}</td>

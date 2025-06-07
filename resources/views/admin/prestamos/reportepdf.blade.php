@@ -91,7 +91,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 5%;">ID</th>
+                <th style="width: 5%;">#</th>
                 <th style="width: 36%;" class="wrap-col">Ficha Prestada</th>
                 <th style="width: 10%;">CI</th>
                 <th style="width: 10%;" class="wrap-col">Nombre(s)</th>
@@ -106,7 +106,7 @@
         <tbody>
             @foreach ($prestamos as $prestamo)
                 <tr>
-                    <td>{{ $prestamo->id }}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>
                         {{ $prestamo->ficha->titulo ?? '-' }}
                     </td>

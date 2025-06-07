@@ -89,7 +89,7 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 4%;">ID</th>
+                <th style="width: 4%;">#</th>
                 <th style="width: 7%;">Fecha</th>
                 <th style="width: 29%;">Título</th>
                 <th style="width: 15%;">Carrera</th>
@@ -99,7 +99,7 @@
         <tbody>
             @foreach ($fichas as $ficha)
                 <tr>
-                    <td>{{ $ficha->id }}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td>{{ Carbon\Carbon::parse($ficha->fecha)->format('d/m/Y') }}</td>
                     <td class="wrap-col">{{ $ficha->titulo }}</td>
                     <td>{{ $ficha->carrera->nombre ?? '-' }}</td>

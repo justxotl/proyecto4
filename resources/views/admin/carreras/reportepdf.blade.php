@@ -90,14 +90,14 @@
     <table>
         <thead>
             <tr>
-                <th style="width: 10%;">ID</th>
+                <th style="width: 10%;">#</th>
                 <th style="width: 90%;">Nombre de Carrera</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($carreras as $carrera)
                 <tr>
-                    <td>{{ $carrera->id }}</td>
+                    <td>{{$loop->iteration}}</td>
                     <td class="wrap-col">{{ $carrera->nombre }}</td>
                 </tr>
             @endforeach

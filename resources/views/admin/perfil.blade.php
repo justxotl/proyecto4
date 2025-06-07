@@ -64,6 +64,7 @@
                             </div>
                         </div>
 
+                        @can('Editar Perfil de Usuario')
                         <div class="row">
                             <div class="col-md-12">
                                 <h3 class="text-center mt-4 mb-4"><b>Datos Actualizables:</b></h3>
@@ -151,6 +152,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endcan
                     </form>
                 </div>
                 <!-- /.card-body -->

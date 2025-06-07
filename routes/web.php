@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('admin.prestamos.destroy');
     
     //rutas de prestatario
+    Route::post('/admin/prestatarios/register', [App\Http\Controllers\PrestatarioController::class, 'store'])->middleware('can:Registrar Préstamo')->name('prestatarios.store');
     Route::get('/admin/prestatarios/buscar', [App\Http\Controllers\PrestatarioController::class, 'buscarPorCedula'])->middleware('can:Registrar Préstamo')->name('prestatarios.buscar');
     Route::put('/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'update'])->middleware('can:Editar Préstamo')->name('prestatarios.update');
     Route::delete('/admin/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('prestatarios.destroy');
