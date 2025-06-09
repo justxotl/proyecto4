@@ -210,9 +210,10 @@
         data-keyboard="false" aria-labelledby="modalPrestatariosLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                        <span aria-hidden="true">&times;</span>
+                <div class="modal-header mt-1">
+                    <h5 class="modal-title" id="modalPrestatariosLabel">Prestatarios Registrados</h5>
+                    <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Cerrar">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <div class="modal-body">

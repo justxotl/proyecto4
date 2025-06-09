@@ -11,19 +11,7 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
     <hr>
-
-
 
     <div class="row">
         <div class="col-md-12">
@@ -52,7 +40,7 @@
                             {{-- CI field --}}
                             <div class="input-group mb-3 col-md-4">
                                 <input type="text" name="ci_autor[]" onkeyup="buscarAutor(event)" maxlength="8" inputmode="numeric" pattern="[0-9]*"
-                                    class="form-control @error('ci_autor') is-invalid @enderror"
+                                    class="form-control"
                                     value="{{ old('ci_autor') }}" placeholder="CI del Autor" id="ciautor" required
                                     autofocus autocomplete="off">
                                 <div class="input-group-append">
@@ -60,17 +48,12 @@
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                                @error('ci_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
 
                             {{-- Nombre field --}}
                             <div class="input-group mb-3 col-md-4" style="visibility: hidden" id="nombreAutor">
                                 <input type="text" name="nombre_autor[]"
-                                    class="form-control @error('nombre_autor') is-invalid @enderror"
+                                    class="form-control"
                                     value="{{ old('nombre_autor') }}" placeholder="Nombre del Autor" autocomplete="off" id="autorN"
                                     required>
 
@@ -79,18 +62,12 @@
                                         <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-
-                                @error('nombre')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
 
                             {{-- Apellido field --}}
                             <div class="input-group mb-3 col-md-4" style="visibility: hidden" id="apellidoAutor">
                                 <input type="text" name="apellido_autor[]"
-                                    class="form-control @error('apellido_autor') is-invalid @enderror"
+                                    class="form-control"
                                     value="{{ old('apellido_autor') }}" placeholder="Apellido del Autor" autocomplete="off" id="autorA"
                                     required>
 
@@ -99,12 +76,6 @@
                                         <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-
-                                @error('apellido_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 
@@ -116,7 +87,7 @@
                             {{-- Titulo field --}}
                             <div class="input-group mb-3 col-md-12">
                                 <input type="text" name="titulo"
-                                    class="form-control @error('titulo') is-invalid @enderror" value="{{ old('titulo') }}"
+                                    class="form-control" value="{{ old('titulo') }}"
                                     placeholder="Título del Trabajo" id="titulo" autocomplete="off" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -124,17 +95,12 @@
                                             class="fas fa-quote-right {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                                @error('titulo')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
 
                             {{-- Fecha field --}}
                             <div class="input-group mb-3 col-md-6">
                                 <input type="date" name="fecha"
-                                    class="form-control @error('fecha') is-invalid @enderror" value="{{ old('fecha') }}"
+                                    class="form-control" value="{{ old('fecha') }}"
                                     id="fecha" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -142,11 +108,7 @@
                                             class="fas fa-calendar {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                                @error('fecha')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+
                             </div>
 
                             {{-- Carrera field --}}
@@ -163,18 +125,12 @@
                                             class="fas fa-graduation-cap {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-
-                                @error('carrera')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
 
                             {{-- Resumen field --}}
                             <div class="input-group mb-3 col-md-12">
 
-                                <textarea name="resumen" id="resumen" rows="4" class="form-control @error('resumen') is-invalid @enderror"
+                                <textarea name="resumen" id="resumen" rows="4" class="form-control"
                                     value="{{ old('resumen') }}" placeholder="Resumen del Trabajo" autocomplete="off" form="form_ficha" required></textarea>
 
                                 <div class="input-group-append">
@@ -183,12 +139,6 @@
                                             class="fas fa-quote-right {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-
-                                @error('resumen')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                         </div>
 

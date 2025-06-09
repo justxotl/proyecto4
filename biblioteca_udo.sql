@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-06-2025 a las 04:00:52
+-- Tiempo de generación: 09-06-2025 a las 04:32:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -41,8 +41,10 @@ CREATE TABLE `autors` (
 --
 
 INSERT INTO `autors` (`id`, `ci_autor`, `nombre_autor`, `apellido_autor`, `created_at`, `updated_at`) VALUES
-(3, '30040201', 'Gabriel', 'Perdomo', '2025-06-03 21:58:12', '2025-06-03 21:58:12'),
-(4, '28668715', 'Ricardo', 'Álvarez', '2025-06-03 22:00:54', '2025-06-03 22:00:54');
+(5, '26139303', 'Natasha Nazareth', 'Baca Vaccaro', '2025-06-06 14:48:50', '2025-06-06 14:48:50'),
+(6, '24620484', 'Julián José', 'Díaz Piñango', '2025-06-06 14:48:50', '2025-06-07 04:07:53'),
+(7, '30040201', 'Gabriel', 'Perdomo', '2025-06-09 00:41:13', '2025-06-09 00:41:13'),
+(8, '28668715', 'Ricardo', 'Alvarez', '2025-06-09 00:44:58', '2025-06-09 00:44:58');
 
 -- --------------------------------------------------------
 
@@ -63,9 +65,10 @@ CREATE TABLE `autor_ficha` (
 --
 
 INSERT INTO `autor_ficha` (`id`, `ficha_id`, `autor_id`, `created_at`, `updated_at`) VALUES
-(9, 2, 3, NULL, NULL),
-(13, 3, 4, NULL, NULL),
-(14, 1, 3, NULL, NULL);
+(17, 4, 5, NULL, NULL),
+(18, 4, 6, NULL, NULL),
+(23, 5, 7, NULL, NULL),
+(24, 5, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -84,7 +87,7 @@ CREATE TABLE `cache` (
 --
 
 INSERT INTO `cache` (`key`, `value`, `expiration`) VALUES
-('laravel_cache_spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:43:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:21:\"Ver Lista de Usuarios\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:17:\"Registrar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:28:\"Exportar Reporte de Usuarios\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:27:\"Ver Información de Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:14:\"Editar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:16:\"Eliminar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:21:\"Ver Perfil de Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:20:\"Ver Lista de Autores\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:15:\"Registrar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:27:\"Exportar Reporte de Autores\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:12:\"Editar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:14:\"Eliminar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:21:\"Ver Lista de Carreras\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:17:\"Registrar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:28:\"Exportar Reporte de Carreras\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:14:\"Editar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:16:\"Eliminar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:19:\"Ver Lista de Fichas\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:15:\"Registrar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:26:\"Exportar Reporte de Fichas\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:25:\"Ver Información de Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:32:\"Exportar Reporte de Ficha Única\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:12:\"Editar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:14:\"Eliminar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:23:\"Ver Lista de Préstamos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:19:\"Registrar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:30:\"Exportar Reporte de Préstamos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:29:\"Ver Información de Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:30:\"Marcar Préstamo como Devuelto\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:16:\"Editar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:18:\"Eliminar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:18:\"Ver Lista de Roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:13:\"Registrar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:25:\"Exportar Reporte de Roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:10:\"Editar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:35;a:4:{s:1:\"a\";i:36;s:1:\"b\";s:12:\"Eliminar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:36;a:4:{s:1:\"a\";i:37;s:1:\"b\";s:22:\"Ver Lista de Respaldos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:37;a:4:{s:1:\"a\";i:38;s:1:\"b\";s:14:\"Crear Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:38;a:4:{s:1:\"a\";i:39;s:1:\"b\";s:18:\"Restaurar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:39;a:4:{s:1:\"a\";i:40;s:1:\"b\";s:36:\"Restaurar Respaldo desde Dispositivo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:40;a:4:{s:1:\"a\";i:41;s:1:\"b\";s:18:\"Descargar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:41;a:4:{s:1:\"a\";i:42;s:1:\"b\";s:17:\"Eliminar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:42;a:4:{s:1:\"a\";i:43;s:1:\"b\";s:29:\"Ver Estadísticas del Sistema\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}}s:5:\"roles\";a:3:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:6:\"MASTER\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:5:\"ADMIN\";s:1:\"c\";s:3:\"web\";}i:2;a:3:{s:1:\"a\";i:3;s:1:\"b\";s:4:\"USER\";s:1:\"c\";s:3:\"web\";}}}', 1749259651);
+('laravel_cache_spatie.permission.cache', 'a:3:{s:5:\"alias\";a:4:{s:1:\"a\";s:2:\"id\";s:1:\"b\";s:4:\"name\";s:1:\"c\";s:10:\"guard_name\";s:1:\"r\";s:5:\"roles\";}s:11:\"permissions\";a:44:{i:0;a:4:{s:1:\"a\";i:1;s:1:\"b\";s:21:\"Ver Lista de Usuarios\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:1;a:4:{s:1:\"a\";i:2;s:1:\"b\";s:17:\"Registrar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:2;a:4:{s:1:\"a\";i:3;s:1:\"b\";s:28:\"Exportar Reporte de Usuarios\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:3;a:4:{s:1:\"a\";i:4;s:1:\"b\";s:27:\"Ver Información de Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:4;a:4:{s:1:\"a\";i:5;s:1:\"b\";s:14:\"Editar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:5;a:4:{s:1:\"a\";i:6;s:1:\"b\";s:16:\"Eliminar Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:6;a:4:{s:1:\"a\";i:7;s:1:\"b\";s:21:\"Ver Perfil de Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:7;a:4:{s:1:\"a\";i:8;s:1:\"b\";s:20:\"Ver Lista de Autores\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:8;a:4:{s:1:\"a\";i:9;s:1:\"b\";s:15:\"Registrar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:9;a:4:{s:1:\"a\";i:10;s:1:\"b\";s:27:\"Exportar Reporte de Autores\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:10;a:4:{s:1:\"a\";i:11;s:1:\"b\";s:12:\"Editar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:11;a:4:{s:1:\"a\";i:12;s:1:\"b\";s:14:\"Eliminar Autor\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:12;a:4:{s:1:\"a\";i:13;s:1:\"b\";s:21:\"Ver Lista de Carreras\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:13;a:4:{s:1:\"a\";i:14;s:1:\"b\";s:17:\"Registrar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:14;a:4:{s:1:\"a\";i:15;s:1:\"b\";s:28:\"Exportar Reporte de Carreras\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:15;a:4:{s:1:\"a\";i:16;s:1:\"b\";s:14:\"Editar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:16;a:4:{s:1:\"a\";i:17;s:1:\"b\";s:16:\"Eliminar Carrera\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:17;a:4:{s:1:\"a\";i:18;s:1:\"b\";s:19:\"Ver Lista de Fichas\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:18;a:4:{s:1:\"a\";i:19;s:1:\"b\";s:15:\"Registrar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:19;a:4:{s:1:\"a\";i:20;s:1:\"b\";s:26:\"Exportar Reporte de Fichas\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:20;a:4:{s:1:\"a\";i:21;s:1:\"b\";s:25:\"Ver Información de Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:3:{i:0;i:1;i:1;i:2;i:2;i:3;}}i:21;a:4:{s:1:\"a\";i:22;s:1:\"b\";s:32:\"Exportar Reporte de Ficha Única\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:22;a:4:{s:1:\"a\";i:23;s:1:\"b\";s:12:\"Editar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:23;a:4:{s:1:\"a\";i:24;s:1:\"b\";s:14:\"Eliminar Ficha\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:24;a:4:{s:1:\"a\";i:25;s:1:\"b\";s:23:\"Ver Lista de Préstamos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:25;a:4:{s:1:\"a\";i:26;s:1:\"b\";s:19:\"Registrar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:26;a:4:{s:1:\"a\";i:27;s:1:\"b\";s:30:\"Exportar Reporte de Préstamos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:27;a:4:{s:1:\"a\";i:28;s:1:\"b\";s:29:\"Ver Información de Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:28;a:4:{s:1:\"a\";i:29;s:1:\"b\";s:30:\"Marcar Préstamo como Devuelto\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:29;a:4:{s:1:\"a\";i:30;s:1:\"b\";s:16:\"Editar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:30;a:4:{s:1:\"a\";i:31;s:1:\"b\";s:18:\"Eliminar Préstamo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}i:31;a:4:{s:1:\"a\";i:32;s:1:\"b\";s:18:\"Ver Lista de Roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:32;a:4:{s:1:\"a\";i:33;s:1:\"b\";s:13:\"Registrar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:33;a:4:{s:1:\"a\";i:34;s:1:\"b\";s:25:\"Exportar Reporte de Roles\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:34;a:4:{s:1:\"a\";i:35;s:1:\"b\";s:10:\"Editar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:35;a:4:{s:1:\"a\";i:36;s:1:\"b\";s:12:\"Eliminar Rol\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:36;a:4:{s:1:\"a\";i:37;s:1:\"b\";s:22:\"Ver Lista de Respaldos\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:37;a:4:{s:1:\"a\";i:38;s:1:\"b\";s:14:\"Crear Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:38;a:4:{s:1:\"a\";i:39;s:1:\"b\";s:18:\"Restaurar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:39;a:4:{s:1:\"a\";i:40;s:1:\"b\";s:36:\"Restaurar Respaldo desde Dispositivo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:40;a:4:{s:1:\"a\";i:41;s:1:\"b\";s:18:\"Descargar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:41;a:4:{s:1:\"a\";i:42;s:1:\"b\";s:17:\"Eliminar Respaldo\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:42;a:4:{s:1:\"a\";i:43;s:1:\"b\";s:29:\"Ver Estadísticas del Sistema\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:1:{i:0;i:1;}}i:43;a:4:{s:1:\"a\";i:44;s:1:\"b\";s:24:\"Editar Perfil de Usuario\";s:1:\"c\";s:3:\"web\";s:1:\"r\";a:2:{i:0;i:1;i:1;i:2;}}}s:5:\"roles\";a:3:{i:0;a:3:{s:1:\"a\";i:1;s:1:\"b\";s:6:\"MASTER\";s:1:\"c\";s:3:\"web\";}i:1;a:3:{s:1:\"a\";i:2;s:1:\"b\";s:5:\"ADMIN\";s:1:\"c\";s:3:\"web\";}i:2;a:3:{s:1:\"a\";i:3;s:1:\"b\";s:4:\"USER\";s:1:\"c\";s:3:\"web\";}}}', 1749519296);
 
 -- --------------------------------------------------------
 
@@ -116,7 +119,11 @@ CREATE TABLE `carreras` (
 --
 
 INSERT INTO `carreras` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
-(1, 'Ingeniería en Sistemas', '2025-06-03 20:03:24', '2025-06-03 20:03:24');
+(3, 'Geología', '2025-06-06 14:38:34', '2025-06-06 14:38:34'),
+(4, 'Ingeniería Geológica', '2025-06-06 14:38:48', '2025-06-06 14:38:48'),
+(5, 'Ingeniería en Minas', '2025-06-06 14:38:59', '2025-06-06 14:38:59'),
+(6, 'Ingeniería Industrial', '2025-06-06 14:39:10', '2025-06-06 14:39:10'),
+(7, 'Ingeniería Civil', '2025-06-06 14:39:21', '2025-06-06 14:39:21');
 
 -- --------------------------------------------------------
 
@@ -155,9 +162,8 @@ CREATE TABLE `fichas` (
 --
 
 INSERT INTO `fichas` (`id`, `titulo`, `fecha`, `carrera_id`, `resumen`, `created_at`, `updated_at`) VALUES
-(1, '\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"', '2023-10-01', 1, 'Resumen de la ficha 1', '2025-06-03 20:03:24', '2025-06-05 22:59:29'),
-(2, 'Prestamos', '2024-12-12', 1, 'Prestamos', '2025-06-03 20:27:52', '2025-06-03 20:27:52'),
-(3, 'Trabajo #2', '2023-11-27', 1, 'Trabajo #2', '2025-06-03 21:28:34', '2025-06-03 21:28:34');
+(4, 'CARACTERIZACIÓN GEOLÓGICA Y ESTRUCTURAL DEL FUNDO VILLA RODEO, SECTOR PRADO DEL ESTE, PARROQUIA PANAPANA, MUNICIPIO ANGOSTURA DEL ORINOCO ESTADO BOLÍVAR, VENEZUELA', '2023-11-01', 4, 'El proyecto de investigación consiste en una caracterización geológica y estructural del\r\nfundo Villa Rodeo, Sector Prado del Este, parroquia Panapana, municipio Angostura\r\ndel Orinoco estado Bolívar, Venezuela. La estrategia adoptada es de nivel descriptivo,\r\ncon un diseño de investigación de campo y documental para la cual se utilizó una\r\nmetodología que incluye los aspectos siguientes:  la descripción de las características\r\nfísico - naturales del área, la identificación de las unidades geológicas y las estructuras\r\nde la zona mediante el levantamiento geológico de superficie, la clasificación de las\r\nestructuras geológicas asociadas a las rocas,  la descripción macroscópica de las rocas\r\naflorantes en el fundo Villa Rodeo, la clasificación de los suelos de acuerdo a las\r\nnormas ASTM-D-2487-00, la descripción de los sedimentos a través del levantamiento\r\nde columnas sedimentológicas, y la elaboración de un mapa geológico estructural\r\nbasado en el levantamiento geológico, usando AutoCAD 2012. Para el logro de los\r\nobjetivos se realizó el levantamiento de 2 columnas sedimentológicas con la apertura\r\nde 2 calicatas, donde se recolectaron (3) muestras de sedimentos; además de (9)\r\nmuestras de rocas. Entre los resultados más relevantes obtenidos tenemos en primer\r\nlugar; las características físico naturales donde se observó que en el fundo Villa Rodeo\r\nse encuentran grandes afloramientos y bloques dispersos de diferentes tamaños que\r\npresentan meteorización esferoidal a nivel de superficie, con  vegetación típica de\r\nsabana, y en menor proporción gramíneas. En la zona se identificaron dos unidades\r\ngeológicas bien definidas que son: Complejo de Imataca y Suelos Residuales. Las\r\nestructuras geológicas asociadas a los afloramientos rocosos son familias de diaclasas\r\ncon direcciones predominantes N40º-70ºW, N10ºE, y S10º-80ºW, las foliaciones con\r\ndirecciones N54°-68ºW con buzamiento 15°-25ºNE, y los Sills de cuarzo cuya\r\ndirección predominante es N12º-83ºW, con espesores promedio que van desde los 2\r\ncm hasta 4 cm. Macroscópicamente los afloramientos rocosos del fundo Villa Rodeo\r\nestán compuestos por rocas metamórficas, de las (9) muestras, se identificaron (3)\r\ncomo Gneis Granítico, (3) Gneis Feldespático, (2) Gneis y un (1) Gneis cuarzo\r\nfeldespático, de colores rosado, blanco y gris en su mayoría de textura de grano grueso\r\ny de grano fino a medio foliadas. Los suelos que conforman el área de estudio fueron\r\nclasificados como arenas mal graduadas de simbología (SP) y arenas limosas de\r\nsimbología (SP-SM) de partículas finas a medias. El análisis mediante las columnas\r\nsedimentológicas mostraron que en la primera columna se tiene dos estratos, donde en\r\nla base es de arena de grano muy fino a fino de color negro a marrón y en el tope arena\r\nde grano medio a fino con presencia de limo de color amarillo y con tonalidades de\r\ncolor blanco; en la segunda solo se tiene un solo estrato, de arena media limosa de color\r\nmarrón con presencia de tonos rojizos producto de la oxidación de hierro. En las 2\r\ncolumnas no se observaron estructuras sedimentarias pero si presencias de raíces. De\r\nacuerdo con el mapa geológico se encuentran los Suelos Residuales que abarca\r\nalrededor del 40% del área y las rocas del Complejo de Imataca que abarca más del\r\n58% del total del área.', '2025-06-06 14:48:50', '2025-06-06 14:48:50'),
+(5, 'Trabajo de Prueba', '2025-06-08', 6, 'Resumen del trabajo de prueba.', '2025-06-09 00:44:58', '2025-06-09 02:21:52');
 
 -- --------------------------------------------------------
 
@@ -180,9 +186,9 @@ CREATE TABLE `infopers` (
 --
 
 INSERT INTO `infopers` (`id`, `ci_us`, `nombre`, `apellido`, `user_id`, `created_at`, `updated_at`) VALUES
-(1, '12345678', 'Test', 'User', 1, '2025-06-03 20:03:23', '2025-06-05 23:26:32'),
-(2, '87654321', 'Admin', 'User', 2, '2025-06-03 20:03:24', '2025-06-03 20:03:24'),
-(3, '11223344', 'Usuario', 'User', 3, '2025-06-03 20:03:24', '2025-06-03 20:03:24');
+(7, '00000001', 'Administrador', 'De Sistema', 7, '2025-06-06 14:24:02', '2025-06-07 03:51:55'),
+(8, '10573469', 'Carmen', 'Rondón', 8, '2025-06-06 14:34:11', '2025-06-06 14:34:11'),
+(9, '00000002', 'Usuario', 'De Consulta', 9, '2025-06-06 15:12:30', '2025-06-07 03:52:12');
 
 -- --------------------------------------------------------
 
@@ -278,9 +284,9 @@ CREATE TABLE `model_has_roles` (
 --
 
 INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
-(1, 'App\\Models\\User', 1),
-(2, 'App\\Models\\User', 2),
-(3, 'App\\Models\\User', 3);
+(1, 'App\\Models\\User', 8),
+(2, 'App\\Models\\User', 7),
+(3, 'App\\Models\\User', 9);
 
 -- --------------------------------------------------------
 
@@ -355,7 +361,8 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 (40, 'Restaurar Respaldo desde Dispositivo', 'web', '2025-06-03 20:03:22', '2025-06-03 20:03:22'),
 (41, 'Descargar Respaldo', 'web', '2025-06-03 20:03:22', '2025-06-03 20:03:22'),
 (42, 'Eliminar Respaldo', 'web', '2025-06-03 20:03:22', '2025-06-03 20:03:22'),
-(43, 'Ver Estadísticas del Sistema', 'web', '2025-06-03 20:03:22', '2025-06-03 20:03:22');
+(43, 'Ver Estadísticas del Sistema', 'web', '2025-06-03 20:03:22', '2025-06-03 20:03:22'),
+(44, 'Editar Perfil de Usuario', 'web', '2025-06-07 03:53:05', '2025-06-07 03:53:05');
 
 -- --------------------------------------------------------
 
@@ -379,9 +386,8 @@ CREATE TABLE `preguntas_user` (
 --
 
 INSERT INTO `preguntas_user` (`id`, `user_id`, `pregunta_uno`, `respuesta_uno`, `pregunta_dos`, `respuesta_dos`, `created_at`, `updated_at`) VALUES
-(1, 1, '¿Cuál es tu color favorito?', 'Rojo', '¿Cuál es tu animal favorito?', 'Gato', '2025-06-03 20:03:23', '2025-06-03 21:36:44'),
-(2, 2, '¿Dónde naciste?', 'Caracas', '¿Cuál es tu comida favorita?', 'Pizza', '2025-06-03 20:03:24', '2025-06-03 20:03:24'),
-(3, 3, '¿Tu primer colegio?', 'San José', '¿Nombre de tu mascota?', 'Firulais', '2025-06-03 20:03:24', '2025-06-03 20:03:24');
+(4, 7, 'Nombre de la jefa', 'Carmen', 'Departamento', 'Biblioteca', '2025-06-06 14:27:13', '2025-06-09 00:36:05'),
+(5, 8, 'Departamento', 'biblioteca', 'Jefa', 'rondon', '2025-06-06 14:37:12', '2025-06-09 00:33:21');
 
 -- --------------------------------------------------------
 
@@ -406,10 +412,7 @@ CREATE TABLE `prestamos` (
 --
 
 INSERT INTO `prestamos` (`id`, `ficha_id`, `prestatario_id`, `fecha_prestamo`, `fecha_devolucion`, `fecha_entrega`, `estado`, `created_at`, `updated_at`) VALUES
-(2, 2, 1, '2025-05-31', '2025-06-02', '2025-06-03', 'devuelto', '2025-06-03 20:28:20', '2025-06-03 21:05:18'),
-(3, 1, 3, '2025-06-03', '2025-06-07', NULL, 'prestado', '2025-06-03 21:21:47', '2025-06-03 21:21:47'),
-(4, 3, 4, '2025-06-01', '2025-06-07', '2025-06-03', 'devuelto', '2025-06-03 21:31:40', '2025-06-03 21:32:51'),
-(5, 2, 3, '2025-05-29', '2025-06-02', NULL, 'prestado', '2025-06-03 21:33:21', '2025-06-03 21:33:21');
+(6, 4, 5, '2025-06-06', '2025-06-07', '2025-06-06', 'devuelto', '2025-06-06 14:53:23', '2025-06-06 15:03:31');
 
 -- --------------------------------------------------------
 
@@ -432,9 +435,7 @@ CREATE TABLE `prestatarios` (
 --
 
 INSERT INTO `prestatarios` (`id`, `ci_prestatario`, `nombre_prestatario`, `apellido_prestatario`, `tlf_prestatario`, `created_at`, `updated_at`) VALUES
-(1, '28668715', 'Ricardo', 'Álvarez', '04249086796', '2025-06-03 20:08:57', '2025-06-03 21:26:38'),
-(3, '30040201', 'Gabriel', 'Perdomo', '04249488564', '2025-06-03 21:21:47', '2025-06-03 21:21:47'),
-(4, '11726812', 'Linora Del Carmen', 'Blanco', '04266905737', '2025-06-03 21:31:40', '2025-06-03 21:31:40');
+(5, '28668715', 'Ricardo', 'Álvarez', '04249086796', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -488,6 +489,7 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (7, 3),
 (8, 1),
 (8, 2),
+(8, 3),
 (9, 1),
 (9, 2),
 (10, 1),
@@ -547,7 +549,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 (40, 1),
 (41, 1),
 (42, 1),
-(43, 1);
+(43, 1),
+(44, 1),
+(44, 2);
 
 -- --------------------------------------------------------
 
@@ -569,7 +573,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('UJMph55pfCHXpOVlQxlmqTvENn6aHHbaG0ZuuuJm', 1, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTo2OntzOjY6Il90b2tlbiI7czo0MDoieDZrSGdBR3hBN05kQmdZa0wwWkQwbE5pZkF5T0tqS2FJUGszSXRjMyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTE6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2FkbWluL2JhY2t1cCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czo0OiJhdXRoIjthOjE6e3M6MjE6InBhc3N3b3JkX2NvbmZpcm1lZF9hdCI7aToxNzQ5MTc0NDE2O31zOjM6InVybCI7YToxOntzOjg6ImludGVuZGVkIjtzOjUzOiJodHRwOi8vbG9jYWxob3N0L2xhcmF2ZWwvYmlibGlvL3B1YmxpYy9hZG1pbi91c3VhcmlvcyI7fX0=', 1749175183);
+('jLi9rbagrDzFT8hB7UXFnocVr6wGdbFmxXfboEWZ', NULL, '::1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoickJHbEZCVWY1SmswVkxjT2xNaE93bHVMRFc1enRYM0NQcExXTm1iVCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDQ6Imh0dHA6Ly9sb2NhbGhvc3QvbGFyYXZlbC9iaWJsaW8vcHVibGljL2xvZ2luIjt9fQ==', 1749436314);
 
 -- --------------------------------------------------------
 
@@ -593,9 +597,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'User', 'test@example.com', '2025-06-03 20:03:23', '$2y$12$K4/WVDZW/3kuSoUAhs0I5uucWGYQhzhDdC1yuTjtJNbPmvThfj.3K', 'TAiKnoMYvOhwII0qDle0V6sZe9S5EuuLhmbcKTOfTHlccTA5VXP8q8nk4osh', '2025-06-03 20:03:23', '2025-06-03 20:03:23'),
-(2, 'Admin', 'admin@example.com', '2025-06-03 20:03:23', '$2y$12$Vyywrm9NmHfgYUmp1LQYyO.fGyf9dMHgblWVRVqqTkFm0DlpP8nQW', 'plWBBzOrnE', '2025-06-03 20:03:24', '2025-06-03 20:03:24'),
-(3, 'Usuario', 'usuario@example.com', '2025-06-03 20:03:24', '$2y$12$v2onXlTcCADDFyQD8wIJt.y1LW/PCsebVLDa0hpurS09RrRghpEZW', 'mM5lz4Oz8TPB8l7TrsgRFURwI3V4uQ8YV2sX1ZyJ84dNCtCUqDvLd7de2ct1', '2025-06-03 20:03:24', '2025-06-03 20:03:24');
+(7, 'Administración', 'administracion@biblioteca.com', NULL, '$2y$12$5Ia6CR8elK4wv/9ZFE5H8OEfWvajI.a9RAr2ua1pcNpF19mWJXC9O', NULL, '2025-06-06 14:24:02', '2025-06-09 00:34:10'),
+(8, 'CarmenRondon', 'carmen.rondon@udo.edu.ve', NULL, '$2y$12$SMgLIhMwh.D2hBc9.4bZ0uThXnzXc3cVFITWtui7f9nu3hhX7ikOq', NULL, '2025-06-06 14:34:11', '2025-06-06 14:34:11'),
+(9, 'Consultas', 'consultas@biblioteca.com', NULL, '$2y$12$3dwMsW5t9Xq0d1b4GV5iBeSjYW6gOlbkj/tL5pgsEuS26uXmc/lvS', NULL, '2025-06-06 15:12:30', '2025-06-07 03:52:12');
 
 --
 -- Índices para tablas volcadas
@@ -760,19 +764,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `autors`
 --
 ALTER TABLE `autors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `autor_ficha`
 --
 ALTER TABLE `autor_ficha`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `carreras`
 --
 ALTER TABLE `carreras`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `failed_jobs`
@@ -784,13 +788,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT de la tabla `fichas`
 --
 ALTER TABLE `fichas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `infopers`
 --
 ALTER TABLE `infopers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `jobs`
@@ -808,25 +812,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT de la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_user`
 --
 ALTER TABLE `preguntas_user`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamos`
 --
 ALTER TABLE `prestamos`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `prestatarios`
 --
 ALTER TABLE `prestatarios`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -838,7 +842,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas

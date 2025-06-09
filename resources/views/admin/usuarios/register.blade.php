@@ -11,10 +11,10 @@
 @section('content')
 
     @if ($errors->any())
-        <div class="alert alert-danger">
+        <div class="">
             <ul>
                 @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
                 @endforeach
             </ul>
         </div>

@@ -85,34 +85,16 @@ function registrarAutor(event) {
             $(".is-invalid").removeClass("is-invalid");
             if (xhr.status === 422) {
                 let errors = xhr.responseJSON.errors;
-                // Para cada error, busca el campo y muestra el mensaje
+                let erroresHtml = '<div class=""><ul>';
                 for (let field in errors) {
-                    let fieldName = field.replace(/\.\d+/, "[]"); // Para arrays como ci_autor.0
-                    let input = $(`[name="${fieldName}"]`).first();
-                    input.addClass("is-invalid");
-                    // Si el input está dentro de un input-group, pon el error después del grupo
-                    if (input.closest(".input-group").length) {
-                        input
-                            .closest(".input-group")
-                            .after(
-                                `<span class="invalid-feedback d-block" role="alert">${errors[field][0]}</span>`
-                            );
-                    } else {
-                        input.after(
-                            `<span class="invalid-feedback d-block" role="alert">${errors[field][0]}</span>`
-                        );
-                    }
+                    errors[field].forEach(function (mensaje) {
+                        erroresHtml += `<li><span class="invalid-feedback d-block" role="alert"><strong>${mensaje}</strong></span></li>`;
+                    });
                 }
-                // Opcional: scroll al primer error
-                let firstError = $(".is-invalid").first();
-                if (firstError.length) {
-                    $("html, body").animate(
-                        {
-                            scrollTop: firstError.offset().top - 100,
-                        },
-                        500
-                    );
-                }
+                erroresHtml += "</ul></div>";
+                
+                $("#form_ficha .alert").remove();
+                $("#form_ficha").prepend(erroresHtml);
             } else {
                 Swal.fire("Error", "Ocurrió un error inesperado.", "error");
             }

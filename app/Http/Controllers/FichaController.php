@@ -125,7 +125,7 @@ class FichaController extends Controller
                 return response()->json(['errors' => $validacion->errors()], 422);
             }
             // Si no es AJAX, sigue como antes
-            return back()->withErrors($validacion)->withInput();
+            return back()->withErrors($validacion);
         }
 
         DB::beginTransaction();
