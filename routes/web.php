@@ -6,8 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    $user = Auth::user();
+    if ($user && $user->can('Ver Estadísticas del Sistema')) {
+        return redirect()->route('home');
+    } elseif ($user) {
+        return redirect()->route('admin.perfil');
+    }
     return redirect('/login');
-})->middleware('guest');
+})->middleware('auth');
 
 Route::get('/home', function () {
     return view('home');
