@@ -2,10 +2,6 @@
 
 @section('title', 'Información de Usuario')
 
-@extends('adminlte::page')
-
-@section('title', 'Información de Usuario')
-
 @section('content')
     <div class="row">
         <h1 class="ml-4 mt-4"><b>Información de "{{$usuario->name}}"</b></h1>

@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::class, 'update'])->middleware('can:Editar Usuario')->name('admin.usuarios.update');
     Route::delete('/admin/usuarios/{id}', [App\Http\Controllers\UsuarioController::class, 'destroy'])->middleware('can:Eliminar Usuario')->name('admin.usuarios.destroy');
     Route::get('/admin/perfil', [App\Http\Controllers\UsuarioController::class, 'perfil'])->middleware('can:Ver Perfil de Usuario')->name('admin.perfil');
-    
-    
+
+
     // rutas autor
     Route::get('/admin/autores', [App\Http\Controllers\AutorController::class, 'index'])->middleware('can:Ver Lista de Autores')->name('admin.autores.index');
     Route::get('/admin/autores/register', [App\Http\Controllers\AutorController::class, 'create'])->middleware('can:Registrar Autor')->name('admin.autores.register');
@@ -55,7 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/autores/{id}/edit', [App\Http\Controllers\AutorController::class, 'edit'])->middleware('can:Editar Autor')->name('admin.autores.edit');
     Route::put('/admin/autores/{id}', [App\Http\Controllers\AutorController::class, 'update'])->middleware('can:Editar Autor')->name('admin.autores.update');
     Route::delete('/admin/autores/{id}', [App\Http\Controllers\AutorController::class, 'destroy'])->middleware('can:Eliminar Autor')->name('admin.autores.destroy');
-    
+
     //rutas Carreras
     Route::get('/admin/carreras', [App\Http\Controllers\CarreraController::class, 'index'])->middleware('can:Ver Lista de Carreras')->name('admin.carreras.index');
     Route::get('/admin/carreras/register', [App\Http\Controllers\CarreraController::class, 'create'])->middleware('can:Registrar Carrera')->name('admin.carreras.register');
@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/carreras/{id}/edit', [App\Http\Controllers\CarreraController::class, 'edit'])->middleware('can:Editar Carrera')->name('admin.carreras.edit');
     Route::put('/admin/carreras/{id}', [App\Http\Controllers\CarreraController::class, 'update'])->middleware('can:Editar Carrera')->name('admin.carreras.update');
     Route::delete('/admin/carreras/{id}', [App\Http\Controllers\CarreraController::class, 'destroy'])->middleware('can:Eliminar Carrera')->name('admin.carreras.destroy');
-    
+
     //rutas fichas
     Route::get('/admin/fichas', [App\Http\Controllers\FichaController::class, 'index'])->middleware('can:Ver Lista de Fichas')->name('admin.fichas.index');
     Route::get('/admin/fichas/register', [App\Http\Controllers\FichaController::class, 'create'])->middleware('can:Registrar Ficha')->name('admin.fichas.register');
@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/fichas/{id}', [App\Http\Controllers\FichaController::class, 'update'])->middleware('can:Editar Ficha')->name('admin.fichas.update');
     Route::delete('/admin/fichas/{id}', [App\Http\Controllers\FichaController::class, 'destroy'])->middleware('can:Eliminar Ficha')->name('admin.fichas.destroy');
     Route::delete('/quitar_autor/{id}', [App\Http\Controllers\FichaController::class, 'quitar'])->middleware('can:Editar Ficha')->name('fichas.quitar');
-    
+
     //rutas prestamos
     Route::get('/admin/prestamos', [App\Http\Controllers\PrestamoController::class, 'index'])->middleware('can:Ver Lista de Préstamos')->name('admin.prestamos.index');
     Route::get('/admin/prestamos/register', [App\Http\Controllers\PrestamoController::class, 'create'])->middleware('can:Registrar Préstamo')->name('admin.prestamos.register');
@@ -93,13 +93,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/prestamos/{id}/edit', [App\Http\Controllers\PrestamoController::class, 'edit'])->middleware('can:Editar Préstamo')->name('admin.prestamos.edit');
     Route::put('/admin/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'update'])->middleware('can:Editar Préstamo')->name('admin.prestamos.update');
     Route::delete('/admin/prestamos/{id}', [App\Http\Controllers\PrestamoController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('admin.prestamos.destroy');
-    
+
     //rutas de prestatario
     Route::post('/admin/prestatarios/register', [App\Http\Controllers\PrestatarioController::class, 'store'])->middleware('can:Registrar Préstamo')->name('prestatarios.store');
     Route::get('/admin/prestatarios/buscar', [App\Http\Controllers\PrestatarioController::class, 'buscarPorCedula'])->middleware('can:Registrar Préstamo')->name('prestatarios.buscar');
     Route::put('/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'update'])->middleware('can:Editar Préstamo')->name('prestatarios.update');
     Route::delete('/admin/prestatarios/{id}', [App\Http\Controllers\PrestatarioController::class, 'destroy'])->middleware('can:Eliminar Préstamo')->name('prestatarios.destroy');
-    
+
     //rutas roles
     Route::get('/admin/roles', [App\Http\Controllers\RoleController::class, 'index'])->middleware('can:Ver Lista de Roles')->name('admin.roles.index');
     Route::get('/admin/roles/register', [App\Http\Controllers\RoleController::class, 'create'])->middleware('can:Registrar Rol')->name('admin.roles.register');
@@ -119,7 +119,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/backup/upload', [App\Http\Controllers\BackupController::class, 'uploadRestore'])->middleware('can:Restaurar Respaldo desde Dispositivo')->name('admin.backup.upload');
     Route::get('/admin/backup/descargar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'descargar'])->middleware('can:Descargar Respaldo')->name('admin.backup.descargar');
     Route::delete('/admin/backup/eliminar/{nombreFile}', [App\Http\Controllers\BackupController::class, 'eliminar'])->middleware('can:Eliminar Respaldo')->name('admin.backup.eliminar');
-
 });
 
 require __DIR__ . '/auth.php';
