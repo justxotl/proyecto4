@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-3"><b>Asignación de Permisos ({{ $rol->name }})</b></h1>
+        <h1 class="ml-2 mt-3"><b>Asignación de Permisos ({{ $rol->name }})</b></h1>
     </div>
     <hr>
 @stop
@@ -56,7 +56,7 @@
                                 <hr>
                             </div>
                         @endforeach
-                        <hr>
+
                         {{-- Register button --}}
                         <button type="submit" class="btn btn-primary">Asignar</button>
                     </form>
@@ -69,6 +69,15 @@
 @stop
 
 @section('css')
+    <style>
+        .content-header,
+        .content-header h1,
+        .content-header .content-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal !important;
+        }
+    </style>
 @stop
 
 @section('js')

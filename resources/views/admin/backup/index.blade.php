@@ -163,6 +163,17 @@
 @stop
 
 @section('css')
+
+    <style>
+        .content-header,
+        .content-header h1,
+        .content-header .content-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal !important;
+        }
+    </style>
+
     <style>
         /* Fondo transparente y sin borde en el contenedor */
         #example1_wrapper .dt-buttons {

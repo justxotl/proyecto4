@@ -382,7 +382,7 @@
 
     <script>
         $(document).ready(function() {
-            $('.ver-autores-link').on('click', function() {
+            $('#example1').on('click', '.ver-autores-link', function() {
                 const autores = $(this).data('autores');
                 const lista = $('#lista-autores');
                 lista.empty();

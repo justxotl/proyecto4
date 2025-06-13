@@ -31,9 +31,9 @@
                 <i class="fas fa-cogs"></i> Manuales
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="opcionesDropdown">
-                <a class="dropdown-item disabled" href="">Usuario</a>
+                <a class="dropdown-item" href="{{asset('manuales/Manual_de_Usuario_Gestor_de_Fichas.pdf')}}" target="_blank">Usuario</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item disabled" href="">Técnico</a>
+                <a class="dropdown-item" href="{{asset('manuales/Manual_Técnico_Gestor_de_Fichas.pdf')}}" target="_blank">Técnico</a>
             </div>
         </li>
 

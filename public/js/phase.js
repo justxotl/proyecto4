@@ -92,7 +92,7 @@ function registrarAutor(event) {
                     });
                 }
                 erroresHtml += "</ul></div>";
-                
+
                 $("#form_ficha .alert").remove();
                 $("#form_ficha").prepend(erroresHtml);
             } else {
@@ -178,7 +178,24 @@ $("#ficha_plus").on("click", ".deleteRow", function () {
     $(this).closest(".autor-item").remove();
 });
 
-function quitar(id, event) {
+$("#autores_previos").on("click", ".deleteRow", function () {
+    const row = $(this).closest(".autor-item");
+    Swal.fire({
+        title: "¿Desea quitar este autor?",
+        icon: "question",
+        showDenyButton: true,
+        confirmButtonText: "Sí, quitar",
+        confirmButtonColor: "#a5161d",
+        denyButtonColor: "#270a0a",
+        denyButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            row.remove();
+        }
+    });
+});
+
+/* function quitar(id, event) {
     event.preventDefault();
     Swal.fire({
         title: "¿Desea eliminar este autor?",
@@ -217,3 +234,4 @@ function quitar(id, event) {
         }
     });
 }
+ */

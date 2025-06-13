@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-3"><b>Modificar "{{ $carreras->nombre }}"</b></h1>
+        <h1 class="ml-2 mt-3"><b>Modificar "{{ $carreras->nombre }}"</b></h1>
     </div>
     <hr>
 @stop
@@ -45,7 +45,8 @@
                                 <div class="form group">
                                     <label for="">Nombre de la Carrera:</label>
                                     <input type="text" name="nombre_carrera" value="{{ $carreras->nombre }}"
-                                        class="form-control @error('nombre_carrera') is-invalid @enderror" autocomplete="off" autofocus required>
+                                        class="form-control @error('nombre_carrera') is-invalid @enderror"
+                                        autocomplete="off" autofocus required>
 
                                     @error('nombre_carrera')
                                         <span class="invalid-feedback" role="alert">
@@ -73,3 +74,15 @@
         </div>
     </div>
 @endsection
+
+@section('css')
+    <style>
+        .content-header,
+        .content-header h1,
+        .content-header .content-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal !important;
+        }
+    </style>
+@stop

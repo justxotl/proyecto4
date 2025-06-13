@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-2"><b>Modificar "{{ $autor->nombre_autor }} {{ $autor->apellido_autor }}"</b></h1>
+        <h1 class="ml-2 mt-2"><b>Modificar "{{ $autor->nombre_autor }} {{ $autor->apellido_autor }}"</b></h1>
     </div>
     <hr>
 @stop
@@ -46,13 +46,12 @@
                                 <div class="form group">
                                     <label for="" class="ml-1">Cédula de Identidad:</label>
                                     <input type="text" name="ci_autor" maxlength="8" inputmode="numeric"
-                                        pattern="[0-9]*" value="{{ $autor->ci_autor }}"
-                                        class="form-control" required>
+                                        pattern="[0-9]*" value="{{ $autor->ci_autor }}" class="form-control" required>
                                     @error('ci_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -65,10 +64,10 @@
                                     <input type="text" name="nombre_autor" value="{{ $autor->nombre_autor }}"
                                         class="form-control" autocomplete="off" required>
                                     @error('nombre_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -81,10 +80,10 @@
                                     <input type="text" name="apellido_autor" value="{{ $autor->apellido_autor }}"
                                         class="form-control" autocomplete="off" required>
                                     @error('apellido_autor')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -104,3 +103,15 @@
         </div>
     </div>
 @endsection
+
+@section('css')
+    <style>
+        .content-header,
+        .content-header h1,
+        .content-header .content-title {
+            overflow-wrap: break-word;
+            word-break: break-word;
+            white-space: normal !important;
+        }
+    </style>
+@stop

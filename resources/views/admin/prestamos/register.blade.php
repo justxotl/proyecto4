@@ -225,13 +225,6 @@
             align-items: center;
         }
 
-        .select2-container--default .select2-results__option {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            max-width: 100%;
-        }
-
         .select2-container--default .select2-selection--single .select2-selection__rendered {
             line-height: 24px !important;
             color: #495057 !important;

@@ -2,10 +2,13 @@
 
 @section('title', 'Modificar Usuario')
 
-@section('content')
+@section('content_header')
     <div class="row">
         <h1 class="ml-4 mt-3"><b>Modificar "{{ $usuario->name }}"</b></h1>
     </div>
+@stop
+
+@section('content')
 
     <hr>
 

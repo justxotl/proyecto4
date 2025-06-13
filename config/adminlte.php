@@ -302,7 +302,7 @@ return [
         // Navbar items:
         [
             'type' => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:

@@ -2,10 +2,13 @@
 
 @section('title', 'Información de Usuario')
 
-@section('content')
+@section('content_header')
     <div class="row">
-        <h1 class="ml-4 mt-4"><b>Información de "{{$usuario->name}}"</b></h1>
+        <h1 class="ml-4 mt-3"><b>Información de "{{$usuario->name}}"</b></h1>
     </div>
+@stop
+
+@section('content')
 
     <hr>
 
