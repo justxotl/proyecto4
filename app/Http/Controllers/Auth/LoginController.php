@@ -31,7 +31,7 @@ class LoginController extends Controller
     if ($user->hasRole('MASTER')) {
         return redirect('/home');
     }
-    return redirect()->route('admin.perfil', $user->id);
+    return redirect()->route('admin.perfil');
 }
 
     /**

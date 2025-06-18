@@ -337,6 +337,15 @@ class UsuarioController extends Controller
 
     public function resetPassword(Request $request)
     {
+        $request->validate([
+            'password' => 'required|string|min:8|max:20|confirmed',
+        ], [
+            'password.required' => 'La contraseña es obligatoria.',
+            'password.string' => 'La contraseña debe ser una cadena de texto.',
+            'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ]);
+
         $user = User::find($request->user_id);
         if ($user) {
             $user->password = Hash::make($request->password);

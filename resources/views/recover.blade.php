@@ -53,7 +53,7 @@
         $('#resetForm').submit(function(e) {
             e.preventDefault();
             if ($('#password').val() !== $('#password_confirmation').val()) {
-                Swal.fire("Error", "Las contraseñas no coinciden", "error");
+                Swal.fire("Error en los campos", "Las contraseñas no coinciden.", "error");
                 return;
             }
             Swal.fire({
@@ -62,19 +62,34 @@
                 showCancelButton: true,
                 cancelButtonColor: '#d33',
                 cancelButtonText: 'Cancelar',
+                confirmButtonColor: '#3085d6',
                 confirmButtonText: 'Sí, confirmar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.post('{{ url('admin/usuarios/resetPassword') }}', {
                         _token: '{{ csrf_token() }}',
                         user_id: userId,
-                        password: $('#password').val()
+                        password: $('#password').val(),
+                        password_confirmation: $('#password_confirmation').val()
                     }, function(response) {
                         if (response.status === 'ok') {
                             Swal.fire("Listo", "Contraseña reestablecida.", "success")
                                 .then(() => window.location.href = "{{ route('login') }}");
                         } else {
                             Swal.fire("Error", "No se pudo reestablecer la contraseña.", "error");
+                        }
+                    }).fail(function(xhr) {
+
+                        if (xhr.status === 422) {
+                            let errors = xhr.responseJSON.errors;
+                            let mensajes = '';
+                            for (let campo in errors) {
+                                mensajes += errors[campo].join('<br>') + '<br>';
+                            }
+                            Swal.fire("Error de validación", mensajes, "error");
+                        } else {
+                            Swal.fire("Error", "Ocurrió un error al procesar la solicitud.",
+                                "error");
                         }
                     });
                 }
