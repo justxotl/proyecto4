@@ -130,9 +130,9 @@ class PrestamoController extends Controller
             'ci_prestatario'       => 'required|numeric|digits_between:6,8',
             'nombre_prestatario'   => 'required|string|max:255',
             'apellido_prestatario' => 'required|string|max:255',
-            'tlf_prestatario'      => 'required|numeric|digits:11|unique:prestatarios,tlf_prestatario,' . $prestatarioActual->id,
+            'tlf_prestatario'      => 'required|numeric|digits:11',
             'fecha_prestamo'       => 'required|date',
-            'fecha_devolucion'     => 'required|date|after:fecha_prestamo|unique:prestatarios,ci_prestatario,' . $prestatarioActual->id,
+            'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
         ], [
             'ficha_id.required' => 'Debe seleccionar una ficha a prestar.',
             'ficha_id.exists' => 'La ficha seleccionada no existe.',
