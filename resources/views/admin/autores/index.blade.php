@@ -32,7 +32,7 @@
                                     <th style="text-align: center">Nombre(s)</th>
                                     <th style="text-align: center">Apellido(s)</th>
                                     <th style="text-align: center">Cédula</th>
-                                    <th style="text-align: center">Acción</th>
+                                    @can('Editar Autor')<th style="text-align: center">Acción</th>@endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,11 +45,12 @@
                                         <td>{{ $autor->nombre_autor }}</td>
                                         <td>{{ $autor->apellido_autor }}</td>
                                         <td>{{ $autor->ci_autor }}</td>
+                                        @can('Editar Autor')
                                         <td style="text-align: center">
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 @can('Editar Autor')
                                                     <a href="{{ url('/admin/autores/' . $autor->id . '/edit') }}" type="button"
-                                                        class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                        class="btn btn-success btn-sm" title="Editar Autor"><i class="fas fa-pencil-alt"></i></a>
                                                 @endcan
                                                 @can('Eliminar Autor')
                                                     <form action="{{ url('/admin/autores', $autor->id) }}" method="post"
@@ -57,7 +58,7 @@
                                                         id="miFormulario{{ $autor->id }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Autor"><i
                                                                 class="fas fa-trash"></i></button>
                                                     </form>
                                                 @endcan
@@ -83,6 +84,7 @@
                                                 </script>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

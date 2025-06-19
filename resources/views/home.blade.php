@@ -2,7 +2,7 @@
 
 @section('content_header')
     <div class="row">
-        <h1 class="ml-2 mt-2"><b>Bienvenido, {{ Auth::user()->name }} ({{ Auth::user()->email }})</b></h1>
+        <h1 class="ml-2 mt-2"><b>Bienvenid@, {{ Auth::user()->name }} ({{ Auth::user()->email }})</b></h1>
     </div>
     <hr>
 @stop

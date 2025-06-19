@@ -44,9 +44,16 @@
                             <div class="col-md-12">
                                 <div class="form group">
                                     <label for="">Nombre de la Carrera:</label>
-                                    <input type="text" name="nombre_carrera" value="{{ $carreras->nombre }}"
-                                        class="form-control @error('nombre_carrera') is-invalid @enderror"
-                                        autocomplete="off" autofocus required>
+                                    <div class="input-group">
+                                        <input type="text" name="nombre_carrera" value="{{ $carreras->nombre }}"
+                                            class="form-control @error('nombre_carrera') is-invalid @enderror"
+                                            autocomplete="off" autofocus required>
+                                        <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-graduation-cap {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        </div>
+                                    </div>
+                                </div>
 
                                     @error('nombre_carrera')
                                         <span class="invalid-feedback" role="alert">

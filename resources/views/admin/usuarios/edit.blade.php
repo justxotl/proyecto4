@@ -10,6 +10,16 @@
 
 @section('content')
 
+    @if ($errors->any())
+        <div class="">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <hr>
 
     <div class="row">
@@ -35,96 +45,131 @@
                         <input type="hidden" name="redirect_to" value="usuarios">
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Nombre(s):</label>
-                                    <input type="text" name="nombre" value="{{ $usuario->infoper->nombre }}"
-                                        class="form-control" autocomplete="off" required>
-                                    @error('nombre')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Apellido(s):</label>
-                                    <input type="text" name="apellido" value="{{ $usuario->infoper->apellido }}"
-                                        class="form-control" autocomplete="off" required>
-                                    @error('apellido')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Nombre de Usuario:</label>
-                                    <input type="text" name="name" value="{{ $usuario->name }}" class="form-control" autocomplete="off" required>
-                                    @error('name')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Cédula:</label>
-                                    <input type="text" name="ci_us" maxlength="8" inputmode="numeric" pattern="[0-9]*" value="{{ $usuario->infoper->ci_us }}"
-                                        class="form-control" autocomplete="off" required>
-                                    @error('ci_us')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Email:</label>
-                                    <input type="email" name="email" value="{{ $usuario->email }}" class="form-control" autocomplete="off"
-                                        required>
-                                    @error('email')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
+                                {{-- Nombre(s) --}}
+                                <label for="nombre">Nombre(s):</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" name="nombre" id="nombre" value="{{ $usuario->infoper->nombre }}"
+                                        class="form-control" autocomplete="off" required placeholder="Nombre">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-id-card"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div class="form group col-md-6">
-                                <label for="">Rol:</label>
-                                <select name="rol" id="rol" class="form-select form-control">
-                                    @foreach ($roles as $rol)
-                                        <option value="{{$rol->name}}" {{$rol->name == $usuario->roles->pluck('name')->implode(', ') ? 'selected': ''}}>{{ $rol->name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-md-6">
+                                {{-- Apellido(s) --}}
+                                <label for="apellido">Apellido(s):</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" name="apellido" id="apellido" value="{{ $usuario->infoper->apellido }}"
+                                        class="form-control" autocomplete="off" required placeholder="Apellido">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-id-card"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{-- Nombre de Usuario --}}
+                                <label for="name">Nombre de Usuario:</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" name="name" id="name" value="{{ $usuario->name }}"
+                                        class="form-control" autocomplete="off" required placeholder="Nombre de Usuario">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-user"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{-- Cédula --}}
+                                <label for="ci_us">Cédula:</label>
+                                <div class="input-group mb-2">
+                                    <input type="text" name="ci_us" id="ci_us" maxlength="8" inputmode="numeric"
+                                        pattern="[0-9]*" value="{{ $usuario->infoper->ci_us }}" class="form-control"
+                                        autocomplete="off" required placeholder="Cédula">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-id-card"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{-- Email --}}
+                                <label for="email">Email:</label>
+                                <div class="input-group mb-2">
+                                    <input type="email" name="email" id="email" value="{{ $usuario->email }}"
+                                        class="form-control" autocomplete="off" required placeholder="Email">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-envelope"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{-- Rol --}}
+                                <label for="rol">Rol:</label>
+                                <div class="input-group mb-2">
+                                    <select name="rol" id="rol" class="form-select form-control">
+                                        @foreach ($roles as $rol)
+                                            <option value="{{ $rol->name }}"
+                                                {{ $rol->name == $usuario->roles->pluck('name')->implode(', ') ? 'selected' : '' }}>
+                                                {{ $rol->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-filter"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                {{-- Contraseña --}}
+                                <label for="password">Contraseña:</label>
+                                <div class="input-group mb-2">
+                                    <input type="password" name="password" id="password"
+                                        placeholder="{{ __('adminlte::adminlte.password') }}" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                {{-- Confirmar Contraseña --}}
+                                <label for="password_confirmation">Confirmar Contraseña:</label>
+                                <div class="input-group mb-2">
+                                    <input type="password" name="password_confirmation" id="password_confirmation"
+                                        placeholder="{{ __('adminlte::adminlte.retype_password') }}" class="form-control">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">
+                                            <span class="fas fa-lock"></span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="row mt-2">
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Contraseña:</label>
-                                    <input type="password" name="password" value="{{ old('password') }}" placeholder="{{ __('adminlte::adminlte.password') }}" class="form-control">
-                                    @error('password')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        
-                            <div class="col-md-6">
-                                <div class="form group">
-                                    <label for="">Verificación de contraseña:</label>
-                                    <input type="password" name="password_confirmation" placeholder="{{ __('adminlte::adminlte.retype_password') }}" class="form-control">
-                                    @error('password_confirmation')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mt-3">
                             <div class="col-md-12">
                                 <div class="form group">
                                     <button type="submit" class="btn btn-success">Actualizar Usuario</button>

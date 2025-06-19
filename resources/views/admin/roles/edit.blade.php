@@ -11,6 +11,16 @@
 
 @section('content')
 
+    @if ($errors->any())
+        <div class="">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li><span class="invalid-feedback d-block" role="alert"><strong>{{ $error }}</strong></span></li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col-md-12">
             <div class="card card-outline card-success">
@@ -36,24 +46,23 @@
                             <div class="col-md-12">
                                 <div class="form group">
                                     <label for="">Nombre del Rol:</label>
-                                    <input type="text" name="name" value="{{ old('name', $rol->name) }}"
-                                        placeholder="Nombre del Rol" class="form-control" required autofocus>
-                                    @error('name')
-                                        <small style="color: red;">{{ $message }}</small>
-                                    @enderror
+                                    <div class="input-group mb-3">
+                                        <input type="text" name="name" value="{{ old('name', $rol->name) }}"
+                                            placeholder="Nombre del Rol"
+                                            class="form-control @error('name') is-invalid @enderror" autocomplete="off"
+                                            required autofocus>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span
+                                                    class="fas fa-filter {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <br>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form group">
-                                    <button type="submit" class="btn btn-success">Actualizar Rol</button>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-success">Actualizar Rol</button>
                     </form>
                 </div>
                 <!-- /.card-body -->

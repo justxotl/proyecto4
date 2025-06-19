@@ -45,7 +45,7 @@
                             <div class="input-group mb-3 col-md-6">
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
-                                    placeholder="Nombre de Usuario" required autofocus>
+                                    placeholder="Nombre de Usuario" autocomplete="off" required autofocus>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -64,7 +64,7 @@
                             <div class="input-group mb-3 col-md-6">
                                 <input type="text" name="ci_us" maxlength="8" inputmode="numeric" pattern="[0-9]*"
                                     class="form-control @error('ci_us') is-invalid @enderror" value="{{ old('ci_us') }}"
-                                    placeholder="Cédula de Identidad" required>
+                                    placeholder="Cédula de Identidad" autocomplete="off" required>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
@@ -83,7 +83,7 @@
                             <div class="input-group mb-3 col-md-6">
                                 <input type="text" name="nombre"
                                     class="form-control @error('nombre') is-invalid @enderror" value="{{ old('nombre') }}"
-                                    placeholder="Nombre" required>
+                                    placeholder="Nombre" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -102,7 +102,7 @@
                             <div class="input-group mb-3 col-md-6">
                                 <input type="text" name="apellido"
                                     class="form-control @error('apellido') is-invalid @enderror"
-                                    value="{{ old('apellido') }}" placeholder="Apellido" required>
+                                    value="{{ old('apellido') }}" placeholder="Apellido" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -123,7 +123,7 @@
                             <div class="input-group mb-3 col-md-6">
                                 <input type="email" name="email"
                                     class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"
-                                    placeholder="{{ __('adminlte::adminlte.email') }}" required>
+                                    placeholder="{{ __('adminlte::adminlte.email') }}" autocomplete="off" required>
 
                                 <div class="input-group-append">
                                     <div class="input-group-text">
@@ -150,7 +150,7 @@
                                 <div class="input-group-append">
                                     <div class="input-group-text">
                                         <span
-                                            class="fas fa-graduation-cap {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            class="fas fa-filter {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
 

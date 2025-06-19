@@ -43,7 +43,7 @@ class UsuarioController extends Controller
     {
 
         $request->validate([
-            'name' => 'required|max:250',
+            'name' => 'required|max:20',
             'ci_us' => 'required|digits_between:6,8|numeric|unique:infopers,ci_us',
             'nombre' => 'required|max:250',
             'apellido' => 'required|max:250',
@@ -52,7 +52,7 @@ class UsuarioController extends Controller
             'password' => 'required|min:8|max:20|confirmed',
         ], [
             'name.required' => 'El nombre de usuario es obligatorio.',
-            'name.max' => 'El nombre de usuario no puede tener más de 250 caracteres.',
+            'name.max' => 'El nombre de usuario no puede tener más de 20 caracteres.',
             'ci_us.required' => 'La cédula es obligatoria.',
             'ci_us.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
             'ci_us.numeric' => 'La cédula debe contener solo números.',
@@ -125,7 +125,7 @@ class UsuarioController extends Controller
         $usuario = User::find($id);
 
         $rules = [
-            'name' => 'required|max:250',
+            'name' => 'required|max:20',
             'email' => 'required|max:250|unique:users,email,' . $usuario->id,
             'password' => 'nullable|min:8|max:20|confirmed',
         ];
@@ -145,7 +145,7 @@ class UsuarioController extends Controller
 
         $request->validate($rules, [
             'name.required' => 'Debes ingresar un nombre de usuario.',
-            'name.max' => 'El nombre de usuario no debe exceder 250 caracteres.',
+            'name.max' => 'El nombre de usuario no debe exceder 20 caracteres.',
             'nombre.required' => 'Debes ingresar el(los) nombre(s) del usuario.',
             'apellido.required' => 'Debes ingresar el(los) apellido(s) del usuario.',
             'nombre.max' => 'El(los) nombre(s) no debe(n) exceder 250 caracteres.',
@@ -343,6 +343,7 @@ class UsuarioController extends Controller
             'password.required' => 'La contraseña es obligatoria.',
             'password.string' => 'La contraseña debe ser una cadena de texto.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'password.max' => 'La contraseña no puede tener más de 20 caracteres.',
             'password.confirmed' => 'La confirmación de la contraseña no coincide.',
         ]);
 

@@ -53,11 +53,11 @@
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 @can('Editar Usuario')
                                                     <a href="{{ url('/admin/usuarios/' . $usuario->id . '/edit') }}"
-                                                        class="btn btn-success btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                        class="btn btn-success btn-sm" title="Editar Usuario"><i class="fas fa-pencil-alt"></i></a>
                                                 @endcan
                                                 @can('Ver Información de Usuario')
                                                     <a href="{{ url('admin/usuarios/' . $usuario->id) }}"
-                                                        class="btn btn-info btn-sm"><i class="bi bi-eye fas fa-eye"></i></a>
+                                                        class="btn btn-info btn-sm" title="Visualizar Usuario"><i class="bi bi-eye fas fa-eye"></i></a>
                                                 @endcan
                                                 @can('Eliminar Usuario')
                                                     <form action="{{ url('/admin/usuarios', $usuario->id) }}" method="post"
@@ -66,7 +66,7 @@
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="submit" class="btn btn-danger btn-sm"><i
-                                                                class="fas fa-trash"></i></button>
+                                                                class="fas fa-trash" title="Eliminar Usuario"></i></button>
                                                     </form>
                                                 @endcan
                                                 <script>

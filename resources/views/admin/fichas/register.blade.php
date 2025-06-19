@@ -18,7 +18,7 @@
             <div class="card card-outline card-info">
 
                 <div class="card-header">
-                    <h3 class="card-title mt-1">Ingrese la información solicitada:</h3>
+                    <h3 class="card-title mt-2">Ingrese la información solicitada:</h3>
                     <div class="card-tools mt-1">
                         <a href="{{ url('/admin/fichas') }}" class="btn btn-sm btn-secondary">Volver</a>
                         <a href="javascript:void(0)" class="btn btn-sm btn-info addRow"><i

@@ -18,6 +18,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class CarreraExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
+    private $contador = 1;
+
+    protected $carreras;
+
     public function collection()
     {
         return Carrera::select(['id', 'nombre'])->get();
@@ -26,7 +30,7 @@ class CarreraExport implements FromCollection, WithHeadings, WithMapping, WithSt
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
             'Nombre de la Carrera',
         ];
     }
@@ -34,7 +38,7 @@ class CarreraExport implements FromCollection, WithHeadings, WithMapping, WithSt
     public function map($carrera): array
     {
         return [
-            $carrera->id,
+            $this->contador++,
             $carrera->nombre,
         ];
     }

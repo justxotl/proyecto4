@@ -50,14 +50,10 @@
                                     placeholder="Nombre del Rol" autocomplete="off" required autofocus>
                                 <div class="input-group-append">
                                     <div class="input-group-text">
-                                        <span class="fas fa-pen {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                        <span class="fas fa-filter {{ config('adminlte.classes_auth_icon', '') }}"></span>
                                     </div>
                                 </div>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+
                             </div>
                         </div>
 

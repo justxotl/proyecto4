@@ -18,6 +18,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class FichasExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithEvents
 {
+    private $contador = 1;
+
     protected $fichas;
 
     public function __construct()
@@ -33,7 +35,7 @@ class FichasExport implements FromCollection, WithHeadings, WithMapping, WithSty
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
             'Fecha',
             'Título',
             'Carrera',
@@ -50,7 +52,7 @@ class FichasExport implements FromCollection, WithHeadings, WithMapping, WithSty
         $apellidos = $ficha->autor->pluck('apellido_autor')->implode("\n");
 
         return [
-            $ficha->id,
+            $this->contador++,
             $ficha->fecha,
             $ficha->titulo,
             $ficha->carrera->nombre ?? '',

@@ -120,7 +120,12 @@ class AutorController extends Controller
      */
     public function destroy($id)
     {
-        $autor = Autor::find($id);
+        $autor = Autor::findOrFail($id);
+
+        if ($autor->ficha()->count() > 0) {
+            return redirect()->back()->with('mensaje', 'No se puede eliminar el autor porque tiene fichas asociadas.')->with('icono', 'error');
+        }
+        
         $autor->delete();
 
         return redirect()->route('admin.autores.index')

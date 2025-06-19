@@ -45,8 +45,17 @@
                             <div class="col-md-12">
                                 <div class="form group">
                                     <label for="" class="ml-1">Cédula de Identidad:</label>
-                                    <input type="text" name="ci_autor" maxlength="8" inputmode="numeric"
-                                        pattern="[0-9]*" value="{{ $autor->ci_autor }}" class="form-control" required>
+                                    <div class="input-group">
+                                        <input type="text" name="ci_autor" maxlength="8" inputmode="numeric"
+                                            pattern="[0-9]*" value="{{ $autor->ci_autor }}" class="form-control"
+                                            autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span
+                                                    class="fas fa-id-card {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @error('ci_autor')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -56,13 +65,20 @@
                             </div>
                         </div>
 
-
                         <div class="row mb-2">
                             <div class="col-md-12">
                                 <div class="form group">
                                     <label for="" class="ml-1">Nombre(s):</label>
-                                    <input type="text" name="nombre_autor" value="{{ $autor->nombre_autor }}"
-                                        class="form-control" autocomplete="off" required>
+                                    <div class="input-group">
+                                        <input type="text" name="nombre_autor" value="{{ $autor->nombre_autor }}"
+                                            class="form-control" autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span
+                                                    class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @error('nombre_autor')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -72,13 +88,20 @@
                             </div>
                         </div>
 
-
                         <div class="row mb-2">
                             <div class="col-md-12">
                                 <div class="form group">
                                     <label for="" class="ml-1">Apellido(s):</label>
-                                    <input type="text" name="apellido_autor" value="{{ $autor->apellido_autor }}"
-                                        class="form-control" autocomplete="off" required>
+                                    <div class="input-group">
+                                        <input type="text" name="apellido_autor" value="{{ $autor->apellido_autor }}"
+                                            class="form-control" autocomplete="off" required>
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span
+                                                    class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @error('apellido_autor')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

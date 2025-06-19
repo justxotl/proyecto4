@@ -18,6 +18,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class RolesExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
+    private $contador = 1;
+
     public function collection()
     {
         return Role::select(['id', 'name'])->get();
@@ -26,7 +28,7 @@ class RolesExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
             'Nombre del Rol',
         ];
     }
@@ -34,7 +36,7 @@ class RolesExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function map($role): array
     {
         return [
-            $role->id,
+            $this->contador++,
             $role->name,
         ];
     }

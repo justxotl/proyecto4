@@ -44,7 +44,7 @@
                                             <div class="btn-group" role="group" aria-label="Basic example">
                                                 @can('Editar Carrera')
                                                     <a href="{{ url('/admin/carreras/' . $carrera->id . '/edit') }}"
-                                                        type="button" class="btn btn-success btn-sm"><i
+                                                        type="button" class="btn btn-success btn-sm" title="Editar Carrera"><i
                                                             class="fas fa-pencil-alt"></i></a>
                                                 @endcan
                                                 @can('Eliminar Carrera')
@@ -53,7 +53,7 @@
                                                         id="miFormulario{{ $carrera->id }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm"><i
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Carrera"><i
                                                                 class="fas fa-trash"></i></button>
                                                     </form>
                                                 @endcan

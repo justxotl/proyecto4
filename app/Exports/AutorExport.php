@@ -18,6 +18,10 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class AutorExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithEvents
 {
+    private $contador = 1;
+
+    protected $autores;
+
     public function collection()
     {
         return Autor::select(['id', 'ci_autor', 'nombre_autor', 'apellido_autor'])->get();
@@ -26,7 +30,7 @@ class AutorExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
             'Cédula del Autor',
             'Nombre del Autor',
             'Apellido del Autor',
@@ -36,7 +40,7 @@ class AutorExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function map($autor): array
     {
         return [
-            $autor->id,
+            $this->contador++,
             $autor->ci_autor,
             $autor->nombre_autor,
             $autor->apellido_autor,

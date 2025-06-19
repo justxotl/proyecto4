@@ -48,7 +48,7 @@
                                         <td class="titulo-columna" title="{{ $ficha->titulo }}">{{ $ficha->titulo }}</td>
                                         <td style="text-align: center">
                                             @if (count($ficha->autor) > 1)
-                                                <a href="#" class="ver-autores-link" data-toggle="modal"
+                                                <a href="#" class="ver-autores-link btn btn-info btn-sm" data-toggle="modal"
                                                     data-target="#modalAutores" data-ficha-id="{{ $ficha->id }}"
                                                     data-autores='@json($ficha->autor)'>
                                                     Ver ({{ count($ficha->autor) }}) autores
@@ -66,22 +66,22 @@
                                         </td>
                                         <td>{{ $ficha->carrera->nombre }}</td>
                                         <td style="text-align: center">
-                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                            <div class="@can('Editar Ficha') btn-group @endcan" role="group" aria-label="Basic example">
                                                 @can('Editar Ficha')
                                                     <a href="{{ url('/admin/fichas/' . $ficha->id . '/edit') }}"
-                                                        class="btn btn-success btn-sm">
+                                                        class="btn btn-success btn-sm" title="Editar Ficha">
                                                         <i class="fas fa-pen"></i>
                                                     </a>
                                                 @endcan
                                                 @can('Ver Información de Ficha')
                                                     <a href="{{ url('admin/fichas/' . $ficha->id) }}"
-                                                        class="btn btn-info btn-sm">
+                                                        class="btn btn-info btn-sm" title="Ver Ficha">
                                                         <i class="fas fa-eye"></i>
                                                     </a>
                                                 @endcan
                                                 @can('Exportar Reporte de Ficha Única')
                                                     <a href="{{ url('admin/fichas/pdf/' . $ficha->id) }}"
-                                                        class="btn btn-secondary btn-sm" target="_blank">
+                                                        class="btn btn-secondary btn-sm" title="Generar Reporte" target="_blank">
                                                         <i class="fas fa-file-pdf"></i>
                                                     </a>
                                                 @endcan
@@ -91,7 +91,7 @@
                                                         id="miFormulario{{ $ficha->id }}">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm">
+                                                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar Ficha">
                                                             <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
@@ -221,7 +221,7 @@
             align-items: center;
             /* Centra verticalmente los botones dentro del grupo */
         }
-
+        
         .btn-group .btn {
             border-radius: 0;
             /* Elimina bordes redondeados internos */
@@ -273,6 +273,7 @@
             color: #212529;
             border: none;
         }
+        
     </style>
 @stop
 

@@ -122,15 +122,17 @@ class PrestamoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $prestamo = Prestamo::findOrFail($id);
+        $prestatarioActual = Prestatario::find($prestamo->prestatario_id);
         // Validación de los campos
         $request->validate([
             'ficha_id'             => 'required|exists:fichas,id',
             'ci_prestatario'       => 'required|numeric|digits_between:6,8',
             'nombre_prestatario'   => 'required|string|max:255',
             'apellido_prestatario' => 'required|string|max:255',
-            'tlf_prestatario'      => 'required|numeric|digits:11',
+            'tlf_prestatario'      => 'required|numeric|digits:11|unique:prestatarios,tlf_prestatario,' . $prestatarioActual->id,
             'fecha_prestamo'       => 'required|date',
-            'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
+            'fecha_devolucion'     => 'required|date|after:fecha_prestamo|unique:prestatarios,ci_prestatario,' . $prestatarioActual->id,
         ], [
             'ficha_id.required' => 'Debe seleccionar una ficha a prestar.',
             'ficha_id.exists' => 'La ficha seleccionada no existe.',
@@ -138,6 +140,7 @@ class PrestamoController extends Controller
             'ci_prestatario.required' => 'Debe ingresar la cédula del prestatario.',
             'ci_prestatario.numeric' => 'La cédula solo puede contener números.',
             'ci_prestatario.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
+            'ci_prestatario.unique' => 'La cédula ya está registrada en otro prestatario.',
 
             'nombre_prestatario.required' => 'Debe ingresar el nombre del prestatario.',
             'nombre_prestatario.string' => 'El nombre del prestatario debe ser texto.',
@@ -150,6 +153,7 @@ class PrestamoController extends Controller
             'tlf_prestatario.required' => 'Debe ingresar el número de teléfono del prestatario.',
             'tlf_prestatario.numeric' => 'El número de teléfono solo puede contener números.',
             'tlf_prestatario.digits' => 'El número de teléfono debe tener exactamente 11 dígitos.',
+            'tlf_prestatario.unique' => 'El número de teléfono ya está registrado en otro prestatario.',
 
             'fecha_prestamo.required' => 'Debe indicar la fecha del préstamo.',
             'fecha_prestamo.date' => 'La fecha de préstamo debe ser válida.',

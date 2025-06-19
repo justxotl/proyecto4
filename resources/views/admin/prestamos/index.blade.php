@@ -155,7 +155,7 @@
 
                                                 @can('Exportar Reporte de Préstamos')
                                                     <a href="{{ url('admin/prestamos/pdf/' . $prestamo->id) }}"
-                                                        class="btn btn-secondary btn-sm" target="_blank">
+                                                        class="btn btn-secondary btn-sm" title="Generar Comprobante" target="_blank">
                                                         <i class="fas fa-file-pdf"></i>
                                                     </a>
                                                 @endcan
@@ -634,9 +634,9 @@
                 $(this).html('<input type="text" ' + atributos + ' value="' + valor + '" name="' + campo + '">');
             });
             fila.find('.acciones').html(
-                '<button class="btn btn-primary btn-sm" onclick="guardarPrestatario(' + id +
+                '<button class="btn btn-primary btn-sm" title="Guardar Cambios" onclick="guardarPrestatario(' + id +
                 ')"><i class="fas fa-save"></i></button>' +
-                '<button class="btn btn-secondary btn-sm ms-2 ml-1" onclick="cancelarEdicion(' + id +
+                '<button class="btn btn-secondary btn-sm ms-2 ml-1" title="Cancelar Edición" onclick="cancelarEdicion(' + id +
                 ')"><i class="fas fa-times"></i></button>'
             );
         }

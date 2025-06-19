@@ -18,6 +18,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithEvents
 {
+    private $contador = 1;
+
     public function collection()
     {
         return User::with(['infoper', 'roles'])->get();
@@ -27,7 +29,7 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     {
         return [
 
-            'ID',
+            '#',
             'Nombre de Usuario',
             'Cédula',
             'Nombre',
@@ -40,7 +42,7 @@ class UsersExport implements FromCollection, WithHeadings, WithMapping, WithStyl
     public function map($user): array
     {
         return [
-            $user->id,
+            $this->contador++,
             $user->name,
             $user->infoper->ci_us,
             $user->infoper->nombre,

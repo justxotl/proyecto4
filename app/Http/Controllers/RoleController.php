@@ -150,7 +150,7 @@ class RoleController extends Controller
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        return redirect()->back()
+        return redirect()->route('admin.roles.index')
             ->with('mensaje', 'Permisos asignados correctamente.')
             ->with('icono', 'success');
     }

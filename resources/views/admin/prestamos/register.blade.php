@@ -165,7 +165,7 @@
                                         value="{{ old('fecha_prestamo') }}" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
-                                            <i class="fas fa-calendar-alt"></i>
+                                            <i class="fas fa-file-upload"></i>
                                         </span>
                                     </div>
                                     @error('fecha_prestamo')
@@ -184,7 +184,7 @@
                                         value="{{ old('fecha_devolucion') }}" required>
                                     <div class="input-group-append">
                                         <span class="input-group-text">
-                                            <i class="fas fa-calendar-alt"></i>
+                                            <i class="fas fa-file-download"></i>
                                         </span>
                                     </div>
                                     @error('fecha_devolucion')

@@ -20,6 +20,8 @@ use Carbon\Carbon;
 
 class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize, WithEvents
 {
+    private $contador = 1;
+
     protected $prestamos;
 
     public function __construct()
@@ -35,7 +37,7 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
     public function headings(): array
     {
         return [
-            'ID',
+            '#',
             'Ficha ID',
             'Título',
             'CI del Prestatario',
@@ -52,7 +54,7 @@ class PrestamoExport implements FromCollection, WithHeadings, WithMapping, WithS
     public function map($prestamo): array
     {
         return [
-            $prestamo->id,
+            $this->contador++,
             $prestamo->ficha_id,
             $prestamo->ficha->titulo ?? 'N/A',
             $prestamo->prestatario->ci_prestatario ?? 'N/A',
