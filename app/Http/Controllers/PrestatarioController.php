@@ -11,8 +11,8 @@ class PrestatarioController extends Controller
         // Validación de campos
         $request->validate([
             'ci_prestatario' => 'required|numeric|digits_between:6,8|unique:prestatarios,ci_prestatario',
-            'nombre_prestatario' => 'required|string|max:255',
-            'apellido_prestatario' => 'required|string|max:255',
+            'nombre_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'apellido_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'tlf_prestatario' => 'required|numeric|digits:11|unique:prestatarios,tlf_prestatario',
         ], [
             'ci_prestatario.required' => 'La cédula es obligatoria.',
@@ -23,10 +23,12 @@ class PrestatarioController extends Controller
             'nombre_prestatario.required' => 'El nombre es obligatorio.',
             'nombre_prestatario.string' => 'El nombre debe ser un texto.',
             'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+            'nombre_prestatario.regex' => 'El nombre del prestatario solo puede contener letras, espacios y guiones.',
 
             'apellido_prestatario.required' => 'El apellido es obligatorio.',
             'apellido_prestatario.string' => 'El apellido debe ser un texto.',
             'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+            'apellido_prestatario.regex' => 'El apellido del prestatario solo puede contener letras, espacios y guiones.',
 
             'tlf_prestatario.required' => 'El teléfono es obligatorio.',
             'tlf_prestatario.numeric' => 'El teléfono debe ser numérico.',
@@ -50,8 +52,8 @@ class PrestatarioController extends Controller
         // Validación de campos
         $request->validate([
             'ci_prestatario' => 'required|numeric|digits_between:6,8|unique:prestatarios,ci_prestatario,' . $id,
-            'nombre_prestatario' => 'required|string|max:255',
-            'apellido_prestatario' => 'required|string|max:255',
+            'nombre_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'apellido_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'tlf_prestatario' => 'required|numeric|digits:11|unique:prestatarios,tlf_prestatario,' . $id,
         ], [
             'ci_prestatario.required' => 'La cédula es obligatoria.',
@@ -62,10 +64,12 @@ class PrestatarioController extends Controller
             'nombre_prestatario.required' => 'El nombre es obligatorio.',
             'nombre_prestatario.string' => 'El nombre debe ser un texto.',
             'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+            'nombre_prestatario.regex' => 'El nombre del prestatario solo puede contener letras, espacios y guiones.',
 
             'apellido_prestatario.required' => 'El apellido es obligatorio.',
             'apellido_prestatario.string' => 'El apellido debe ser un texto.',
             'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+            'apellido_prestatario.regex' => 'El apellido del prestatario solo puede contener letras, espacios y guiones.',
 
             'tlf_prestatario.required' => 'El teléfono es obligatorio.',
             'tlf_prestatario.numeric' => 'El teléfono debe ser numérico.',

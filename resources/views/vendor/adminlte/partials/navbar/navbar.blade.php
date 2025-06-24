@@ -25,17 +25,45 @@
         {{-- Configured right links --}}
         @each('adminlte::partials.navbar.menu-item', $adminlte->menu('navbar-right'), 'item')
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="opcionesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-cogs"></i> Manuales
-            </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="opcionesDropdown">
-                <a class="dropdown-item" href="{{asset('manuales/Manual_de_Usuario_Gestor_de_Fichas.pdf')}}" target="_blank">Usuario</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{asset('manuales/Manual_Técnico_Gestor_de_Fichas.pdf')}}" target="_blank">Técnico</a>
-            </div>
-        </li>
+        @can('Ver Manuales de MASTER')
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="opcionesDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" title="Manuales de Administración">
+                    <i class="fas fa-cogs"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="opcionesDropdown">
+                    <a class="dropdown-item" href="{{ asset('manuales/Manual_de_Usuario_Gestor_de_Fichas.pdf') }}"
+                        target="_blank">Manual de Usuario Maestro</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ asset('manuales/Manual_Técnico_Gestor_de_Fichas.pdf') }}"
+                        target="_blank"> Manual Técnico</a>
+                </div>
+            </li>
+        @endcan
+
+        @canany(['Ver Manual de ADMIN', 'Ver Manual de USER'])
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="manualesDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Manuales de Usuario">
+                    <i class="fas fa-book-open"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="manualesDropdown">
+                    @can('Ver Manual de ADMIN')
+                        <a class="dropdown-item"
+                            href="{{ asset('manuales/Manual_de_Usuario_Gestor_de_Fichas_Nivel_ADMIN.pdf') }}" target="_blank">
+                            Manual de Administrador
+                        </a>
+                    @endcan
+                    @can('Ver Manuales de MASTER')<div class="dropdown-divider"></div>@endcan
+                    @can('Ver Manual de USER')
+                        <a class="dropdown-item"
+                            href="{{ asset('manuales/Manual_de_Usuario_Gestor_de_Fichas_Nivel_USER.pdf') }}" target="_blank">
+                            Manual de Consultas
+                        </a>
+                    @endcan
+                </div>
+            </li>
+        @endcanany
 
         {{-- User menu link --}}
         @if (Auth::user())

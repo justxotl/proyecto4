@@ -77,8 +77,8 @@ class FichaController extends Controller
             $request->all(),
             [
                 'ci_autor.*' => 'required|numeric|digits_between:6,8',
-                'nombre_autor.*' => 'required|string|max:100',
-                'apellido_autor.*' => 'required|string|max:100',
+                'nombre_autor.*' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+                'apellido_autor.*' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
                 'titulo' => 'required|string|max:900|unique:fichas,titulo',
                 'fecha' => 'required|date',
                 'carrera' => 'required',
@@ -93,17 +93,19 @@ class FichaController extends Controller
                 // NOMBRE AUTOR
                 'nombre_autor.*.required' => 'El nombre del autor es requerido.',
                 'nombre_autor.*.string' => 'El nombre del autor debe ser texto.',
-                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 100 caracteres.',
+                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 250 caracteres.',
+                'nombre_autor.*.regex' => 'El nombre del autor solo puede contener letras, espacios y guiones.',
 
                 // APELLIDO AUTOR
                 'apellido_autor.*.required' => 'El apellido del autor es requerido.',
                 'apellido_autor.*.string' => 'El apellido del autor debe ser texto.',
-                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 100 caracteres.',
+                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 250 caracteres.',
+                'apellido_autor.*.regex' => 'El apellido del autor solo puede contener letras, espacios y guiones.',
 
                 // TÍTULO
                 'titulo.required' => 'El título del trabajo es requerido.',
                 'titulo.string' => 'El título debe ser texto.',
-                'titulo.max' => 'El título no debe exceder 900 caracteres.',
+                'titulo.max' => 'El título no debe exceder los 900 caracteres.',
                 'titulo.unique' => 'Ya existe una ficha registrada con este título.',
 
                 // FECHA
@@ -210,8 +212,8 @@ class FichaController extends Controller
             $request->all(),
             [
                 'ci_autor.*' => 'required|numeric|digits_between:6,8',
-                'nombre_autor.*' => 'required|string|max:100',
-                'apellido_autor.*' => 'required|string|max:100',
+                'nombre_autor.*' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+                'apellido_autor.*' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
                 'titulo' => 'required|string|max:900|unique:fichas,titulo,' . $id,
                 'fecha' => 'required|date',
                 'carrera' => 'required',
@@ -226,12 +228,14 @@ class FichaController extends Controller
                 // NOMBRE AUTOR
                 'nombre_autor.*.required' => 'El nombre del autor es requerido.',
                 'nombre_autor.*.string' => 'El nombre del autor debe ser texto.',
-                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 100 caracteres.',
+                'nombre_autor.*.max' => 'El nombre del autor no debe exceder 250 caracteres.',
+                'nombre_autor.*.regex' => 'El nombre del autor solo puede contener letras, espacios y guiones.',
 
                 // APELLIDO AUTOR
                 'apellido_autor.*.required' => 'El apellido del autor es requerido.',
                 'apellido_autor.*.string' => 'El apellido del autor debe ser texto.',
-                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 100 caracteres.',
+                'apellido_autor.*.max' => 'El apellido del autor no debe exceder 250 caracteres.',
+                'apellido_autor.*.regex' => 'El apellido del autor solo puede contener letras, espacios y guiones.',
 
                 // TÍTULO
                 'titulo.required' => 'El título del trabajo es requerido.',

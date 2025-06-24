@@ -123,6 +123,11 @@ class RoleController extends Controller
                 return "Estadística";
             } elseif (stripos($permiso->name, 'respaldo') !== false) {
                 return "Respaldos de Base de Datos";
+            } elseif (
+                stripos($permiso->name, 'manual') !== false ||
+                stripos($permiso->name, 'manuales') !== false
+            ) {
+                return "Manuales";
             }
         });
         return view('admin.roles.asignar', compact('rol', 'permisos'));

@@ -42,8 +42,8 @@ class PrestamoController extends Controller
         $request->validate([
             'ficha_id'             => 'required|exists:fichas,id',
             'ci_prestatario'       => 'required|numeric|digits_between:6,8',
-            'nombre_prestatario'   => 'required|string|max:255',
-            'apellido_prestatario' => 'required|string|max:255',
+            'nombre_prestatario'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'apellido_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'tlf_prestatario'      => 'required|numeric|digits:11',
             'fecha_prestamo'       => 'required|date',
             'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
@@ -58,10 +58,12 @@ class PrestamoController extends Controller
             'nombre_prestatario.required' => 'Debe ingresar el nombre del prestatario.',
             'nombre_prestatario.string' => 'El nombre del prestatario debe ser texto.',
             'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+            'nombre_prestatario.regex' => 'El nombre del prestatario solo puede contener letras, espacios y guiones.',
 
             'apellido_prestatario.required' => 'Debe ingresar el apellido del prestatario.',
             'apellido_prestatario.string' => 'El apellido del prestatario debe ser texto.',
             'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+            'apellido_prestatario.regex' => 'El apellido del prestatario solo puede contener letras, espacios y guiones.',
 
             'tlf_prestatario.required' => 'Debe ingresar el número de teléfono del prestatario.',
             'tlf_prestatario.numeric' => 'El número de teléfono solo puede contener números.',
@@ -128,8 +130,8 @@ class PrestamoController extends Controller
         $request->validate([
             'ficha_id'             => 'required|exists:fichas,id',
             'ci_prestatario'       => 'required|numeric|digits_between:6,8',
-            'nombre_prestatario'   => 'required|string|max:255',
-            'apellido_prestatario' => 'required|string|max:255',
+            'nombre_prestatario'   => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
+            'apellido_prestatario' => 'required|string|max:255|regex:/^[\pL\s\-]+$/u',
             'tlf_prestatario'      => 'required|numeric|digits:11',
             'fecha_prestamo'       => 'required|date',
             'fecha_devolucion'     => 'required|date|after:fecha_prestamo',
@@ -145,10 +147,12 @@ class PrestamoController extends Controller
             'nombre_prestatario.required' => 'Debe ingresar el nombre del prestatario.',
             'nombre_prestatario.string' => 'El nombre del prestatario debe ser texto.',
             'nombre_prestatario.max' => 'El nombre no debe exceder 255 caracteres.',
+            'nombre_prestatario.regex' => 'El nombre del prestatario solo puede contener letras, espacios y guiones.',
 
             'apellido_prestatario.required' => 'Debe ingresar el apellido del prestatario.',
             'apellido_prestatario.string' => 'El apellido del prestatario debe ser texto.',
             'apellido_prestatario.max' => 'El apellido no debe exceder 255 caracteres.',
+            'apellido_prestatario.regex' => 'El apellido del prestatario solo puede contener letras, espacios y guiones.',
 
             'tlf_prestatario.required' => 'Debe ingresar el número de teléfono del prestatario.',
             'tlf_prestatario.numeric' => 'El número de teléfono solo puede contener números.',

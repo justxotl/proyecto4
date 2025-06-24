@@ -34,8 +34,8 @@ class AutorController extends Controller
     {
         $request->validate([
             'ci_autor' => 'required|numeric|digits_between:6,8|unique:autors',
-            'nombre_autor' => 'required|string|max:255',
-            'apellido_autor' => 'required|string|max:255',
+            'nombre_autor' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+            'apellido_autor' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
         ], [
             'ci_autor.required' => 'Debe ingresar la cédula del autor.',
             'ci_autor.numeric' => 'La cédula solo puede contener números.',
@@ -44,11 +44,13 @@ class AutorController extends Controller
 
             'nombre_autor.required' => 'Debe ingresar el nombre del autor.',
             'nombre_autor.string' => 'El nombre del autor debe ser texto.',
-            'nombre_autor.max' => 'El nombre no debe exceder los 255 caracteres.',
+            'nombre_autor.max' => 'El nombre no debe exceder los 250 caracteres.',
+            'nombre_autor.regex' => 'El nombre del autor solo puede contener letras, espacios y guiones.',
 
             'apellido_autor.required' => 'Debe ingresar el apellido del autor.',
             'apellido_autor.string' => 'El apellido del autor debe ser texto.',
-            'apellido_autor.max' => 'El apellido no debe exceder los 255 caracteres.',
+            'apellido_autor.max' => 'El apellido no debe exceder los 250 caracteres.',
+            'apellido_autor.regex' => 'El apellido del autor solo puede contener letras, espacios y guiones.',
         ]);
 
         $autor = new Autor();
@@ -87,8 +89,8 @@ class AutorController extends Controller
         $autor = Autor::find($id);
         $request->validate([
             'ci_autor' => 'required|numeric|digits_between:6,8|unique:autors,ci_autor,' . $autor->id,
-            'nombre_autor' => 'required|string|max:255',
-            'apellido_autor' => 'required|string|max:255',
+            'nombre_autor' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
+            'apellido_autor' => 'required|string|max:250|regex:/^[\pL\s\-]+$/u',
         ], [
             'ci_autor.required' => 'Debe ingresar la cédula del autor.',
             'ci_autor.numeric' => 'La cédula solo puede contener números.',
@@ -97,11 +99,13 @@ class AutorController extends Controller
 
             'nombre_autor.required' => 'Debe ingresar el nombre del autor.',
             'nombre_autor.string' => 'El nombre del autor debe ser texto.',
-            'nombre_autor.max' => 'El nombre no debe exceder los 255 caracteres.',
+            'nombre_autor.max' => 'El nombre no debe exceder los 250 caracteres.',
+            'nombre_autor.regex' => 'El nombre del autor solo puede contener letras, espacios y guiones.',
 
             'apellido_autor.required' => 'Debe ingresar el apellido del autor.',
             'apellido_autor.string' => 'El apellido del autor debe ser texto.',
-            'apellido_autor.max' => 'El apellido no debe exceder los 255 caracteres.',
+            'apellido_autor.max' => 'El apellido no debe exceder los 250 caracteres.',
+            'apellido_autor.regex' => 'El apellido del autor solo puede contener letras, espacios y guiones.',
         ]);
 
         $autor = Autor::find($id);

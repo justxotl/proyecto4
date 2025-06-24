@@ -73,8 +73,13 @@
                         password_confirmation: $('#password_confirmation').val()
                     }, function(response) {
                         if (response.status === 'ok') {
-                            Swal.fire("Listo", "Contraseña reestablecida.", "success")
-                                .then(() => window.location.href = "{{ route('login') }}");
+                            Swal.fire({
+                                title: "Contraseña reestablecida",
+                                text: "La contraseña se ha reestablecido correctamente.",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(() => window.location.href = "{{ route('login') }}");
                         } else {
                             Swal.fire("Error", "No se pudo reestablecer la contraseña.", "error");
                         }

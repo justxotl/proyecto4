@@ -45,26 +45,34 @@ class UsuarioController extends Controller
         $request->validate([
             'name' => 'required|max:20',
             'ci_us' => 'required|digits_between:6,8|numeric|unique:infopers,ci_us',
-            'nombre' => 'required|max:250',
-            'apellido' => 'required|max:250',
+            'nombre' => 'required|max:250|regex:/^[\pL\s\-]+$/u',
+            'apellido' => 'required|max:250|regex:/^[\pL\s\-]+$/u',
             'email' => 'required|max:250|unique:users,email',
             'rol' => 'required',
             'password' => 'required|min:8|max:20|confirmed',
         ], [
             'name.required' => 'El nombre de usuario es obligatorio.',
             'name.max' => 'El nombre de usuario no puede tener más de 20 caracteres.',
+
             'ci_us.required' => 'La cédula es obligatoria.',
             'ci_us.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
             'ci_us.numeric' => 'La cédula debe contener solo números.',
             'ci_us.unique' => 'Esta cédula ya está registrada.',
+
             'nombre.required' => 'El nombre es obligatorio.',
             'nombre.max' => 'El nombre no puede tener más de 250 caracteres.',
+            'nombre.regex' => 'El nombre solo puede contener letras, espacios y guiones.',
+
             'apellido.required' => 'El apellido es obligatorio.',
             'apellido.max' => 'El apellido no puede tener más de 250 caracteres.',
+            'apellido.regex' => 'El apellido solo puede contener letras, espacios y guiones.',
+
             'email.required' => 'El correo electrónico es obligatorio.',
             'email.max' => 'El correo electrónico no puede tener más de 250 caracteres.',
             'email.unique' => 'Este correo electrónico ya está registrado.',
+
             'rol.required' => 'El rol es obligatorio.',
+
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.max' => 'La contraseña no puede tener más de 20 caracteres.',
@@ -131,8 +139,8 @@ class UsuarioController extends Controller
         ];
 
         if (!$desdePerfil) {
-            $rules['nombre'] = 'required|max:250';
-            $rules['apellido'] = 'required|max:250';
+            $rules['nombre'] = 'required|max:250|regex:/^[\pL\s\-]+$/u';
+            $rules['apellido'] = 'required|max:250|regex:/^[\pL\s\-]+$/u';
             $rules['ci_us'] = 'required|digits_between:6,8|numeric|unique:infopers,ci_us,' . $usuario->infoper->user_id;
         }
 
@@ -146,31 +154,39 @@ class UsuarioController extends Controller
         $request->validate($rules, [
             'name.required' => 'Debes ingresar un nombre de usuario.',
             'name.max' => 'El nombre de usuario no debe exceder 20 caracteres.',
+
             'nombre.required' => 'Debes ingresar el(los) nombre(s) del usuario.',
-            'apellido.required' => 'Debes ingresar el(los) apellido(s) del usuario.',
             'nombre.max' => 'El(los) nombre(s) no debe(n) exceder 250 caracteres.',
+            'nombre.regex' => 'El nombre solo puede contener letras, espacios y guiones.',
+
+            'apellido.required' => 'Debes ingresar el(los) apellido(s) del usuario.',
             'apellido.max' => 'El(los) apellido(s) no debe(n) exceder 250 caracteres.',
+            'apellido.regex' => 'El apellido solo puede contener letras, espacios y guiones.',
+
             'ci_us.required' => 'Debes ingresar la cédula del usuario.',
             'ci_us.digits_between' => 'La cédula debe tener entre 6 y 8 dígitos.',
             'ci_us.numeric' => 'La cédula solo puede contener números.',
             'ci_us.unique' => 'La cédula ya está registrada.',
+
             'email.required' => 'Debes ingresar el correo del usuario.',
             'email.unique' => 'El correo ya está registrado.',
             'email.max' => 'El correo no debe exceder 250 caracteres.',
+
             'password.min' => 'La contraseña debe tener al menos 8 caracteres.',
             'password.max' => 'La contraseña no debe exceder 20 caracteres.',
             'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+
             'preguntauno.required' => 'Debes ingresar la pregunta de seguridad #1.',
             'preguntados.required' => 'Debes ingresar la pregunta de seguridad #2.',
             'respuestauno.required' => 'Debes ingresar la respuesta de seguridad #1.',
             'respuestados.required' => 'Debes ingresar la respuesta de seguridad #2.',
             'preguntauno.string' => 'La pregunta de seguridad #1 debe ser texto.',
-            'preguntauno.max' => 'La pregunta de seguridad #1 no debe exceder 255 caracteres.',
             'preguntados.string' => 'La pregunta de seguridad #2 debe ser texto.',
-            'preguntados.max' => 'La pregunta de seguridad #2 no debe exceder 255 caracteres.',
             'respuestauno.string' => 'La respuesta de seguridad #1 debe ser texto.',
-            'respuestauno.max' => 'La respuesta de seguridad #1 no debe exceder 255 caracteres.',
             'respuestados.string' => 'La respuesta de seguridad #2 debe ser texto.',
+            'preguntauno.max' => 'La pregunta de seguridad #1 no debe exceder 255 caracteres.',
+            'preguntados.max' => 'La pregunta de seguridad #2 no debe exceder 255 caracteres.',
+            'respuestauno.max' => 'La respuesta de seguridad #1 no debe exceder 255 caracteres.',
             'respuestados.max' => 'La respuesta de seguridad #2 no debe exceder 255 caracteres.',
         ]);
 
